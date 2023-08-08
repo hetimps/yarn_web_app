@@ -10,21 +10,6 @@ body {
     font-family: $font-family;
 }
 
-// phon number
-
-.react-tel-input .form-control {
-    font-family: $font-family !important;
-    width: 20rem !important;
-    height: 45px !important;
-}
-
-.react-tel-input .country-list .country-name {
-    font-family: $font-family !important;
-}
-
-.react-tel-input .country-list .country .dial-code {
-    font-family: $font-family !important;
-}
 
 .login-container {
 
@@ -39,55 +24,81 @@ body {
         border-radius: 40px !important;
         width: 1080px !important;
 
+
+        // img
         .login_img {
             width: 50%;
+
             .img-wrapper {
                 margin: 1rem 1rem 0.8rem 00rem !important;
+
                 img {
                     width: 100%;
                 }
             }
         }
 
-
+        //form
         .forms_container {
             display: flex !important;
             align-items: center !important;
             width: 50%;
+            justify-content: center;
 
-            .logo_img_wrapper {
-                margin-left: 3rem;
-            }
+            .main {
+                width: 400px;
+                margin: 00px 00px !important;
 
-            .login_dec_wrapper {
-                margin-top: 2.5rem;
-                margin-left: 3rem;
+                .login_dec_wrapper {
+                    margin-top: 1.3rem;
+                    width: 100%;
 
-                .login_desc {
-                    font-weight: 500;
-                    color: $light-color;
+                    .login_desc {
+                        font-weight: 500;
+                        color: $light-color;
+                    }
+
+                    .login_tital {
+                        margin-bottom: 0.1rem;
+                        font-size: 20px;
+                    }
                 }
 
-                .login_tital {
-                    margin-bottom: 0.1rem;
+
+                .login_filed {
+                    width: 100%;
+
+                    .phon_input {
+                        margin: 2.5rem 0;
+
+                        .error {
+                            color: $primary;
+                            font-size: 0.9rem;
+                            font-weight: 600;
+
+                        }
+                    }
+
+                    .btn-out {
+                        position: relative;
+                        width: 100%;
+
+
+                        .login_button {
+                            position: relative;
+                            width: 100% !important;
+                        }
+
+                        .loader {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            margin-top: 1.5rem !important;
+
+                        }
+                    }
                 }
-            }
-
-            .login_filed {
-                margin-left: 3rem;
-
-                .phon_input {
-                    margin-top: 2rem;
-                }
-
-                .login_button {
-                    margin-top: 3rem;
-                }
-
-                .loaedr {
-                    margin-right: 6rem;
-                }
-
             }
         }
     }
@@ -101,86 +112,33 @@ body {
     font-weight: 600 !important;
     font-size: 15px !important;
     border-radius: 12px !important;
-    margin-top: 1rem !important;
     color: $white !important;
+    width: 100% !important;
+    height: 3.1rem !important;
 }
 
-.MuiFormHelperText-root {
+// phon number
+
+.react-tel-input .form-control {
     font-family: $font-family !important;
-    color: $primary !important;
-    // text-transform: capitalize;
-    font-weight: 800 !important;
+    width: 100% !important;
+    height: 45px !important;
 }
 
+.react-tel-input .country-list .country-name {
+    font-family: $font-family !important;
+}
 
-
-
-// media query
-
-@media (max-width: 1400px) {
-
-    .logo_img_wrapper {
-        margin-left: 2rem !important;
-    }
-
-    .login_dec_wrapper {
-        margin-top: 2.5rem !important;
-        margin-left: 2rem !important;
-
-        .login_tital {
-            margin-bottom: 0.2rem !important;
-            font-size: 20px !important;
-        }
-    }
-
-
-    .login_filed {
-        margin-left: 2rem !important;
-
-        .login_email_lable {
-            margin-top: 2.5rem !important;
-            size: 1px !important;
-            
-        }
-
-        .login_password_lable {
-            margin-top: 1.5rem !important;
-        }
-
-        .login_button {
-            margin-top: 2.5rem !important;
-        }
-
-        .loaedr {
-            margin-left: 2.4rem !important;
-            width: 50% !important;
-        }
-    }
-
-    .buttoms_login {
-        font-size: 15px !important;
-        width: 20rem !important;
-        height: 3rem !important;
-    }
-
-    .MuiInputBase-root {
-        width: 20rem !important;
-        height: 3rem !important;
-    }
+.react-tel-input .country-list .country .dial-code {
+    font-family: $font-family !important;
 }
 
 
 @media (max-width: 1000px) {
 
-    .react-tel-input .form-control {
-
-        width: 100% !important;
-
-
-    }
-
+  
     .login-container {
-
+       background-image: none !important;
         width: 100% !important;
 
         .login_pepar {
@@ -189,140 +147,35 @@ body {
             display: flex !important;
             align-items: center;
             justify-content: center;
+            border-radius: 00rem!important;
 
             .login_img {
-                width: 50% !important;
                 display: none;
             }
-
-            .forms_container {
-                // width: 100% !important;
-        
-
-                .logo_img_wrapper {
-                    margin-top: 0.5rem !important;
-                }
-
-                .login_dec_wrapper {
-                    margin-top: 2rem !important;
-                }
-
-
-                .login_filed {
-                    .login_email_lable {
-                        size: 1px !important;
-                        margin-bottom: 0.5rem !important;
-                    }
-
-                    .login_password_lable {
-                        size: 10px;
-                    }
-
-                    .loaedr {
-                        margin-left: 7rem !important;
-                        // width: 50% !important;
-                    }
-
-                }
-            }
-
         }
-
-        .buttoms_login {
-            font-size: 15px !important;
-            width: 100% !important;
-            height: 4rem !important;
-        }
-
-        // .MuiInputBase-root {
-        //     width: 30rem !important;
-        //     height: 3rem !important;
-        // }
-
     }
 }
 
 @media (max-width: 700px) {
 
-    .react-tel-input .form-control {
-
-        width: 100% !important;
-
-
-    }
-
     .login-container {
-
-        width: 100% !important;
-        background: none !important;
-
+ 
         .login_pepar {
             width: 100% !important;
             border-radius: 0rem !important;
 
-            .login_tital {
-                font-size: 1.2rem !important;
-            }
 
-            .login_desc {
-                font-size: 0.9rem !important;
-            }
-
-            .login_filed {
-                margin-left: 0rem !important;
-
-                .login_email_lable {
-                    margin-top: 1.7rem !important;
-                    font-size: 14px !important;
-                    margin-bottom: 0.5rem !important;
+            .main {
+                width: 400px !important;
+                .login_tital {
+                    font-size: 1.1rem !important;
                 }
-
-                .login_password_lable {
-                    margin-top: 1.7rem !important;
-                    font-size: 14px !important;
-                    margin-bottom: 0.5rem !important;
+                .login_desc {
+                    font-size: 0.9rem !important;
                 }
-
-                .custome_input {
-                    width: 100% !important;
-                    height: 1.5rem !important;
-                    margin-bottom: 1.5rem !important;
-                }
-
-                .loaedr {
-                    margin-left: 5.5rem !important;
-                    // width: 50% !important;
-                }
-
             }
-
-            .login_img {
-                display: none !important;
-            }
-
-            .logo_img_wrapper {
-                margin-top: 1rem !important;
-                margin-left: 0rem !important;
-                text-align: left !important;
-            }
-
-            .login_dec_wrapper {
-                text-align: left !important;
-                margin-top: 2rem !important;
-                margin-left: 0rem !important;
-            }
+           
         }
     }
 
-    .MuiInputBase-root {
-        border-radius: 8px !important;
-        width: 100% !important;
-        height: 2.8rem !important;
-    }
-
-    .buttoms_login {
-        font-size: 14px !important;
-        width: 100% !important;
-        height: 2.8rem !important;
-    }
 }

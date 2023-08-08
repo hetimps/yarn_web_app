@@ -1,10 +1,17 @@
+import { Provider } from "react-redux";
 import Router from "./router/Router.js";
+import { store } from "./Redux/Store.js";
+import Toasters from "./Comon_Components/Toasters.js";
 
 function App() {
   return (
-    <div>
-     <Router/>
-    </div>
+    <>
+      <Provider store={store}>
+        <Toasters/>
+        <Router />
+
+      </Provider>
+    </>
   );
 }
 
