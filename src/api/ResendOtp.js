@@ -1,24 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const LoginApi = createApi({
-  reducerPath: 'loginApi',
+export const ResendOtpApi = createApi({
+  reducerPath: 'ResendOtpApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api',
   }),
   endpoints: (builder) => ({
-    loginUser: builder.mutation({
+    resendOtp: builder.mutation({
       query: (body) => ({
-        url: '/user/login',
+        url: '/user/resend-otp',
         method: 'post',
         body,
       }),
-
     }),
-    
   }),
 });
 
-export const { useLoginUserMutation } = LoginApi;
+export const { useResendOtpMutation } = ResendOtpApi;
 
 
 

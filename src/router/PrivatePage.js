@@ -3,14 +3,17 @@ import { Navigate } from 'react-router'
 import { useLocation } from 'react-router-dom'
 
 export default function PrivatePage({ children }) {
-   
+
     const location = useLocation();
 
-    const {state} = location;
+    const { state } = location;
 
     console.log(state)
 
-    if (!state) {
+    const user = JSON.parse(localStorage.getItem("token"))
+    console.log(user)
+
+    if (!state && !user) {
         return <Navigate to="/Phonno" />
     }
     return (

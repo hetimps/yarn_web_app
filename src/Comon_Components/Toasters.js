@@ -10,7 +10,7 @@ export default function Toasters() {
         <>
             <Toaster toastOptions={{
 
-                duration: 10000,
+                // duration: 10000,
                 style: toasterStyles, success: {
                     iconTheme: {
                         primary: "#E89E46",

@@ -15,26 +15,29 @@ import Loader from "../Comon_Components/Loader";
 import CustomButtons from "../Comon_Components/CustomButtons";
 import { Regex } from "../constants/Regex";
 
-const defaultValue = {
-  phoneNumber: "",
-};
-
-
-const isValidLast10Digits = (value) => {
-  return Regex.mobile_no.test(value);
-};
-
-const validationSchema = Yup.object().shape({
-  phoneNumber: Yup.string()
-    .required(String.validation)
-    .test(String.validation, String.validation, (value) => {
-      const last10Digits = value.substr(2);
-      return isValidLast10Digits(last10Digits);
-    })
-});
 
 
 const PhonNo = () => {
+
+  const defaultValue = {
+    phoneNumber: "",
+  };
+
+
+  const isValidLast10Digits = (value) => {
+    return Regex.mobile_no.test(value);
+  };
+
+  const validationSchema = Yup.object().shape({
+    phoneNumber: Yup.string()
+      .required(String.required)
+      .test(String.validation, String.validation, (value) => {
+        const last10Digits = value.substr(2);
+        return isValidLast10Digits(last10Digits);
+      })
+  });
+
+
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
   const handleSubmit = async (values) => {
@@ -61,28 +64,30 @@ const PhonNo = () => {
       console.log(response)
       const status = response?.data?.statusCode;
       const message = response?.data?.message;
-      const loginOtp = response?.data?.result?.loginOtp;
-      const mobileNo = response?.data?.result?.mobileNo;
 
       if (status === 200) {
-        toast.success(`${message} ${loginOtp}`)
+        const loginOtp = response?.data?.result?.loginOtp;
+        const mobileNo = response?.data?.result?.mobileNo;
+        const countryCode = response?.data?.result?.countryCode;
+
+        toast.success(message)
 
         navigate("/Otp", {
           state: {
+            "countryCode": countryCode,
             "loginOtp": loginOtp,
             "mobileNo": mobileNo
           }
         })
       }
       else {
-        toast.error(`${message}`)
+        toast.error(message)
       }
     }
 
     catch (error) {
       console.log(error)
     }
-
   };
 
   return (
@@ -148,14 +153,15 @@ const PhonNo = () => {
                             country="in"
                             value={values.phoneNumber}
                             onChange={(value) => {
-                              // Use Formik's handleChange to update the field value and trigger validation
-                              handleChange("phoneNumber")(value);
+                              handleChange("phoneNumber")(value)
                             }}
                             searchable={true}
                             disableDropdown={true}
                           />
 
-                          <div className="error">{errors.phoneNumber}</div>
+                          {touched.phoneNumber && errors.phoneNumber && (
+                            <div className="error">{errors.phoneNumber}</div>
+                          )}
 
                         </Box>
                         <div className="btn-out">

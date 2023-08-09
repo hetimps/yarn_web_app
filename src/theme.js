@@ -12,5 +12,9 @@ import { createTheme } from '@mui/material';
     primary: {
       main: "#E89E46",
     },
+    MuiLink: {
+      fontFamily: 'Poppins, sans-serif', // Change to your desired font family for links
+    },
   },
+  
 });
