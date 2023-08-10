@@ -1,7 +1,7 @@
 
 import { Button} from '@mui/material'
 import React from 'react'
-import "../style/PhonNo.scss"
+import "../../style/PhonNo.scss"
 
 export default function CustomButtons({ button_name }) {
     const Button_style = {

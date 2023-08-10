@@ -11,8 +11,8 @@ import * as Yup from "yup";
 import { useLoginUserMutation } from "../api/PhonNumber";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Loader from "../Comon_Components/Loader";
-import CustomButtons from "../Comon_Components/CustomButtons";
+import Loader from '../Components/ComonComponent/Loader';
+import CustomButtons from "../Components/ComonComponent/CustomButtons";
 import { Regex } from "../constants/Regex";
 
 
@@ -127,7 +127,6 @@ const PhonNo = () => {
                     handleChange,
                     errors,
                     touched,
-                    isSubmitting,
                     handleSubmit
                   }) => (
                     <Form

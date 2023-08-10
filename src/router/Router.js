@@ -4,6 +4,8 @@ import PhonNo from '../pages/PhonNo';
 import Otp from '../pages/Otp';
 import PrivatePage from './PrivatePage';
 import UserInfor from '../pages/UserInfor';
+import Company from '../pages/Company';
+import Quality from '../pages/Quality';
 
 
 export default function Router() {
@@ -16,6 +18,8 @@ export default function Router() {
                 <Route path="/Otp" element={<PrivatePage><Otp /></PrivatePage>}></Route>
 
                 <Route path="/Userinformation" element={<PrivatePage><UserInfor /></PrivatePage>}></Route>
+                <Route path="/Company" element={<PrivatePage><Company /></PrivatePage>}></Route>
+                <Route path="/Quality" element={<PrivatePage><Quality /></PrivatePage>}></Route>
 
                 <Route path="/" element={<Navigate to="/Phonno" />} />
 

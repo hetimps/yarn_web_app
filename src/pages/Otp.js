@@ -5,13 +5,13 @@ import { Form, Formik } from 'formik';
 import Logo from "../assets/img/logo.svg";
 import { String } from "../constants/String";
 import Machin from "../assets/img/machin.svg";
-import CustomButtons from '../Comon_Components/CustomButtons';
+import CustomButtons from '../Components/ComonComponent/CustomButtons';
 import { MuiOtpInput } from 'mui-one-time-password-input'
 import OtpTimer from 'otp-timer'
 import * as Yup from "yup";
 import { useResendOtpMutation, useUserVerifyMutation } from '../api/Otp';
 import { toast } from 'react-hot-toast';
-import Loader from '../Comon_Components/Loader';
+import Loader from '../Components/ComonComponent/Loader';
 
 
 export function matchIsNumeric(text) {
@@ -162,6 +162,7 @@ export default function Otp() {
                                                         length={6}
                                                         validateChar={validateChar}
                                                         style={{ fontFamily: 'Poppins' }}
+                                                        
                                                     />
 
                                                     {touched.Otp && errors.Otp && (

@@ -1,0 +1,118 @@
+@import "./Color.js/color";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+}
+
+
+.login-container {
+
+    .login_pepar {
+
+        //form
+        .forms_container {
+
+            .main {
+
+                .login_filed {
+                    
+                 
+
+                    .user_btns {
+
+                        .user_btn {
+                            width: 100%;
+                            border-radius: 12px !important;
+                            font-family: $font-family ;
+                            background-color: $secondary;
+                            text-transform: capitalize !important;
+                            font-size: 15px !important;
+                            height: 3.1rem !important;
+                            margin-top: 1.5rem !important;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+// dialog
+.MuiFormHelperText-root{
+   
+}
+.dialog_container {
+
+
+    .MuiDialog-paper {
+        border-radius: 20px;
+        // width: 30%;
+        // padding:  1rem ;
+    }
+
+    .invite_dialog_tital {
+
+        display: flex;
+        justify-content: space-between;
+        font-family: $font-family !important;
+        font-size: 18px;
+        font-weight: 600;
+
+
+
+        .invite_dialog_tital_txt {
+
+            margin: auto;
+
+        }
+
+        .invite_dialog_close {
+            cursor: pointer;
+            margin-top: 0.5rem !important;
+            
+            font-size: 20px !important;
+        }
+
+    }
+
+
+    .invite_dialog_content {
+
+
+        .invite_form {
+            margin-top: 0.5rem;
+
+            .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+                border-color: $primary !important;
+            }
+
+            .invite_dialog_butto_container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 2rem;
+
+                .invite_dialog_button {
+                    font-family: $font-family;
+                    text-transform: capitalize;
+                    color: $white;
+                    border-radius: 12px;
+                    height: 2.9rem;
+                    width: 95%;
+                    font-size: 1rem;
+                    margin-bottom: 0.8rem !important;
+                }
+            }
+        }
+
+    }
+
+}

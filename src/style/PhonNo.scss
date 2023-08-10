@@ -10,20 +10,24 @@ body {
     font-family: $font-family;
 }
 
-.MuiInputBase-input{
-    font-family: $font-family !important ;
-  
-   
+.MuiInputBase-input {
+    font-family: $font-family !important;
+
 }
 
-.MuiOtpInput-Box{
-    :hover{
-    //    background-color: red !important;
-       border-color: pink !important;
-     
-    }
+
+.MuiInputBase-root {
+
+    border-radius: 12px !important;
+    height: 50px;
 }
 
+.MuiFormHelperText-root {
+    font-family: $font-family !important;
+    color: $primary !important;
+    // text-transform: capitalize;
+    font-weight: 800 !important;
+}
 
 .login-container {
 
@@ -82,6 +86,10 @@ body {
                 .login_filed {
                     width: 100%;
 
+                    .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+                        border-color: $primary !important;
+                    }
+
                     .phon_input {
                         margin: 2.5rem 0;
 
@@ -113,7 +121,7 @@ body {
                         }
 
                         //otp link
-                        .link{
+                        .link {
                             font-family: $font-family ;
                         }
                     }
@@ -124,6 +132,8 @@ body {
 }
 
 // custome_buttons
+
+
 
 .buttoms_login {
     font-family: $font-family !important;
@@ -155,18 +165,19 @@ body {
 
 @media (max-width: 1000px) {
 
-  
+
     .login-container {
-       background-image: none !important;
+        background-image: none !important;
         width: 100% !important;
 
         .login_pepar {
-            width: 100%;
+            width: 100% !important;
             height: 100vh;
             display: flex !important;
             align-items: center;
             justify-content: center;
-            border-radius: 00rem!important;
+            border-radius: 0rem !important;
+
 
             .login_img {
                 display: none;
@@ -178,7 +189,7 @@ body {
 @media (max-width: 700px) {
 
     .login-container {
- 
+
         .login_pepar {
             width: 100% !important;
             border-radius: 0rem !important;
@@ -186,14 +197,16 @@ body {
 
             .main {
                 width: 400px !important;
+
                 .login_tital {
                     font-size: 1.1rem !important;
                 }
+
                 .login_desc {
                     font-size: 0.9rem !important;
                 }
             }
-           
+
         }
     }
 
