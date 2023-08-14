@@ -1,10 +1,20 @@
 import { createTheme } from '@mui/material';
+
 // Create a custom theme
- export const theme = createTheme({
+export const theme = createTheme({
   components: {
-    MuiButtonBase: {
+
+    MuiButton: {
       defaultProps: {
         disableRipple: true,
+      },
+
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'Poppins, sans-serif',
+        },
       },
     },
   },
@@ -12,9 +22,5 @@ import { createTheme } from '@mui/material';
     primary: {
       main: "#E89E46",
     },
-    MuiLink: {
-      fontFamily: 'Poppins, sans-serif', // Change to your desired font family for links
-    },
   },
-  
 });

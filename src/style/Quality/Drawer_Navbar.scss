@@ -1,0 +1,323 @@
+@import "../Color.js/color";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.draewr_logo {
+    margin-top: 1.5rem;
+    margin-right: 3rem;
+}
+
+.draewr_item {
+    margin-top: 1.5rem !important;
+    margin-right: 2rem !important;
+
+
+    .draewr_dashboard_item {
+        border-radius: 0 30px 30px 0 !important;
+
+        &:hover {
+            background-color: $secondary;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 8px !important;
+                height: 100%;
+                background-color: $primary;
+                border-radius: 0px 30px 30px 0px !important;
+            }
+        }
+
+        .draewr_dashboard_icon {
+            color: $font_color;
+        
+        }
+
+        .draewr_dashboard_text {
+            // color: #2D3748;
+            font-weight: 600 !important;
+            margin-left: -0.5rem !important;
+        }
+    }
+}
+
+
+.draewr_dashboard_item:active .draewr_dashboard_icon {
+    color: $primary;
+}
+
+.draewr_dashboard_item:active .MuiTypography-root {
+    color: $primary;
+}
+
+.draewr_dashboard_item:hover .MuiButtonBase-root {
+    background-color: transparent !important;
+}
+
+.MuiTypography-root {
+    font-weight: 600 !important;
+    font-family: $font-family !important;
+    color: $font_color;
+}
+
+
+.draewr_dashboard_item.active {
+    background-color: $secondary;
+
+    /* Add other styles for the active effect */
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 8px !important;
+        height: 100%;
+        background-color: $primary;
+        border-radius: 0px 30px 30px 0px !important;
+    }
+
+    .draewr_dashboard_icon {
+        color: $primary;
+    }
+
+    .MuiTypography-root {
+        color: $primary;
+    }
+
+}
+
+// appbar
+
+
+// .css-i4bv87-MuiSvgIcon-root {
+//     font-size: 20px !important;
+// }
+
+.appbar_right_noti_icon {
+    height: 43px !important;
+    width: 43px !important;
+}
+
+.appbar {
+    background-color: $white !important;
+    padding-left: 2rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    box-shadow: 1px 1px 10px 1px $box-shadow !important;
+
+    .appbar_toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        .appbar_hading_box {
+            display: flex;
+            align-items: center;
+
+            .appbar_heading {
+                font-size: 1.3rem
+            }
+        }
+
+        .appbar_right_box {
+            display: flex;
+            align-items: center;
+
+            .appbar_search_right {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .appbar_search_button {
+                margin-left: 8px;
+            }
+
+            .appbar_search {
+                height: 50px;
+                width: 350px;
+                background-color: $background_color;
+
+                .appbar_search_button {
+                    height: 50px;
+
+                    box-shadow: none;
+                    border-radius: 0px 9px 9px 0px;
+
+                    &:hover {
+                        background-color: $primary;
+                    }
+                }
+
+                .appbar_search_icon {
+                    color: $box-shadow ;
+                }
+            }
+
+            .appbar_right_noti_icon {
+                color: $font_color;
+                margin-left: 0.5rem;
+                background-color: $secondary;
+            }
+
+
+
+            .menuitem_icon {
+                margin-left: 1rem !important;
+            }
+
+
+            .appbar_right_drop_icon {
+                color: $font_color;
+                &:hover {
+                    background-color: $white;
+                }
+            }
+
+
+
+            .appbar_avatar {
+                margin-left: 0.5rem;
+                background-color: $primary;
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+
+            .appbar_username {
+                margin-left: 0.5rem;
+                font-size: 1.1rem !important;
+            }
+
+
+
+            .menu_item {
+                font-weight: 600 !important;
+            }
+
+
+            .appbar_logout {
+                color: $font_color !important;
+                font-size: 23px !important;
+            }
+        }
+    }
+
+    .MuiInputBase-input {
+        padding-left: 1rem !important;
+    }
+
+    .appbar_hading {
+        font-weight: 600 !important;
+        align-items: center !important;
+    }
+}
+
+
+
+.dialog {
+
+    .dialog_wraper {
+        display: flex !important;
+        flex-direction: column;
+        // background-color: red;
+        align-items: center !important;
+        margin-top: -18px;
+
+
+        .dialog_tital {
+            margin-top: 15px !important;
+
+            .dialog_logout_icon {
+                color: $primary;
+                font-size: 4rem;
+                margin-bottom: -15px;
+
+            }
+        }
+
+        .dialog_tital_txt {
+            text-align: center !important;
+            font-weight: 600;
+            font-size: 20px !important;
+            font-family: $font-family;
+            margin-bottom: 3px;
+
+
+        }
+
+        .dialog_cancel {
+            color: $font_color !important;
+            border-color: $font_color !important;
+            font-family: $font-family !important;
+            text-transform: capitalize !important;
+            margin-top: -10px !important;
+            margin-bottom: 12px !important;
+            height: 2.6rem;
+
+
+
+        }
+
+        .dialog_yes {
+
+            text-transform: capitalize !important;
+            font-family: $font-family !important;
+            background-color: $primary;
+            color: $white !important;
+            box-shadow: none !important;
+            margin-top: -10px !important;
+            margin-bottom: 12px !important;
+            width: 80px !important;
+            height: 2.6rem;
+            margin-left: 0.5rem;
+        }
+    }
+
+    .MuiDialog-paper {
+        border-radius: 20px !important;
+        width: 400px;
+    }
+}
+
+// search
+.appbar_search_right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.appbar_search_button {
+    margin-left: 8px;
+}
+
+
+.appbar_search {
+    height: 50px;
+    width: 300px;
+    background-color: $background_color;
+
+    .appbar_search_button {
+        height: 50px;
+        box-shadow: none;
+        border-radius: 0px 9px 9px 0px;
+
+        &:hover {
+            background-color: $primary;
+        }
+    }
+
+    .appbar_search_icon {
+        color: $white ;
+    }
+}
+
+.MuiInputBase-input {
+    padding-left: 1rem !important;
+}

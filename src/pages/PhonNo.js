@@ -16,7 +16,6 @@ import CustomButtons from "../Components/ComonComponent/CustomButtons";
 import { Regex } from "../constants/Regex";
 
 
-
 const PhonNo = () => {
 
   const defaultValue = {

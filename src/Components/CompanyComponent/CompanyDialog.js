@@ -43,9 +43,7 @@ export default function CompanyDialog({ open, onClose }) {
         catch (error) {
             console.log(error)
         }
-
     }
-
 
     return (
         <>
@@ -55,15 +53,14 @@ export default function CompanyDialog({ open, onClose }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='dialog_container'>
-                <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
 
-                    <Box className="invite_dialog_tital_txt">
-                        {String.add_tital}
-                    </Box>
+                <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="invite_dialog_close" onClick={onClose} />
                     </Box>
-
+                    <Box className="invite_dialog_tital_txt">
+                        {String.add_tital}
+                    </Box>
                 </DialogTitle>
 
                 <DialogContent className='invite_dialog_content'>
@@ -75,7 +72,6 @@ export default function CompanyDialog({ open, onClose }) {
                             touched,
                         }) => (
                             <Form className='invite_form' >
-
                                 <TextField className="company_input"
                                     onChange={handleChange}
                                     value={values.companyName}
@@ -89,8 +85,7 @@ export default function CompanyDialog({ open, onClose }) {
                                         {String.add_button}
                                     </Button>)}
                                 </div>
-                            </Form>
-                        )}
+                            </Form>)}
                     </Formik>
                 </DialogContent>
             </Dialog>

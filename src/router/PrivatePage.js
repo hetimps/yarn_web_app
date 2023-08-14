@@ -6,16 +6,18 @@ export default function PrivatePage({ children }) {
 
     const location = useLocation();
 
-    const { state } = location;
+    const  state  = location?.state;
+    const mobile_no = state?.mobileNo;
+    const username = state?.username;
 
-    console.log(state)
 
     const user = JSON.parse(localStorage.getItem("token"))
-    console.log(user)
 
-    if (!state && !user) {
+
+    if (!mobile_no && !user && !username  ) {
         return <Navigate to="/Phonno" />
     }
+    
     return (
         <div>
             {children}

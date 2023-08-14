@@ -42,7 +42,13 @@ export default function UserInfor() {
 
       if (status === 200) {
         toast.success(message)
-        navigate("/Company")
+        const userName = response?.data?.result?.userName;
+       
+        navigate("/Company", {
+          state: {
+            "username": userName
+          }
+        })
 
       }
       else {

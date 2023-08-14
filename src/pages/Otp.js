@@ -67,15 +67,34 @@ export default function Otp() {
 
         try {
             const response = await verifyOtp(body);
-            console.log(response)
+            console.log("otp--", response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
 
             if (status === 200) {
                 const token = response?.data?.result?.token;
+                const username = response?.data?.result?.userName;
+                const companyid = response?.data?.result?.companyId;
+                const isCreatedCompany = response?.data?.result?.isCreatedCompany;
+                const isJoinedCompany = response?.data?.result?.isJoinedCompany;
+                const userName = response?.data?.result?.userName;
+               
+                console.log(companyid, "-----", username,)
                 localStorage.setItem("token", JSON.stringify(token));
+                localStorage.setItem("username", JSON.stringify(userName));
                 toast.success(message)
-                navigate("/Userinformation")
+                if (!username) {
+                    navigate("/Userinformation")
+                }
+                else if (!companyid) {
+                    navigate("/Company")
+                }
+                else if (isCreatedCompany) {
+                    navigate("/Quality")
+                }
+                else if (isJoinedCompany) {
+                    navigate("/Join")
+                }
             }
             else {
                 toast.error(message)
@@ -116,7 +135,7 @@ export default function Otp() {
             console.log(error)
         }
     };
- 
+
     return (
         <>
             <Box className="login-container" sx={{ flexGrow: 1 }}>
@@ -162,7 +181,7 @@ export default function Otp() {
                                                         length={6}
                                                         validateChar={validateChar}
                                                         style={{ fontFamily: 'Poppins' }}
-                                                        
+
                                                     />
 
                                                     {touched.Otp && errors.Otp && (
@@ -186,7 +205,7 @@ export default function Otp() {
                                                                     textColor={"#E89E46"}
                                                                     background={"white"}
                                                                     ButtonText={<Link className='link' href="#" underline="none">{String.resend}</Link>}
-                                                                    resend={() => ResendOtp(setFieldValue)}/>
+                                                                    resend={() => ResendOtp(setFieldValue)} />
                                                             </Box>
                                                         </>
                                                     )}

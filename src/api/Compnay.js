@@ -23,10 +23,17 @@ export const CompanyApi = createApi({
         body,
       }),
     }),
+    JoinCompany : builder.mutation({
+      query:(body)=>({
+        url: '/company/join-company',
+        method: 'post',
+        body,
+      })
+    })
   }),
 });
 
-export const { useAddCompanyMutation} = CompanyApi;
+export const { useAddCompanyMutation,useJoinCompanyMutation} = CompanyApi;
 
 
 

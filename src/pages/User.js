@@ -9,11 +9,11 @@ import QualityTable from '../Components/QualityComponent/QualityTable';
 import {DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
 
 
-export default function Quality() {
+export default function User() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBars haddings="Quality" />
+      <AppBars haddings="User" />
       <Drawers />
 
       <Main open={true}>

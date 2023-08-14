@@ -21,8 +21,8 @@ body {
             .main {
 
                 .login_filed {
-                    
-                 
+
+
 
                     .user_btns {
 
@@ -46,25 +46,28 @@ body {
 
 
 // dialog
-.MuiFormHelperText-root{
-   
-}
+.MuiFormHelperText-root {}
+
 .dialog_container {
 
 
     .MuiDialog-paper {
         border-radius: 20px;
         // width: 30%;
-        // padding:  1rem ;
+        padding: 0.5rem 0.5rem;
     }
 
     .invite_dialog_tital {
 
-        display: flex;
-        justify-content: space-between;
+       
+    
+ 
         font-family: $font-family !important;
         font-size: 18px;
         font-weight: 600;
+        margin-bottom: -10px !important;
+        margin-top: 5px !important;
+        
 
 
 
@@ -76,9 +79,15 @@ body {
 
         .invite_dialog_close {
             cursor: pointer;
-            margin-top: 0.5rem !important;
-            
+            // margin-top: 0.5rem !important;
             font-size: 20px !important;
+            position: absolute !important;
+            top: 0;
+            right: 0;
+           margin-right: 8px !important ;
+           margin-top: 5px !important ;
+     
+
         }
 
     }
@@ -98,7 +107,7 @@ body {
                 display: flex;
                 justify-content: center;
                 width: 100%;
-                margin-top: 2rem;
+                margin-top: 1.5rem;
 
                 .invite_dialog_button {
                     font-family: $font-family;
@@ -106,7 +115,7 @@ body {
                     color: $white;
                     border-radius: 12px;
                     height: 2.9rem;
-                    width: 95%;
+                    width: 100%;
                     font-size: 1rem;
                     margin-bottom: 0.8rem !important;
                 }
