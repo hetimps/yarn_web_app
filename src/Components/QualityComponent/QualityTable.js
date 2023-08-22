@@ -1,4 +1,4 @@
-import { Box, Button,  Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Search from '../ComonComponent/Search'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -9,6 +9,7 @@ import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import EditIcon from "@mui/icons-material/Edit";
 import { useGetQualityQuery } from '../../api/Quality'
 import Loader from '../ComonComponent/Loader'
+import { useNavigate } from 'react-router-dom'
 
 export default function QualityTable() {
 
@@ -23,6 +24,8 @@ export default function QualityTable() {
     const [ref, setRef] = useState(false);
 
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         setRef(true);
     }, []);
@@ -30,8 +33,9 @@ export default function QualityTable() {
     useEffect(() => {
         if (!ref) return;
         if (!isFetching) {
-            setTotal(data?.result?.totalCount)
+            setTotal(data?.result?.isTotalCount)
             if (page === 1) {
+                console.log("uuuuuuuuuuu", data?.result?.data)
                 setQualityData(data?.result?.data);
             } else {
                 setQualityData((prevData) => [...prevData, ...data?.result?.data]);
@@ -60,7 +64,7 @@ export default function QualityTable() {
         }
         setSortConfig({ columnName, direction });
     };
-    const sortedData = [...QualityData].sort((a, b) => {
+    const sortedData = QualityData ? [...QualityData].sort((a, b) => {
         if (sortConfig.columnName !== '') {
             const keyA = a[sortConfig.columnName];
             const keyB = b[sortConfig.columnName];
@@ -68,9 +72,14 @@ export default function QualityTable() {
             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
         }
         return 0;
-    });
+    }) : [];
+
+    console.log("89889889898989898989",sortedData)
 
 
+   const addQuality =()=>{
+    navigate("/Addquality")
+   }
     return (
         <>
             <div className='table_tital'>
@@ -96,7 +105,7 @@ export default function QualityTable() {
                             setpage={setPage} />
 
                     </Box>
-                    <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' >
+                    <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' onClick={addQuality} >
                         {String.add_quality}
                     </Button>
                 </div>
@@ -249,7 +258,7 @@ export default function QualityTable() {
                                     </Box>
                                 </TableCell>
                                 <TableCell className="table_border table_cell" >
-                                    <Box className="table_hading_cell" sx={{ marginTop: "-54px"}}   >
+                                    <Box className="table_hading_cell" sx={{ marginTop: "-54px" }}   >
                                         {String.action}
                                     </Box>
                                 </TableCell>
@@ -261,12 +270,11 @@ export default function QualityTable() {
 
                         {isFetching && page === 1 ? (<Box className="table_loading" >
                             <Loader />
-                        </Box>) : (!isFetching && sortedData?.length < 0) || (sortedData?.length <= 0 && search) ? (
+                        </Box>) : (!isFetching && sortedData?.length <= 0) || (sortedData?.length <= 0 && search) ? (
                             <Box className="table_loading" >
                                 {String.no_data_available}
                             </Box>
                         ) : (
-
                             <TableBody>
                                 {sortedData.map((row, index) => (
                                     <TableRow
@@ -278,41 +286,41 @@ export default function QualityTable() {
                                         }}
                                     >
                                         <TableCell className="table_border" component="th" scope="row">
-                                            {row.qualityName || '-'}
+                                            {row?.qualityName || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.qualityWeight || '-'}
+                                            {row?.qualityWeight || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.qualityCost || '-'}
+                                            {row?.qualityCost || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.TotalPick || '-'}
+                                            {row?.TotalPick || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.TotalBeamEnds || '-'}
+                                            {row?.TotalBeamEnds || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.TotalWidth || '-'}
+                                            {row?.TotalWidth || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.qualityName || '-'}
+                                            {row?.info?.gsm || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.weft.totalWeftWeight || '-'}
+                                            {row?.weft?.totalWeftWeight || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.weft.totalWeftCost || '-'}
+                                            {row?.weft?.totalWeftCost || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.warp.totalWarpWeight || '-'}
+                                            {row?.warp?.totalWarpWeight || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
-                                            {row.warp.totalWarpCost || '-'}
+                                            {row?.warp?.totalWarpCost || '-'}
                                         </TableCell>
                                         <TableCell className="table_border" align="left">
                                             <Box className="edit_icon" >
-                                                
+
                                                 <EditIcon onClick={console.log("hello24356")} />
                                             </Box>
 

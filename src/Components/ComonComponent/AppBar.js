@@ -1,7 +1,6 @@
-import { Avatar, Badge, Box, IconButton,  Toolbar, Typography } from '@mui/material'
+import { Avatar,  Box,   Toolbar, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import "../../style/Quality/Drawer_Navbar.scss"
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { useNavigate } from 'react-router';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Dialogs from './Dialogs';
@@ -16,7 +15,6 @@ export default function AppBars({ haddings }) {
         navigate('/Phonno');
         localStorage.removeItem("token")
         localStorage.removeItem("username")
-        
     };
 
     // dialog

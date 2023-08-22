@@ -10,6 +10,7 @@ import Join from '../pages/Join';
 import Profile from '../pages/Profile';
 import Yarn from '../pages/Yarn';
 import User from '../pages/User';
+import AddQuality from '../pages/AddQuality';
 
 
 export default function Router() {
@@ -26,7 +27,9 @@ export default function Router() {
                 <Route path="/Profile" element={<PrivatePage><Profile /></PrivatePage>}></Route>
                 <Route path="/Yarn" element={<PrivatePage><Yarn /></PrivatePage>}></Route>
                 <Route path="/User" element={<PrivatePage><User /></PrivatePage>}></Route>
+                <Route path="/Addquality" element={<PrivatePage><AddQuality/></PrivatePage>}></Route>
                 <Route path="*" element={<Navigate to="/Phonno" />} />
+
             </Routes>
         </BrowserRouter >
     )

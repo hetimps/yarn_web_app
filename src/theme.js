@@ -23,4 +23,9 @@ export const theme = createTheme({
       main: "#E89E46",
     },
   },
+  typography: {
+    fontFamily: ["Poppins", "sans-serif"].join(","),
+
+   
+  },
 });

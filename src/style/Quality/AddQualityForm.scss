@@ -1,0 +1,620 @@
+@import "../Color.js/color";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family;
+}
+
+.MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+    border-color: $primary !important;
+}
+
+
+.MuiList-root,
+.MuiList-padding,
+.MuiMenu-list,
+.css-6hp17o-MuiList-root-MuiMenu-list {
+    height: 300px !important;
+}
+
+
+.add_form {
+    margin-top: 1rem;
+
+    //heaqding
+
+    .add_heading {
+        display: flex;
+        align-items: center;
+
+
+
+        .add_arrow {
+            background-color: $secondary;
+            color: $primary;
+        }
+
+        .add_heading {
+
+            margin-left: 1rem;
+            font-size: 1.3rem;
+        }
+
+
+    }
+
+    //add_from_filed
+
+
+    .add_form_filed {
+        margin-top: 1rem;
+
+        .btn_weight {
+
+            font-weight: 500;
+            // background-color: $secondary;
+            border-color: $black;
+            font-family: $font-family;
+            color: $black;
+            text-transform: capitalize;
+            height: 2.5rem;
+
+        }
+
+        .btn_cost {
+
+            // background-color: $secondary;
+            border-color: $black;
+            color: $black;
+            font-family: $font-family;
+            text-transform: capitalize;
+            font-weight: 500;
+            height: 2.5rem;
+        }
+
+        //coman
+        .qulaity_wrap {
+            margin-top: 1rem;
+        }
+
+        .label {
+            font-family: $font-family ;
+            font-weight: 500;
+            color: $black;
+
+        }
+
+
+        .quality_input {
+            margin-top: 0.5rem;
+            width: 50%;
+        }
+
+        .add_form_btns {
+            margin-top: 1rem;
+
+            .btn_warp {
+                background-color: $secondary;
+                font-family: $font-family;
+                text-transform: capitalize;
+                font-weight: 600;
+                height: 2.5rem;
+                width: 15rem;
+            }
+
+            .btn_weft {
+                background-color: $secondary;
+                font-family: $font-family;
+                text-transform: capitalize;
+                font-weight: 600;
+                height: 2.5rem;
+                width: 15rem;
+
+            }
+
+            .error-text {
+                font-weight: 600;
+                color: $primary;
+                font-size: 0.75rem;
+                margin-top: 0.3rem;
+            }
+        }
+
+        .wrap_box {
+            display: flex;
+            flex-direction: row;
+
+            .box_content {
+                border: 1px dashed $primary;
+                border-radius: 20px;
+                margin-top: 10px;
+                display: flex;
+                flex-direction: column;
+                width: 20rem;
+                height: 8rem;
+                padding: 0.5rem;
+                margin-left: 0.3rem;
+
+                .heading_text {
+                    font-size: 14px;
+                    color: $lable-color;
+                    font-weight: 600 !important;
+                }
+
+                .heading1 {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+
+                .heading2 {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    border-bottom: 1px dashed $light-color;
+                }
+
+                .after_heading {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                    margin-top: 0.5rem;
+                }
+
+
+            }
+
+        }
+
+        .add_expense {
+            margin-top: 1rem;
+            display: flex;
+
+            .radios {
+                margin-top: -8px;
+                margin-left: 0.5rem;
+            }
+
+
+
+
+            .MuiFormControlLabel-label {
+                color: $font_color;
+                font-weight: 500 !important;
+            }
+        }
+
+
+        .add_expense_inputs {
+            margin-top: 0.5rem;
+
+            .expense_wrap {
+                display: flex;
+                align-items: center;
+            }
+
+        }
+
+
+        .add_production {
+            margin-top: 1rem;
+
+
+            .production_input_wrap {
+                margin-top: 1rem;
+                display: flex;
+                align-items: center;
+
+                .production_input {
+                    display: flex;
+                    align-items: center;
+                    width: 20%;
+
+
+
+                    // margin-right: 2rem;
+                }
+            }
+
+        }
+
+        .add_info {
+            margin-top: 2rem;
+
+
+
+            .info_label {
+                font-family: $font-family ;
+                font-weight: 600;
+                width: 200px;
+
+            }
+        }
+
+
+        .add_info_wrap {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+
+
+            .info_input {
+                display: flex;
+                align-items: center;
+                
+           
+
+                margin-right: 2rem;
+                justify-content: space-between;
+                width: 20%;
+
+               
+
+
+                .info_lable {
+                    font-family: $font-family ;
+                    font-weight: 600;
+                    // margin-right: 0.5rem;
+
+                }
+            }
+        }
+
+        .add_btn {
+            margin-top: 2rem;
+
+            .btn_save {
+                background-color: $primary;
+                color: $white;
+                text-transform: capitalize;
+                font-family: $font-family;
+                width: 9rem;
+                height: 2.7rem;
+                font-size: 16px;
+            }
+        }
+
+    }
+
+}
+
+// wrap
+
+.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.drawer {
+    position: relative;
+
+    .heading {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.9rem;
+        padding: 0 5px;
+        border-bottom: 1px dashed $font_color;
+    }
+
+    .close_icon {
+        cursor: pointer;
+    }
+
+    .from {
+        margin-top: 1rem;
+        padding: 00 10px;
+
+        .yarns_wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .yarn_select {
+                width: 93%;
+            }
+
+
+            .add_yarn {
+                color: $primary;
+                cursor: pointer;
+                font-size: 28px;
+            }
+
+        }
+
+        .company_wrap {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .company_menu {
+                font-family: $font-family !important;
+            }
+
+            .company_select {
+                width: 93%;
+            }
+
+            .add_company {
+                color: $primary;
+                cursor: pointer;
+                font-size: 28px;
+            }
+        }
+
+
+
+
+        .inputs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+
+
+        }
+
+        .btns {
+            right: 0;
+            bottom: 0;
+            position: absolute;
+            margin-bottom: 1rem;
+            margin-right: 1rem;
+            display: flex;
+            justify-content: space-between;
+
+            .btn_done {
+
+                background-color: $primary;
+                color: $white;
+                text-transform: capitalize;
+                font-family: $font-family;
+                // width: 100%;
+                height: 2.7rem;
+                font-size: 16px;
+                margin-top: 1rem;
+                width: 6rem !important;
+
+
+            }
+
+            .btn_cancel {
+                background-color: $white;
+                color: $font_color;
+                text-transform: capitalize;
+                font-family: $font-family;
+                border-color: $font_color;
+                height: 2.7rem;
+                font-size: 16px;
+                margin-top: 1rem;
+                width: 6rem !important;
+            }
+        }
+
+    }
+}
+
+
+//yarn
+.ydrawer {
+
+    .yheading {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.9rem;
+        padding: 0 5px;
+        border-bottom: 1px dashed $font_color;
+
+        .icons {
+            display: flex;
+
+
+            .add_icon {
+                color: $primary;
+                width: 30px;
+                cursor: pointer;
+            }
+
+            .close_icon {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+//add yarn
+
+.ydialog_container {
+
+    .invite_dialog_tital {
+
+        .ydialog_close {
+            cursor: pointer;
+            // margin-top: 0.5rem !important;
+            font-size: 20px !important;
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            margin-right: 8px !important;
+            margin-top: 5px !important;
+        }
+    }
+
+    .ydialog_content {
+
+        .label {
+            font-family: $font-family;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: $font_color;
+        }
+
+        .yratewrap {
+            margin-top: 1rem;
+        }
+
+    }
+
+    .btns {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+
+        .ycancel {
+            background-color: $white;
+            color: $font_color;
+            text-transform: capitalize;
+            font-family: $font-family;
+            border-color: $font_color;
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+            width: 6rem !important;
+
+        }
+
+        .yadd {
+            background-color: $primary;
+            color: $white;
+            text-transform: capitalize;
+            font-family: $font-family;
+
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+        }
+    }
+
+    .MuiDialog-paper {
+        border-radius: 20px !important;
+        width: 400px;
+    }
+
+}
+
+
+//add_company
+.cdialog_container {
+
+    .cadd_dialog_tital {
+
+        .cdialog_close {
+            cursor: pointer;
+            // margin-top: 0.5rem !important;
+            font-size: 20px !important;
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            margin-right: 8px !important;
+            margin-top: 5px !important;
+        }
+    }
+
+    .cdialog_content {
+
+        .label {
+            font-family: $font-family;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: $font_color;
+        }
+
+    }
+
+    .btns {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+
+        .ccancel {
+            background-color: $white;
+            color: $font_color;
+            text-transform: capitalize;
+            font-family: $font-family;
+            border-color: $font_color;
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+            width: 6rem !important;
+
+        }
+
+        .cadd {
+            background-color: $primary;
+            color: $white;
+            text-transform: capitalize;
+            font-family: $font-family;
+
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+        }
+    }
+
+    .MuiDialog-paper {
+        border-radius: 20px !important;
+        width: 400px;
+    }
+
+}
+
+
+//condialog
+.MuiDrawer-paperAnchorRight {
+    width: 500px !important;
+}
+
+.cdialog {
+
+    .cdialog_wraper {
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+
+        .cdialog_info {
+            text-align: center;
+
+        }
+
+    }
+
+
+    .cdialog_cancel {
+        color: $font_color !important;
+        border-color: $font_color !important;
+        font-family: $font-family !important;
+        text-transform: capitalize !important;
+        margin-top: -10px !important;
+        margin-bottom: 12px !important;
+        height: 2.6rem;
+    }
+
+    .cdialog_yes {
+        text-transform: capitalize !important;
+        font-family: $font-family !important;
+        background-color: $primary;
+        color: $white !important;
+        box-shadow: none !important;
+        margin-top: -10px !important;
+        margin-bottom: 12px !important;
+        width: 80px !important;
+        height: 2.6rem;
+        margin-left: 0.5rem;
+    }
+
+    .MuiDialog-paper {
+        border-radius: 20px !important;
+        width: 400px;
+    }
+
+}

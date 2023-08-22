@@ -43,6 +43,9 @@ export default function UserInfor() {
       if (status === 200) {
         toast.success(message)
         const userName = response?.data?.result?.userName;
+        
+        localStorage.setItem("username", JSON.stringify(userName));
+        
        
         navigate("/Company", {
           state: {

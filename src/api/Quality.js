@@ -17,17 +17,59 @@ export const QualityApi = createApi({
     }),
     endpoints: (builder) => ({
         GetQuality: builder.query({
-            query: ({page,limit,search}) => {
-                return {
-                    url: '/quality/getall-quality',
-                    params: {
-                        page,
-                        limit,
-                        search
-                      },
-                };
-            },
+            query: ({ page, limit, search }) => ({
+
+                url: '/quality/getall-quality',
+                params: {
+                    page,
+                    limit,
+                    search
+                },
+            }),
+            providesTags: ["Quality"],
         }),
+        AddQuality: builder.mutation({
+            query: (body) => ({
+                url: "/quality/create-quality",
+                method: 'post',
+                body,
+            }),
+            invalidatesTags: ["Quality"],
+        }),
+
+        AddYarn: builder.mutation({
+            query: (body) => ({
+                url: "/yarn/create-yarn",
+                method: 'post',
+                body,
+            }),
+            invalidatesTags: ["Yarn"],
+        }),
+
+        GetYarn: builder.query({
+            query: () => ({
+                url: '/yarn/getall-yarn',
+            }),
+            providesTags: ["Yarn"],
+        }),
+
+        GetCompany: builder.query({
+            query: () => ({
+                url: '/yarn-company/getall-yarn-company',
+            }),
+            providesTags: ["Company"],
+        }),
+
+        AddCompany: builder.mutation({
+            query: (body) => ({
+                url: "/yarn-company/create-yarn-company",
+                method: 'post',
+                body,
+            }),
+            invalidatesTags: ["Company"],
+        }),
+
     }),
 });
-export const { useGetQualityQuery } = QualityApi;
+
+export const { useGetQualityQuery, useAddQualityMutation, useAddYarnMutation, useGetYarnQuery, useGetCompanyQuery,useAddCompanyMutation } = QualityApi;
