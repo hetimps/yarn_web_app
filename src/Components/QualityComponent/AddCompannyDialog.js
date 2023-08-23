@@ -55,12 +55,12 @@ export default function AddCompannyDialog({ open, onClose }) {
                 aria-describedby="alert-dialog-description"
                 className='cdialog_container'>
 
-                <DialogTitle id="alert-dialog-title" className='cadd_dialog_tital'>
+                {/* <DialogTitle id="alert-dialog-title" className='cadd_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="cdialog_close" onClick={onClose} />
                     </Box>
 
-                </DialogTitle>
+                </DialogTitle> */}
 
                 <DialogContent className='cdialog_content'>
                     <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit} >

@@ -55,12 +55,12 @@ export default function AddYarnDialog({ open, onClose }) {
                 aria-describedby="alert-dialog-description"
                 className='ydialog_container'>
 
-                <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
+                {/* <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="ydialog_close" onClick={onClose} />
                     </Box>
 
-                </DialogTitle>
+                </DialogTitle> */}
 
                 <DialogContent className='ydialog_content'>
                     <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit} >

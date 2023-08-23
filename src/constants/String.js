@@ -100,8 +100,8 @@ export const String = {
     //add yarn 
     yadd: "add",
     ycancel: "cancel",
-    yarn_label: "yarn",
-    rate_label: "Rate",
+    yarn_label: "Yarn Name",
+    rate_label: "Yarn Rate",
     yarn_placeholder: "Enter Yarn Name",
     rate_placeholder: "Enter Yarn Rate",
     yarn_required: "Yarn name is required",
@@ -112,7 +112,7 @@ export const String = {
     //add company
     cadd: "Add",
     ccancel: "cancel",
-    clabel: "Compnay",
+    clabel: "Company Name",
     company_placeholder: "Enter Comapnay Name",
     company_required: "Company name is required",
     valid_compnay: "Enter valid company name",
@@ -142,7 +142,8 @@ export const String = {
     //weft drawer
 
     weft_heading: "Weft",
-    weft_heading_value: "W:00.00 | C:00.00",
+    dweight: "W : ",
+    dcost   : " C :",
 
     weftYarn_required: "Yarn name is required",
     weftCompany_required: "Compnay name is required",

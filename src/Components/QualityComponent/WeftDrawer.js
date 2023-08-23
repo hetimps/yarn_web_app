@@ -1,4 +1,4 @@
-import { Button, Drawer, FormHelperText, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close';
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
@@ -12,14 +12,45 @@ import AddCompannyDialog from './AddCompannyDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
-export default function WeftDrawer({  Width,setWidth,setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
+export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
 
+    let initialValues = {
+        weftCompany: "",
+        weftYarn: "",
+        weftWeight: "",
+        weftCost: "",
+        weftDeniar: "",
+        weftPick: "",
+        weftWidth: "",
+        weftWastage: "",
+        weftYarnRate: "",
+        tpm: "",
+        wefYarnName: "",
+        wefCompnayName: "",
+    };
 
+    if (editweftData.index !== undefined && weftData[editweftData.index]) {
+        initialValues = weftData[editweftData.index];
+    }
+    else {
+        initialValues = {
+            weftCompany: "",
+            weftYarn: "",
+            weftWeight: "",
+            weftCost: "",
+            weftDeniar: "",
+            weftPick: "",
+            weftWidth: "",
+            weftWastage: "",
+            weftYarnRate: "",
+            tpm: "",
+            wefYarnName: "",
+            wefCompnayName: "",
+        };
+    }
 
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
-
-
     const handleCloseAddYarn = () => {
         setOpenAdd(false);
     };
@@ -29,7 +60,6 @@ export default function WeftDrawer({  Width,setWidth,setPickSum, pickSum, setwef
 
     //   add company
     const [openAddCompnay, setOpenAddCompnay] = useState(false);
-
     const handleCloseAddCompany = () => {
         setOpenAddCompnay(false);
     };
@@ -37,29 +67,10 @@ export default function WeftDrawer({  Width,setWidth,setPickSum, pickSum, setwef
         setOpenAddCompnay(true);
     };
 
-    const { data: YarnData } = useGetYarnQuery();
 
+    const { data: YarnData } = useGetYarnQuery();
     const { data: CompanyData } = useGetCompanyQuery();
 
-
-
-    console.log(YarnData?.result)
-
-    const defaultValue = {
-        weftCompany: "",
-        weftYarn: "",
-        weftWeight:"",
-        weftCost:"",
-        weftDeniar: "",
-        weftPick: "",
-        weftWidth: "",
-        weftWastage: "",
-        weftYarnRate: "",
-        tpm: "",
-        wefYarnName: "",
-        wefCompnayName: "",
-
-    };
 
     const validationSchema = Yup.object().shape({
         weftYarn: Yup.string().required(String.weftYarn_required),
@@ -74,238 +85,298 @@ export default function WeftDrawer({  Width,setWidth,setPickSum, pickSum, setwef
 
     const calculation = async (values) => {
         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
-
         const cost = Number((value * values.weftYarnRate).toFixed(2));
-
-
-
         const weight = Number((value * 100).toFixed(2));
-
-
         const pick = Number(values.weftPick)
-
         const width = Number(values.weftWidth)
-
         values.weftWeight = weight
         values.weftCost = cost
-
-
-
-
         setweftSumCost([...weftSumCost, cost])
         setweftSumweight([...weftSumweight, weight])
-        setPickSum([...pickSum,pick])
-        setWidth([...Width,width])
-       
-    
-
+        setPickSum([...pickSum, pick])
+        setWidth([...Width, width])
     }
 
     const handleSubmit = async (values) => {
-        console.log(values, "weft value")
 
 
-        setweftData([...weftData, values])
-        // values.tpm = parseFloat(values.tpm);
-        
+        if (editweftData.index !== undefined) {
+            const updatedWeftData = [...weftData];
+            updatedWeftData[editweftData.index] = values;
+            setweftData(updatedWeftData);
+        } else {
+            setweftData([...weftData, values]);
+        }
+
 
         calculation(values);
+
+        if (editweftData.index !== undefined) {
+            editweftData.index = undefined
+        }
         toggleDrawerWeft();
+    }
+
+    const toggleDrawerWefts = () => {
+        toggleDrawerWeft();
+        if (editweftData.index !== undefined) {
+            editweftData.index = undefined
+        }
     }
 
     return (
         <>
-            <Drawer anchor="right" open={isDrawerOpenWeft}  className='drawer'>
+            <Drawer transitionDuration={1000} anchor="right" open={isDrawerOpenWeft} className='drawer'>
 
-                <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit}  >
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}  >
                     {({
                         values,
                         handleChange,
                         errors,
                         touched,
-                        setFieldValue
-                    }) => (
-                        <Form>
-                            <div className='heading' >
+                        setFieldValue,
+                        setFieldError,
+                        setFieldTouched
+                    }) => {
 
-                                <div >
+                        const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
 
-                                    <Typography
-                                        className="heading_text"
-                                        variant="span"
-                                        component="span">
-                                        {String.weft_heading}
-                                    </Typography>
+                        const cost = Number((value * values.weftYarnRate).toFixed(2));
 
-                                </div>
+                        const weight = Number((value * 100).toFixed(2));
 
-                                <div>
-                                    <Typography
-                                        className="heading_text"
-                                        variant="span"
-                                        component="span">
-                                        {String.weft_heading_value}
-                                    </Typography>
-                                </div>
+                        return (
 
-                                <div onClick={toggleDrawerWeft} className='close_icon'>
-                                    <CloseIcon />
-                                </div>
+                            <Form >
+                                <div className='heading' >
 
-                            </div>
+                                    <div >
 
+                                        <Typography
+                                            className="heading_text"
+                                            variant="span"
+                                            component="span">
+                                            {String.weft_heading}
+                                        </Typography>
 
+                                    </div>
 
-                            <div className='from'>
+                                    <div>
+                                        <Typography
+                                            className="heading_text"
+                                            variant="span"
+                                            component="span">
+                                            {String.dweight}${weight} | {String.weft_cost}{cost}
+                                        </Typography>
+                                    </div>
 
-
-                                <div className='yarns_wrap'>
-
-
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        name='weftYarn'
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            const selectedYarnId = e.target.value;
-                                            const selectedYarn = YarnData?.result?.find(yarnItem => yarnItem._id === selectedYarnId);
-                                            setFieldValue('weftYarnRate', selectedYarn?.yarnRate || '');
-                                            setFieldValue("wefYarnName", selectedYarn?.yarnName || "")
-
-                                            // Clear the error for the warpYarn field
-                                            if (selectedYarnId) {
-                                                setFieldValue('weftYarn', selectedYarnId);
-                                            } else {
-                                                setFieldValue('weftYarn', ''); // Reset the selected value
-                                            }
-                                        }}
-                                        value={values.weftYarn}
-                                        error={touched.weftYarn && Boolean(errors.weftYarn)}
-                                        className='yarn_select'
-                                        displayEmpty
-
-                                    >
-                                        <MenuItem value="" disabled sx={{display:"none"}}>
-                                            {String.select_yarn}
-                                        </MenuItem>
-                                        {YarnData?.result?.map((yarnItem) => (
-                                            <MenuItem className='yarn_menu' key={yarnItem?.id} value={yarnItem?._id} sx={{ display: "flex", justifyContent: "space-between" }}>
-                                                <div>
-                                                    {yarnItem?.yarnName}
-                                                </div>
-                                                <div>
-                                                    {`${yarnItem?.yarnRate} ₹`}
-                                                </div>
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-
-                                    <AddCircleOutlineIcon className='add_yarn' onClick={handleOpenAddYarn} />
+                                    <div onClick={toggleDrawerWefts} className='close_icon'>
+                                        <CloseIcon />
+                                    </div>
 
                                 </div>
 
 
-                                <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftYarn && errors.weftYarn}</FormHelperText>
+
+                                <div className='from'>
+
+
+                                    <div className='yarns_wrap'>
+
+                                        <FormControl fullWidth>
+                                            <Autocomplete
+                                                sx={{ width: "98%" }}
+                                                id='weftYarn'
+                                                name='weftYarn'
+                                                options={YarnData?.result || []}
+                                                getOptionLabel={(option) => option ? `${option.yarnName} - ${option.yarnRate} ₹` : ''}
+                                                value={YarnData?.result?.find((yarnItem) => yarnItem._id === values.weftYarn) || null}
+                                                onChange={(e, newValue) => {
+                                                    if (newValue) {
+                                                        setFieldValue('weftYarn', newValue._id || '');
+                                                        setFieldValue('weftYarnRate', newValue.yarnRate || '');
+                                                        setFieldValue('wefYarnName', newValue.yarnName || '');
+                                                        setFieldTouched('weftYarn', false); // Reset the touched state
+                                                        setFieldError('weftYarn', ''); // Reset the error message
+                                                    } else {
+                                                        setFieldValue('weftYarn', '');
+                                                        setFieldValue('weftYarnRate', '');
+                                                        setFieldValue('wefYarnName', '');
+                                                        setFieldTouched('weftYarn', true); // Mark the field as touched
+                                                        setFieldError('weftYarn', String.weftYarn_required); // Set the error message
+                                                    }
+                                                }}
+                                                renderOption={(props, yarnItem) => (
+                                                    <MenuItem
+                                                        {...props}
+                                                        className='yarn_menu'
+                                                        key={yarnItem?._id}
+                                                        value={yarnItem?._id}
+                                                        sx={{ display: "flex", justifyContent: "space-between" }}
+                                                    >
+                                                        <div>
+                                                            {yarnItem?.yarnName}
+                                                        </div>
+                                                        <div>
+                                                            {`${yarnItem?.yarnRate} ₹`}
+                                                        </div>
+                                                    </MenuItem>
+                                                )}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        label={String.select_yarn}
+                                                        variant='outlined'
+                                                    />
+                                                )}
+                                            />
+                                        </FormControl>
+
+
+
+                                        <IconButton className='add_icon' onClick={handleOpenAddYarn}>
+                                            <AddCircleOutlineIcon className='add_yarn' />
+                                        </IconButton>
+                                    </div>
+
+
+                                    <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftYarn && errors.weftYarn}</FormHelperText>
 
 
 
 
-                                <div className='company_wrap'>
+                                    <div className='company_wrap'>
+
+                                        <FormControl fullWidth>
+                                            <Autocomplete
+                                                sx={{ width: "98%" }}
+                                                id='weftCompany'
+                                                name='weftCompany'
+                                                options={CompanyData?.result || []}
+                                                getOptionLabel={(option) => option?.yarnCompanyName || ''}
+                                                value={CompanyData?.result?.find((company) => company._id === values.weftCompany) || null}
+                                                onChange={(e, newValue) => {
+                                                    if (newValue) {
+                                                        setFieldValue('weftCompany', newValue._id || '');
+                                                        setFieldValue('wefCompnayName', newValue.yarnCompanyName || '');
+                                                        setFieldTouched('weftCompany', false);
+                                                        setFieldError('weftCompany', '');
+                                                    } else {
+                                                        setFieldValue('weftCompany', '');
+                                                        setFieldValue('wefCompnayName', '');
+                                                        setFieldTouched('weftCompany', true);
+                                                        setFieldError('weftCompany', String.select_company);
+                                                    }
+                                                }}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        {...params}
+                                                        label={String.select_company}
+                                                        variant='outlined'
+                                                    />
+                                                )}
+                                            />
+                                        </FormControl>
 
 
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        name='weftCompany'
+                                        <IconButton className='add_icon'>
+                                            <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
+                                        </IconButton>
 
-                                        onChange={(e) => {
+                                    </div>
+                                    <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftCompany && errors.weftCompany}</FormHelperText>
 
-
-
-                                            handleChange(e);
-                                            const selectedCompanyId = e.target.value;
-                                            const selectedCompay = CompanyData?.result?.find(Company => Company._id === selectedCompanyId);
-
-                                            setFieldValue("wefCompnayName", selectedCompay?.yarnCompanyName || "")
+                                    <div className='input_all'>
 
 
+                                        <div className='inputs'>
 
-                                            if (selectedCompanyId) {
-                                                setFieldValue('weftCompany', selectedCompanyId);
-                                            } else {
-                                                setFieldValue('weftCompany', '');
-                                            }
-                                        }}
 
-                                        value={values.weftCompany}
-                                        error={touched.weftCompany && Boolean(errors.weftCompany)}
-                                        className='company_select'
-                                        displayEmpty
+                                            <InputLabel className="drawer_label" >
+                                                {String.weftDeniar_placeholder}
+                                            </InputLabel>
 
-                                    >
-                                        <MenuItem value="" disabled sx={{display:"none"}}>
-                                            {String.select_company}
-                                        </MenuItem>
-                                        {CompanyData?.result?.map((Company) => (
-                                            <MenuItem className='company_menu' key={Company?._id} value={Company?._id}  >
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.weftDeniar}
+                                                error={touched.weftDeniar && Boolean(errors.weftDeniar)}
+                                                helperText={touched.weftDeniar && errors.weftDeniar} placeholder={String.weftDeniar_placeholder} name="weftDeniar" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
 
-                                                {Company?.yarnCompanyName}
+                                        </div>
 
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
+                                        <div className='inputs'>
+                                            <InputLabel className="drawer_label" >
+                                                {String.weftPick_placeholder}
+                                            </InputLabel>
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.weftPick}
+                                                error={touched.weftPick && Boolean(errors.weftPick)}
+                                                helperText={touched.weftPick && errors.weftPick} placeholder={String.weftPick_placeholder} name="weftPick" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
+                                        </div>
 
-                                    <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
+                                        <div className='inputs'>
+                                            <InputLabel className="drawer_label" >
+                                                {String.weftWidth_placeholder}
+                                            </InputLabel>
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.weftWidth}
+                                                error={touched.weftWidth && Boolean(errors.weftWidth)}
+                                                helperText={touched.weftWidth && errors.weftWidth} placeholder={String.weftWidth_placeholder} name="weftWidth" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
 
+                                        </div>
+
+                                        <div className='inputs'>
+                                            <InputLabel className="drawer_label" >
+                                                {String.weftYarnRate_placeholder}
+                                            </InputLabel>
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.weftYarnRate}
+                                                error={touched.weftYarnRate && Boolean(errors.weftYarnRate)}
+                                                helperText={touched.weftYarnRate && errors.weftYarnRate} placeholder={String.weftYarnRate_placeholder} name="weftYarnRate" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
+                                        </div>
+
+                                        <div className='inputs'>
+                                            <InputLabel className="drawer_label" >
+                                                {String.weftWastage_placeholder}
+                                            </InputLabel>
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.weftWastage}
+                                                error={touched.weftWastage && Boolean(errors.weftWastage)}
+                                                helperText={touched.weftWastage && errors.weftWastage} placeholder={String.weftWastage_placeholder} name={"weftWastage"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
+
+
+                                        </div>
+
+                                        <div className='inputs'>
+                                            <InputLabel className="drawer_label" >
+                                                {String.wefttpm_yarn}
+                                            </InputLabel>
+                                            <TextField onChange={handleChange}
+                                                className='input'
+                                                value={values.tpm}
+                                                error={touched.tpm && Boolean(errors.tpm)}
+                                                helperText={touched.tpm && errors.tpm} placeholder={String.wefttpm_yarn} name={"tpm"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
+                                        </div>
+
+
+
+                                        <div className='btns'>
+                                            <Stack direction="row" spacing={1}>
+
+                                                <Button onClick={toggleDrawerWefts} className='btn_cancel' variant="outlined">{String.warp_Cancel}</Button>
+                                                <Button className='btn_done' type='submit' variant="contained">{String.warp_done}</Button>
+
+                                            </Stack>
+                                        </div>
+                                    </div>
                                 </div>
-                                <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftCompany && errors.weftCompany}</FormHelperText>
-
-
-                                <div className='inputs'>
-
-                                    <TextField onChange={handleChange}
-                                        value={values.weftDeniar}
-                                        error={touched.weftDeniar && Boolean(errors.weftDeniar)}
-                                        helperText={touched.weftDeniar && errors.weftDeniar} placeholder={String.weftDeniar_placeholder} name="weftDeniar" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-                                    <TextField onChange={handleChange}
-                                        value={values.weftPick}
-                                        error={touched.weftPick && Boolean(errors.weftPick)}
-                                        helperText={touched.weftPick && errors.weftPick} placeholder={String.weftPick_placeholder} name="weftPick" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-                                </div>
-                                <div className='inputs'>
-                                    <TextField onChange={handleChange}
-                                        value={values.weftWidth}
-                                        error={touched.weftWidth && Boolean(errors.weftWidth)}
-                                        helperText={touched.weftWidth && errors.weftWidth} placeholder={String.weftWidth_placeholder} name="weftWidth" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-                                    <TextField onChange={handleChange}
-                                        value={values.weftYarnRate}
-                                        error={touched.weftYarnRate && Boolean(errors.weftYarnRate)}
-                                        helperText={touched.weftYarnRate && errors.weftYarnRate} placeholder={String.weftYarnRate_placeholder} name="weftYarnRate" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-                                </div>
-                                <div className='inputs'>
-                                    <TextField onChange={handleChange}
-                                        value={values.weftWastage}
-                                        error={touched.weftWastage && Boolean(errors.weftWastage)}
-                                        helperText={touched.weftWastage && errors.weftWastage} placeholder={String.weftWastage_placeholder} name={"weftWastage"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-
-                                    <TextField onChange={handleChange}
-                                        value={values.tpm}
-                                        error={touched.tpm && Boolean(errors.tpm)}
-                                        helperText={touched.tpm && errors.tpm} placeholder={String.wefttpm_yarn} name={"tpm"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-                                </div>
-
-
-
-                                <div className='btns'>
-                                    <Stack direction="row" spacing={1}>
-                                        <Button className='btn_done' type='submit' variant="contained">{String.warp_done}</Button>
-                                        <Button onClick={toggleDrawerWeft} className='btn_cancel' variant="outlined">{String.warp_Cancel}</Button>
-                                    </Stack>
-                                </div>
-
-                            </div>
-                        </Form>)}
+                            </Form>
+                        )
+                    }}
                 </Formik>
             </Drawer>
 

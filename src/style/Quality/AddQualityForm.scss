@@ -19,269 +19,308 @@ body {
 .MuiList-padding,
 .MuiMenu-list,
 .css-6hp17o-MuiList-root-MuiMenu-list {
-    height: 300px !important;
+    max-height: 300px !important;
 }
+
+
 
 
 .add_form {
     margin-top: 1rem;
 
     //heaqding
-
     .add_heading {
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
-
-
-        .add_arrow {
-            background-color: $secondary;
-            color: $primary;
-        }
-
-        .add_heading {
-
-            margin-left: 1rem;
-            font-size: 1.3rem;
-        }
-
-
-    }
-
-    //add_from_filed
-
-
-    .add_form_filed {
-        margin-top: 1rem;
-
-        .btn_weight {
-
-            font-weight: 500;
-            // background-color: $secondary;
-            border-color: $black;
-            font-family: $font-family;
-            color: $black;
-            text-transform: capitalize;
-            height: 2.5rem;
-
-        }
-
-        .btn_cost {
-
-            // background-color: $secondary;
-            border-color: $black;
-            color: $black;
-            font-family: $font-family;
-            text-transform: capitalize;
-            font-weight: 500;
-            height: 2.5rem;
-        }
-
-        //coman
-        .qulaity_wrap {
-            margin-top: 1rem;
-        }
-
-        .label {
-            font-family: $font-family ;
-            font-weight: 500;
-            color: $black;
-
-        }
-
-
-        .quality_input {
-            margin-top: 0.5rem;
-            width: 50%;
-        }
-
-        .add_form_btns {
-            margin-top: 1rem;
-
-            .btn_warp {
-                background-color: $secondary;
-                font-family: $font-family;
-                text-transform: capitalize;
-                font-weight: 600;
-                height: 2.5rem;
-                width: 15rem;
-            }
-
-            .btn_weft {
-                background-color: $secondary;
-                font-family: $font-family;
-                text-transform: capitalize;
-                font-weight: 600;
-                height: 2.5rem;
-                width: 15rem;
-
-            }
-
-            .error-text {
-                font-weight: 600;
-                color: $primary;
-                font-size: 0.75rem;
-                margin-top: 0.3rem;
-            }
-        }
-
-        .wrap_box {
-            display: flex;
-            flex-direction: row;
-
-            .box_content {
-                border: 1px dashed $primary;
-                border-radius: 20px;
-                margin-top: 10px;
-                display: flex;
-                flex-direction: column;
-                width: 20rem;
-                height: 8rem;
-                padding: 0.5rem;
-                margin-left: 0.3rem;
-
-                .heading_text {
-                    font-size: 14px;
-                    color: $lable-color;
-                    font-weight: 600 !important;
-                }
-
-                .heading1 {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                }
-
-                .heading2 {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                    border-bottom: 1px dashed $light-color;
-                }
-
-                .after_heading {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                    margin-top: 0.5rem;
-                }
-
-
-            }
-
-        }
-
-        .add_expense {
-            margin-top: 1rem;
-            display: flex;
-
-            .radios {
-                margin-top: -8px;
-                margin-left: 0.5rem;
-            }
-
-
-
-
-            .MuiFormControlLabel-label {
-                color: $font_color;
-                font-weight: 500 !important;
-            }
-        }
-
-
-        .add_expense_inputs {
-            margin-top: 0.5rem;
-
-            .expense_wrap {
-                display: flex;
-                align-items: center;
-            }
-
-        }
-
-
-        .add_production {
-            margin-top: 1rem;
-
-
-            .production_input_wrap {
-                margin-top: 1rem;
-                display: flex;
-                align-items: center;
-
-                .production_input {
-                    display: flex;
-                    align-items: center;
-                    width: 20%;
-
-
-
-                    // margin-right: 2rem;
-                }
-            }
-
-        }
-
-        .add_info {
-            margin-top: 2rem;
-
-
-
-            .info_label {
-                font-family: $font-family ;
-                font-weight: 600;
-                width: 200px;
-
-            }
-        }
-
-
-        .add_info_wrap {
-            margin-top: 1rem;
+        .first_heading {
             display: flex;
             align-items: center;
-            width: 100%;
 
 
-            .info_input {
-                display: flex;
-                align-items: center;
-                
-           
-
-                margin-right: 2rem;
-                justify-content: space-between;
-                width: 20%;
-
-               
+            .add_arrow {
+                background-color: $primary;
+                color: $white;
 
 
-                .info_lable {
-                    font-family: $font-family ;
-                    font-weight: 600;
-                    // margin-right: 0.5rem;
-
+                .add_qicon {
+                    font-size: 20px;
                 }
+
+            }
+
+            .add_tital {
+
+                margin-left: 1rem;
+                font-size: 1.3rem;
+            }
+
+        }
+
+        .second_heading {
+            .btn_weight {
+                font-weight: 600;
+                background-color: $button_color;
+                border-color: $black;
+                font-family: $font-family;
+                color: $black;
+                text-transform: capitalize;
+                height: 2.5rem;
+                width: 8.5rem;
+            }
+
+            .btn_cost {
+                background-color: $button_color;
+                border-color: $black;
+                color: $black;
+                font-family: $font-family;
+                text-transform: capitalize;
+                font-weight: 600;
+                height: 2.5rem;
+                width: 8.5rem;
             }
         }
 
         .add_btn {
-            margin-top: 2rem;
-
             .btn_save {
                 background-color: $primary;
                 color: $white;
                 text-transform: capitalize;
                 font-family: $font-family;
-                width: 9rem;
-                height: 2.7rem;
+                width: 6rem;
                 font-size: 16px;
+                height: 2.5rem;
             }
         }
-
     }
 
+
+
+    //from
+
+    .from_paper {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 1.2rem;
+        margin-top: 1.3rem;
+        border-radius: 30px;
+
+        .add_form_filed {
+
+            .label {
+                font-family: $font-family ;
+                font-weight: 500;
+                color: $black;
+
+            }
+
+            .quality_input {
+                margin-top: 0.5rem;
+                width: 50%;
+            }
+
+
+
+
+
+
+            .add_form_btns {
+                margin-top: 1rem;
+
+
+                .btn_warp {
+                    color: $black;
+                    font-family: $font-family;
+                    text-transform: capitalize;
+                    font-weight: 500;
+                    height: 2.5rem;
+                    width: 16rem;
+                    font-size: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100;
+
+                    .css-9tj150-MuiButton-endIcon {
+                        margin-right: -15px
+                    }
+
+                    .add_waicons {
+
+                        background-color: $primary;
+                        color: $white !important;
+
+                        .add_waicons_button {
+                            color: white;
+                        }
+
+                    }
+                }
+
+                .btn_weft {
+                    color: $black;
+                    font-family: $font-family;
+                    text-transform: capitalize;
+                    font-weight: 500;
+                    height: 2.5rem;
+                    width: 16rem;
+                    font-size: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100;
+
+                    .css-9tj150-MuiButton-endIcon {
+                        margin-right: -15px
+                    }
+
+                    .add_weicons {
+
+                        background-color: $primary;
+                        color: $white !important;
+
+                        .add_weicons_button {
+                            color: white;
+                        }
+
+                    }
+
+                }
+
+                .error-text {
+                    font-weight: 600;
+                    color: $primary;
+                    font-size: 0.75rem;
+                    margin-top: 0.3rem;
+                }
+            }
+
+            .wrap_box {
+                display: flex;
+                flex-direction: row;
+
+                .box_content {
+                    border: 1px dashed $primary;
+                    border-radius: 20px;
+                    margin-top: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    width: 20rem;
+                    height: 8rem;
+                    padding: 0.5rem;
+                    margin-left: 0.3rem;
+
+                    .heading_text {
+                        font-size: 14px;
+                        color: $lable-color;
+                        font-weight: 600 !important;
+                    }
+
+                    .heading1 {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                    }
+
+                    .heading2 {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        border-bottom: 1px dashed $light-color;
+                    }
+
+                    .after_heading {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        margin-top: 0.5rem;
+                    }
+
+
+                }
+
+            }
+
+            .expense_pepar {
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                border-radius: 10px;
+
+                .add_expense {
+
+                    .costs {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+
+                        .cost_label {
+                            margin-top: 0.2rem;
+                            font-weight: 600 !important;
+
+                        }
+
+                        .expense_radios {
+
+
+                            .radios {
+                                margin-top: 0.2rem;
+                            }
+                        }
+
+                        .expense_wraps {
+                            display: flex;
+                            align-items: center;
+
+                        }
+                    }
+
+
+                    .MuiFormControlLabel-label {
+                        color: $font_color;
+                        font-weight: 500 !important;
+                    }
+                }
+            }
+
+            .productions_pepar {
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                border-radius: 10px;
+
+                .add_production {
+
+                    .production_input_wrap {
+                        margin-top: 1rem;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                }
+            }
+
+
+            .info_pepar {
+                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                padding: 0.5rem;
+                margin-top: 0.5rem;
+                border-radius: 10px;
+
+                .add_info {
+                    .add_info_wrap {
+                        margin-top: 1rem;
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+
+                        .info_input {
+                            align-items: center;
+                            justify-content: space-between;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 // wrap
@@ -316,15 +355,23 @@ body {
             justify-content: space-between;
 
             .yarn_select {
-                width: 93%;
+                width: 98%;
             }
 
 
-            .add_yarn {
-                color: $primary;
-                cursor: pointer;
-                font-size: 28px;
+            .add_icon {
+                background-color: $primary;
+                border-radius: 7px;
+
+                .add_yarn {
+                    color: $white;
+                    cursor: pointer;
+                    font-size: 28px;
+
+                }
             }
+
+
 
         }
 
@@ -339,26 +386,47 @@ body {
             }
 
             .company_select {
-                width: 93%;
+                width: 98%;
             }
 
-            .add_company {
-                color: $primary;
-                cursor: pointer;
-                font-size: 28px;
+            .add_icon {
+                background-color: $primary;
+                border-radius: 7px;
+
+                .add_company {
+                    color: $white;
+                    cursor: pointer;
+                    font-size: 28px;
+                }
             }
+
+
         }
 
 
-
-
-        .inputs {
-            display: flex;
-            justify-content: space-between;
+        .input_all {
             margin-top: 1rem;
 
+            .inputs {
 
+
+                margin-top: 0.8rem;
+
+                .drawer_label {
+                    font-weight: 500;
+                    color: $black;
+                    margin-bottom: 0.2rem;
+                    margin-left: 0.3rem;
+                }
+
+                .input {
+                    width: 100%;
+
+                }
+
+            }
         }
+
 
         .btns {
             right: 0;
@@ -380,7 +448,6 @@ body {
                 font-size: 16px;
                 margin-top: 1rem;
                 width: 6rem !important;
-
 
             }
 
