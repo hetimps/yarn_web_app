@@ -1,5 +1,5 @@
-import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close';
+import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
+
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import { String } from '../../constants/String';
 import { Regex } from '../../constants/Regex';
 import AddCompannyDialog from './AddCompannyDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
@@ -30,7 +31,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         warpCompnayName: "",
     };
 
-    console.log(initialValues, "opoopopopopopp")
+
 
     if (editdata.index !== undefined && wrapData[editdata.index]) {
         initialValues = wrapData[editdata.index];
@@ -51,9 +52,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
             warpCompnayName: "",
         };
     }
-
-
-    console.log(initialValues, "---------------opoopopopopopp")
 
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
@@ -86,7 +84,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
 
     const validationSchema = Yup.object().shape({
         warpYarn: Yup.string().required(String.warpyarn_required),
-        warpCompany: Yup.string().required(String.warpyarn_required),
+        warpCompany: Yup.string().required(String.warpcompany_required),
         warpDeniar: Yup.string().required(String.warpdeniar_required).matches(Regex.wrap_item, String.warpdeniar_valid),
         warpBeamEnds: Yup.string().required(String.warpbeamends_required).matches(Regex.wrap_item, String.warpbeamends_valid),
         warpShortage: Yup.string().required(String.warpShortage_required).matches(Regex.wrap_item, String.warpShortage_valid),
@@ -151,36 +149,42 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                         setFieldError
                     }) => {
                         const value = (((values.warpDeniar * values.warpBeamEnds) * values.warpShortage / 100 + (values.warpDeniar * values.warpBeamEnds)) / 9000000)
-                        const weight = (value * 100).toFixed(2);
-                        const cost = (value * values.warpYarnRate).toFixed(2);
+                        const weight = Number((value * 100).toFixed(2));
+                        const cost = Number((value * values.warpYarnRate).toFixed(2));
                         return (
                             <Form>
-                                {console.log(values, "yyyyyyyyyyyyyyyyyyyyyyy")}
-                                <div className='heading' >
 
-                                    <div>
-                                        <Typography
-                                            className="heading_text"
-                                            variant="span"
-                                            component="span">
-                                            {"Warp"}
-                                        </Typography>
 
+
+                                <Paper className='heading_paper'>
+
+                                    <div className='heading' >
+
+                                        <div>
+                                            <Typography
+                                                className="heading_text"
+                                                variant="span"
+                                                component="span">
+                                                {String.warp_heafing}
+                                            </Typography>
+
+                                        </div>
+
+                                        <div>
+                                            <Typography
+                                                className="heading_text"
+                                                variant="span"
+                                                component="span">
+                                                {String.dweight} {weight.toFixed(2)} | {String.dcost} {cost.toFixed(2)}
+                                            </Typography>
+                                        </div>
+
+                                        <div onClick={toggleDrawers} className='close_icon'>
+                                            <HighlightOffIcon />
+                                        </div>
                                     </div>
+                                </Paper>
 
-                                    <div>
-                                        <Typography
-                                            className="heading_text"
-                                            variant="span"
-                                            component="span">
-                                            {`W : ${weight} | C : ${cost}`}
-                                        </Typography>
-                                    </div>
-
-                                    <div onClick={toggleDrawers} className='close_icon'>
-                                        <CloseIcon />
-                                    </div>
-                                </div>
 
                                 <div className='from'>
 
@@ -198,14 +202,14 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                         setFieldValue('warpYarn', newValue._id || '');
                                                         setFieldValue('warpYarnRate', newValue.yarnRate || '');
                                                         setFieldValue('warpYarnName', newValue.yarnName || '');
-                                                        setFieldTouched('warpYarn', false); // Reset the touched state
-                                                        setFieldError('warpYarn', ''); // Reset the error message
+                                                        setFieldTouched('warpYarn', false);
+                                                        setFieldError('warpYarn', '');
                                                     } else {
                                                         setFieldValue('warpYarn', '');
                                                         setFieldValue('warpYarnRate', '');
                                                         setFieldValue('warpYarnName', '');
-                                                        setFieldTouched('warpYarn', true); // Mark the field as touched
-                                                        setFieldError('warpYarn', String.warpyarn_required); // Set the error message
+                                                        setFieldTouched('warpYarn', true);
+                                                        setFieldError('warpYarn', String.warpyarn_required);
                                                     }
                                                 }}
                                                 renderOption={(props, yarnItem) => (
@@ -236,7 +240,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                         </FormControl>
 
 
-                                        {/* <Button onClick={handleOpenAddYarn} className='add_yarn' variant="outlined">Add</Button> */}
+
                                         <IconButton className='add_icon' onClick={handleOpenAddYarn}>
                                             <AddCircleOutlineIcon className='add_yarn' />
                                         </IconButton>
@@ -264,13 +268,13 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                     if (newValue) {
                                                         setFieldValue('warpCompany', newValue._id || '');
                                                         setFieldValue('warpCompnayName', newValue.yarnCompanyName || '');
-                                                        setFieldTouched('warpCompany', false); // Reset the touched state
-                                                        setFieldError('warpCompany', ''); // Reset the error message
+                                                        setFieldTouched('warpCompany', false);
+                                                        setFieldError('warpCompany', '');
                                                     } else {
                                                         setFieldValue('warpCompany', '');
                                                         setFieldValue('warpCompnayName', '');
-                                                        setFieldTouched('warpCompany', true); // Mark the field as touched
-                                                        setFieldError('warpCompany', String.select_company); // Set the error message
+                                                        setFieldTouched('warpCompany', true);
+                                                        setFieldError('warpCompany', String.select_company);
                                                     }
                                                 }}
                                                 renderInput={(params) => (
@@ -284,8 +288,8 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
 
                                         </FormControl>
 
-                                        {/* 
-                                    <Button onClick={handleOpenAddCompany} className='add_company' variant="outlined">Add</Button> */}
+
+
                                         <IconButton className='add_icon'>
                                             <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
                                         </IconButton>
@@ -377,7 +381,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                     }
                 </Formik>
             </Drawer >
-
 
             <AddYarnDialog open={openAdd} onClose={handleCloseAddYarn} />
             <AddCompannyDialog open={openAddCompnay} onClose={handleCloseAddCompany} />

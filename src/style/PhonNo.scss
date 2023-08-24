@@ -16,11 +16,6 @@ body {
 }
 
 
-.MuiInputBase-root {
-
-    border-radius: 12px !important;
-    height: 50px;
-}
 
 .MuiFormHelperText-root {
     font-family: $font-family !important;
@@ -30,6 +25,12 @@ body {
 }
 
 .login-container {
+
+    .MuiInputBase-root {
+
+        border-radius: 12px !important;
+        height: 50px;
+    }
 
     display: flex;
     justify-content: center;
@@ -119,6 +120,10 @@ body {
                             margin-top: 1.5rem !important;
 
                         }
+
+
+
+                       
 
                         //otp link
                         .link {

@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, InputLabel, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Search from '../ComonComponent/Search'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -10,6 +10,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useGetQualityQuery } from '../../api/Quality'
 import Loader from '../ComonComponent/Loader'
 import { useNavigate } from 'react-router-dom'
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export default function QualityTable() {
 
@@ -22,9 +25,12 @@ export default function QualityTable() {
     const [QualityData, setQualityData] = useState([]);
     const [total, setTotal] = useState("")
     const [ref, setRef] = useState(false);
-
+    const [selectedRowId, setSelectedRowId] = useState(null); //
 
     const navigate = useNavigate();
+
+
+
 
     useEffect(() => {
         setRef(true);
@@ -35,7 +41,7 @@ export default function QualityTable() {
         if (!isFetching) {
             setTotal(data?.result?.isTotalCount)
             if (page === 1) {
-                console.log("uuuuuuuuuuu", data?.result?.data)
+
                 setQualityData(data?.result?.data);
             } else {
                 setQualityData((prevData) => [...prevData, ...data?.result?.data]);
@@ -68,18 +74,63 @@ export default function QualityTable() {
         if (sortConfig.columnName !== '') {
             const keyA = a[sortConfig.columnName];
             const keyB = b[sortConfig.columnName];
+
             if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
         }
         return 0;
     }) : [];
 
-    console.log("89889889898989898989",sortedData)
+
+    
+    // const sortedData = QualityData ? [...QualityData].sort((a, b) => {
+    //     if (sortConfig.columnName !== '') {
+    //         const keyA = a[sortConfig.columnName];
+    //         const keyB = b[sortConfig.columnName];
+    
+    //         if (sortConfig.columnName === 'gsm') {
+    //             // Convert to numbers before comparing for the 'gsm' column
+    //             const numKeyA = parseFloat(keyA);
+    //             const numKeyB = parseFloat(keyB);
+    
+    //             if (numKeyA < numKeyB) return sortConfig.direction === 'asc' ? -1 : 1;
+    //             if (numKeyA > numKeyB) return sortConfig.direction === 'asc' ? 1 : -1;
+    //         } else if (sortConfig.columnName === 'totalWarpCost') { // Replace 'totalWarpCost' with the actual key of your last column
+    //             // Add sorting logic for the last column here
+    //             if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
+    //             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
+    //         } else {
+    //             // For other columns
+    //             if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
+    //             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
+    //         }
+    //     }
+    //     return 0;
+    // }) : [];
+    
 
 
-   const addQuality =()=>{
-    navigate("/Addquality")
-   }
+    const addQuality = () => {
+        navigate("/Addquality")
+    }
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleMenuOpen = (event, rowId) => {
+        setAnchorEl(event.currentTarget);
+        setSelectedRowId(rowId); // Store the selected row's _id
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleEdit = () => {
+        navigate("/Editquality", {
+            state: {
+                "_id": selectedRowId // Use the selected row's _id
+            }
+        });
+    };
     return (
         <>
             <div className='table_tital'>
@@ -188,7 +239,7 @@ export default function QualityTable() {
                                 <TableCell className="table_border table_cell">
                                     <Box className="table_hading_cell" >
                                         {String.money}
-                                        <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWarpCost')} />
+                                        <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityCost')} />
 
                                     </Box>
                                 </TableCell>
@@ -221,7 +272,7 @@ export default function QualityTable() {
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.gsm}
-                                        <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('gsm')} />
+                                        <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort("gsm")} />
 
                                     </Box>
                                 </TableCell>
@@ -259,7 +310,7 @@ export default function QualityTable() {
                                 </TableCell>
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }}   >
-                                        {String.action}
+                                        {/* {String.action} */}
                                     </Box>
                                 </TableCell>
 
@@ -276,61 +327,86 @@ export default function QualityTable() {
                             </Box>
                         ) : (
                             <TableBody>
-                                {sortedData.map((row, index) => (
-                                    <TableRow
+                                {sortedData.map((row, index) => {
 
-                                        sx={{
-                                            '& td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
-                                            '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
-                                            '&:hover': { backgroundColor: '#f5f5f5' },
-                                        }}
-                                    >
-                                        <TableCell className="table_border" component="th" scope="row">
-                                            {row?.qualityName || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.qualityWeight || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.qualityCost || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.TotalPick || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.TotalBeamEnds || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.TotalWidth || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.info?.gsm || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.weft?.totalWeftWeight || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.weft?.totalWeftCost || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.warp?.totalWarpWeight || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            {row?.warp?.totalWarpCost || '-'}
-                                        </TableCell>
-                                        <TableCell className="table_border" align="left">
-                                            <Box className="edit_icon" >
+                                    console.log("_iddddddddd", row._id)
 
-                                                <EditIcon onClick={console.log("hello24356")} />
-                                            </Box>
+                                    return (
 
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                        <TableRow
+                                            key={index}
+
+                                            sx={{
+                                                '& td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
+                                                '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
+                                                '&:hover': { backgroundColor: '#f5f5f5' },
+                                            }}
+                                        >
+                                            <TableCell className="table_border" component="th" scope="row">
+                                                {row?.qualityName || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.qualityWeight || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.qualityCost || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.TotalPick || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.TotalBeamEnds || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.TotalWidth || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.info?.gsm || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.weft?.totalWeftWeight || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.weft?.totalWeftCost || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.warp?.totalWarpWeight || '-'}
+                                            </TableCell>
+                                            <TableCell className="table_border" align="left">
+                                                {row?.warp?.totalWarpCost || '-'}
+                                            </TableCell>
+
+                                            <TableCell className="table_border" align="left">
+                                                <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id)}>
+                                                    <MoreVertIcon className='more_icon' />
+
+                                                </Box>
+                                            </TableCell>
+
+                                            <Menu
+                                                className="menus"
+                                                anchorEl={anchorEl}
+                                                open={Boolean(anchorEl)}
+                                                onClose={handleMenuClose}>
+
+
+
+                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id)} > <EditIcon className='edit' /></MenuItem>
+
+                                                <MenuItem className='menu' ><DeleteIcon className='edit' />  </MenuItem>
+                                                <MenuItem className='menu' >< VisibilityIcon className='edit' /> </MenuItem>
+                                            </Menu>
+                                        </TableRow>
+                                    )
+
+                                })}
                             </TableBody>)}
                     </Table>
                 </InfiniteScroll>
             </TableContainer>
+
+
+
         </>
     )
 }

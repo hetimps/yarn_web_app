@@ -69,7 +69,14 @@ export const QualityApi = createApi({
             invalidatesTags: ["Company"],
         }),
 
+
+        GetEditQuality: builder.query({
+            query: () => ({
+                url: '/yarn/getall-yarn',
+            }),
+
+        }),
     }),
 });
 
-export const { useGetQualityQuery, useAddQualityMutation, useAddYarnMutation, useGetYarnQuery, useGetCompanyQuery,useAddCompanyMutation } = QualityApi;
+export const { useGetQualityQuery, useAddQualityMutation, useAddYarnMutation, useGetYarnQuery, useGetCompanyQuery, useAddCompanyMutation } = QualityApi;

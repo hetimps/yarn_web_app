@@ -45,7 +45,7 @@ export default function Drawers() {
 
                     <List className='draewr_item'>
 
-                        <ListItem disablePadding onClick={()=>Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" ? "active" : ""
+                        <ListItem disablePadding onClick={() => Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" || location.pathname === "/Addquality" ? "active" : ""
                             }`}  >
                             <ListItemButton component="a" disableRipple>
                                 <ListItemIcon className='draewr_dashboard_icon'  >
@@ -55,7 +55,7 @@ export default function Drawers() {
                             </ListItemButton>
                         </ListItem>
 
-                        <ListItem disablePadding onClick={()=>Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : ""
+                        <ListItem disablePadding onClick={() => Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : ""
                             }`}   >
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
@@ -65,7 +65,7 @@ export default function Drawers() {
                             </ListItemButton>
                         </ListItem>
 
-                        <ListItem disablePadding onClick={()=>Navigate("/Yarn")} className={`draewr_dashboard_item ${location.pathname === "/Yarn" ? "active" : ""
+                        <ListItem disablePadding onClick={() => Navigate("/Yarn")} className={`draewr_dashboard_item ${location.pathname === "/Yarn" ? "active" : ""
                             }`}>
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
@@ -76,7 +76,7 @@ export default function Drawers() {
                         </ListItem>
 
 
-                        <ListItem disablePadding onClick={()=>Navigate("/Profile")} className={`draewr_dashboard_item ${location.pathname === "/Profile" ? "active" : ""
+                        <ListItem disablePadding onClick={() => Navigate("/Profile")} className={`draewr_dashboard_item ${location.pathname === "/Profile" ? "active" : ""
                             }`} >
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
@@ -86,7 +86,7 @@ export default function Drawers() {
                             </ListItemButton>
                         </ListItem>
 
-                       
+
 
                         {/* <ListItem disablePadding onClick={()=>Navigate("/kyc")} className={`draewr_dashboard_item ${location.pathname === "/kyc" ? "active" : ""
                             }`} >

@@ -20,6 +20,7 @@ import WeftDrawer from './WeftDrawer';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 export default function AddQualityForm() {
 
+
     const navigaet = useNavigate();
 
     const [selectedOption, setSelectedOption] = useState('Fixed Cost');
@@ -44,7 +45,7 @@ export default function AddQualityForm() {
         cost: 0,
         rpm: "",
         eff: "",
-        mach: "",
+        mach: 1,
         reed: "",
         border: "",
         pasramani: "",
@@ -60,9 +61,7 @@ export default function AddQualityForm() {
     const [weftDataRequired, setWeftDataRequired] = useState(false);
     const validationSchema = Yup.object().shape({
 
-        qulaity: Yup.string()
-            .required(String.quality_required)
-            .matches(Regex.quality_name, String.quality_required),
+        qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
         eff: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
         cost: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
         rpm: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
@@ -77,7 +76,6 @@ export default function AddQualityForm() {
         gsm: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
 
 
-
     }).test('wrapData', `${String.wrapData_required}`, () => {
         if (wrapData.length > 0) {
             setWrapDataRequired(false);
@@ -88,29 +86,24 @@ export default function AddQualityForm() {
             setWeftDataRequired(false);
         }
         return weftData.length > 0;
-
-
-
     });
 
     const [Qulaity, { isLoading }] = useAddQualityMutation();
 
     const handleSubmit = async (value) => {
-
-
-
         if (wrapData.length === 0) {
             setWrapDataRequired(true);
-        } else {
+        }
+        else {
             setWrapDataRequired(false);
         }
 
         if (weftData.length === 0) {
             setWeftDataRequired(true);
-        } else {
+        }
+        else {
             setWeftDataRequired(false);
         }
-
 
         if (wrapData.length === 0 || weftData.length === 0) {
             return;
@@ -119,10 +112,7 @@ export default function AddQualityForm() {
         //api data
 
         const qualityName = value.qulaity
-
-
         const qualityWeight = totalWeights
-
 
         const qualityCost = selectedOption === "Fixed Cost"
             ? Number(totalCosts) + Number(value.cost)
@@ -139,7 +129,6 @@ export default function AddQualityForm() {
         const TotalWidth = widths
 
         const totalefficiency = (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2))
-
 
         const body = {
             qualityName: qualityName,
@@ -224,7 +213,6 @@ export default function AddQualityForm() {
         navigaet("/Quality")
     }
 
-
     // wrap data
     const [wrapData, setWrapData] = useState([])
 
@@ -236,7 +224,6 @@ export default function AddQualityForm() {
 
     const WrapsumOfweight = wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
     const WrapsumOfweights = Number(WrapsumOfweight.toFixed(2))
-
 
     // weft data
     const [weftData, setweftData] = useState([])
@@ -250,8 +237,6 @@ export default function AddQualityForm() {
     const WeftsumOfweight = weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
     const WeftsumOfweights = Number(WeftsumOfweight.toFixed(2))
 
-
-
     //total sum
     const totalWeight = parseFloat(WrapsumOfweights) + parseFloat(WeftsumOfweights)
     const totalWeights = totalWeight.toFixed(2)
@@ -262,8 +247,6 @@ export default function AddQualityForm() {
     //pick
 
     const [pickSum, setPickSum] = useState([]);
-
-
     const sumOfPick = pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
     const sumOfPicks = Number(sumOfPick.toFixed(2))
 
@@ -272,9 +255,6 @@ export default function AddQualityForm() {
     //width
 
     const [Width, setWidth] = useState([]);
-
-
-
     const widths = Width.reduce((sum, width) => sum + parseFloat(width), 0);
 
 
@@ -282,21 +262,15 @@ export default function AddQualityForm() {
     //tar
 
     const [Tar, setTar] = useState([]);
-
     const tars = Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
-
     const [editdata, seteditdata] = useState([]);
-
-
     const editData = (index) => {
         toggleDrawer();
 
         const editData = {
             index: index,
-
         }
         seteditdata(editData)
-
     }
 
     const [editweftData, seteditweftData] = useState([]);
@@ -319,14 +293,10 @@ export default function AddQualityForm() {
                     handleChange,
                     errors,
                     touched,
-
                 }) => (
 
                     <Form>
-
                         <div className='add_form'>
-
-
 
                             {/* heading */}
                             <div className='add_heading'>
@@ -345,15 +315,15 @@ export default function AddQualityForm() {
                                         <Button className='btn_weight' variant="contained" >{String.weight} {totalWeights} {String.akg}</Button>
                                         <Button className='btn_cost' variant="contained" >
                                             {selectedOption === "Fixed Cost"
-                                                ? `cost ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ₹`
-                                                : `cost ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ₹`
+                                                ? (`${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`)
+                                                : (`${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`)
                                             }
                                         </Button>
                                     </Stack>
                                 </div>
 
                                 <div className='add_btn'>
-                                    {isLoading ? <Loader /> : (<Button type='submit' className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">Save</Button>)}
+                                    {isLoading ? <Loader /> : (<Button type='submit' className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">{String.save}</Button>)}
                                 </div>
                             </div>
 
@@ -363,7 +333,11 @@ export default function AddQualityForm() {
                                 <div className='add_form_filed'>
 
                                     <div className='qulaity_wrap'>
-                                        <InputLabels name={String.Quality} />
+
+                                        <InputLabel className="qulaity_label">
+                                            {String.Quality}
+                                        </InputLabel>
+
                                         <TextFields onChange={handleChange}
                                             value={values.qulaity}
                                             error={touched.qulaity && Boolean(errors.qulaity)}
@@ -387,7 +361,14 @@ export default function AddQualityForm() {
                                             }
 
                                         >
-                                            {String.warp_w}{WrapsumOfweights} | {String.warp_c} {WrapsumOfCosts}
+                                            <div>
+                                                {String.warp_b}
+                                            </div>
+
+                                            <div>
+                                                {String.warp_w} {WrapsumOfweights.toFixed(2)} | {String.warp_c} {WrapsumOfCosts.toFixed(2)}
+
+                                            </div>
                                         </Button>
                                         {wrapDataRequired && wrapData.length === 0 && (
                                             <div className="error-text">{String.wrapData_required}</div>
@@ -404,7 +385,6 @@ export default function AddQualityForm() {
                                             return (
 
                                                 <>
-
                                                     <Box className='box_content' component="span"
 
                                                         onClick={() => {
@@ -443,7 +423,7 @@ export default function AddQualityForm() {
                                                                     variant="span"
                                                                     component="span">
 
-                                                                    {`₹ : ${cost}`}
+                                                                    {String.money} : {cost}
 
 
                                                                 </Typography>
@@ -467,7 +447,7 @@ export default function AddQualityForm() {
                                                                     className='heading_text'
                                                                     variant="span"
                                                                     component="span">
-                                                                    {`kg : ${weight}`}
+                                                                    {String.kg} : {weight}
                                                                 </Typography>
                                                             </div>
 
@@ -489,7 +469,7 @@ export default function AddQualityForm() {
 
                                                             </div>
 
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
 
 
@@ -504,7 +484,7 @@ export default function AddQualityForm() {
                                                                 </Typography>
 
                                                             </div>
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Ends}</InputLabel>
@@ -515,7 +495,7 @@ export default function AddQualityForm() {
                                                                     {wrap.warpBeamEnds}
                                                                 </Typography>
                                                             </div>
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
 
                                                             <div>
@@ -527,7 +507,7 @@ export default function AddQualityForm() {
                                                                     {wrap.warpYarnRate}
                                                                 </Typography>
                                                             </div>
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
 
                                                             <div>
@@ -560,11 +540,20 @@ export default function AddQualityForm() {
                                                         <ControlPointIcon />
                                                     </IconButton>
 
-                                                </div>
+                                                </div>}>
 
-                                            }
+                                            <div>
+                                                {String.weft_b}
+                                            </div>
 
-                                        >{String.weft_w}{WeftsumOfweights} | {String.Weft_c} {WeftsumOfCosts}</Button>
+                                            <div>
+                                            {String.warp_w} {WeftsumOfweights.toFixed(2)} | {String.Weft_c} {WeftsumOfCosts.toFixed(2)}
+                                            </div>
+
+
+
+
+                                        </Button>
                                         {weftDataRequired && weftData.length === 0 && (
                                             <div className="error-text">{String.WeftData_required}</div>
                                         )}
@@ -619,7 +608,7 @@ export default function AddQualityForm() {
                                                                     variant="span"
                                                                     component="span">
 
-                                                                    {`₹ : ${cost}`}
+                                                                    {String.money} : {cost}
 
 
                                                                 </Typography>
@@ -643,7 +632,7 @@ export default function AddQualityForm() {
                                                                     className='heading_text'
                                                                     variant="span"
                                                                     component="span">
-                                                                    {`kg : ${weight}`}
+                                                                    {String.kg} : {weight}
                                                                 </Typography>
                                                             </div>
 
@@ -688,7 +677,7 @@ export default function AddQualityForm() {
                                                                     {weft.weftWastage}
                                                                 </Typography>
                                                             </div>
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
 
                                                             <div>
@@ -700,7 +689,7 @@ export default function AddQualityForm() {
                                                                     {weft.weftWidth}
                                                                 </Typography>
                                                             </div>
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
 
                                                             <div>
@@ -713,7 +702,7 @@ export default function AddQualityForm() {
                                                                 </Typography>
                                                             </div>
 
-                                                            <div style={{ borderLeft: "1px dashed grey" }} />
+                                                            <div className='dashed_border' />
 
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.TPM}</InputLabel>
@@ -729,7 +718,6 @@ export default function AddQualityForm() {
 
                                                     </Box>
                                                 </>
-
                                             )
                                         })}
 
@@ -739,9 +727,9 @@ export default function AddQualityForm() {
                                     <Paper className='expense_pepar'>
                                         <div className='add_expense'>
 
-                                            <InputLabels name={"Expense"} />
-
-
+                                            <InputLabel className="qulaity_label">
+                                                {String.Expense}
+                                            </InputLabel>
                                             <div className='costs'>
 
 
@@ -754,9 +742,9 @@ export default function AddQualityForm() {
                                                         name="row-radio-buttons-group"
                                                         value={selectedOption}
                                                         onChange={handleChanger}>
-                                                        <FormControlLabel className='radio_fix' value="Fixed Cost" control={<Radio />} label="Fixed Cost" />
+                                                        <FormControlLabel className='radio_fix' value="Fixed Cost" control={<Radio />} label={String.Fixed_Cost} />
 
-                                                        <FormControlLabel value="Per Pick" control={<Radio />} label="Per Pick" />
+                                                        <FormControlLabel value="Per Pick" control={<Radio />} label={String.Per_Pick} />
 
                                                     </RadioGroup>
                                                 </div>
@@ -764,7 +752,7 @@ export default function AddQualityForm() {
 
                                                 <div className='cost_label'>
 
-                                                    <InputLabels name={"Cost"} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
 
 
@@ -776,7 +764,7 @@ export default function AddQualityForm() {
 
 
                                                         <TextFields onChange={handleChange}
-                                                            value={values.cost} width={"12rem"} placeholder={"Enter Cost"} name="cost"
+                                                            value={values.cost} width={"12rem"} placeholder={String.Enter_Cost} name="cost"
 
                                                             error={touched.cost && Boolean(errors.cost)}
                                                             helperText={touched.cost && errors.cost}
@@ -793,9 +781,9 @@ export default function AddQualityForm() {
 
 
                                                         <TextFields error={touched.cost && Boolean(errors.cost)}
-                                                            helperText={touched.cost && errors.cost} onChange={handleChange} value={values.cost} name="cost" width={"37.5%"} placeholder={"Enter Cost"} />
+                                                            helperText={touched.cost && errors.cost} onChange={handleChange} value={values.cost} name="cost" width={"37.5%"} placeholder={String.Enter_Cost} />
 
-                                                        <InputLabels name={`x ${sumOfPicks} = `} m={"0 0.3rem 0 0.3rem"} />
+                                                        <InputLabels name={`x ${sumOfPicks} =`} m={"0 0.7rem 0 0.7rem"} />
 
                                                         <TextFields name="costs" value={values.cost * sumOfPicks} width={"37.5%"} />
 
@@ -812,22 +800,23 @@ export default function AddQualityForm() {
                                         <div className='add_production'>
 
                                             <div className='productions_lables'>
-                                                <InputLabels name={"Production"} />
-
+                                                <InputLabel className="qulaity_label">
+                                                    {String.Production}
+                                                </InputLabel>
                                             </div>
 
                                             <div className='production_input_wrap'>
                                                 <div className='production_input'>
 
-                                                    <InputLabels name={"RPM"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"RPM"} name="rpm" error={touched.rpm && Boolean(errors.rpm)}
+                                                    <InputLabels name={String.RPM} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.RPM} name="rpm" error={touched.rpm && Boolean(errors.rpm)}
                                                         helperText={touched.rpm && errors.rpm} onChange={handleChange} value={values.rpm} />
 
                                                 </div>
                                                 <div className='production_input'>
 
-                                                    <InputLabels name={"Eff."} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Eff."}
+                                                    <InputLabels name={String.Eff} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Eff}
 
                                                         name="eff" error={touched.eff && Boolean(errors.eff)}
                                                         helperText={touched.eff && errors.eff} onChange={handleChange} value={values.eff}
@@ -835,22 +824,22 @@ export default function AddQualityForm() {
 
                                                 </div>
                                                 <div className='production_input'>
-                                                    <InputLabels name={"Mach."} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.Mach} m={"0 0.5rem 0 0"} />
 
-                                                    <TextFields width={"90%"} placeholder={"Mach"}
+                                                    <TextFields width={"90%"} placeholder={String.Mach}
                                                         name="mach" error={touched.mach && Boolean(errors.mach)}
                                                         helperText={touched.mach && errors.mach} onChange={handleChange} value={values.mach} />
 
                                                 </div>
 
                                                 <div className='production_input'>
-                                                    <InputLabels name={"Pick"} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.qPick} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} value={sumOfPicks} />
 
                                                 </div>
 
                                                 <div className='production_input'>
-                                                    <InputLabels name={"efficiency"} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.efficiency} m={"0 0.5rem 0 0"} />
                                                     <div style={{ top: 0, left: 0 }}>
                                                         {console.log(sumOfPicks)}
                                                         {sumOfPicks === 0 ? (<TextFields width={"90%"} value={`0.00 m/d`} m={"0 0 0 5rem"} />) : (<TextFields value={`${(((values.rpm / sumOfPicks / 39.37) * (values.eff / 100) * 720).toFixed(2))} m/d`} m={"0 0 0 5rem"} />)}
@@ -870,35 +859,39 @@ export default function AddQualityForm() {
                                         <div className='add_info'>
 
 
-                                            <InputLabels name={"Information"} />
+
+
+                                            <InputLabel className="qulaity_label">
+                                                {String.Information}
+                                            </InputLabel>
 
 
                                             <div className='add_info_wrap'>
                                                 <div className='info_input'>
 
-                                                    <InputLabels name={"Reed"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} className="info_input_text" placeholder={"Reed"} name="reed" error={touched.reed && Boolean(errors.reed)}
+                                                    <InputLabels name={String.Reed} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} className="info_input_text" placeholder={String.Reed} name="reed" error={touched.reed && Boolean(errors.reed)}
                                                         helperText={touched.reed && errors.reed} onChange={handleChange} value={values.reed} />
 
                                                 </div>
                                                 <div className='info_input'>
 
-                                                    <InputLabels name={"Border"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Borde"} name="border" error={touched.border && Boolean(errors.border)}
+                                                    <InputLabels name={String.Border} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Border} name="border" error={touched.border && Boolean(errors.border)}
                                                         helperText={touched.border && errors.border} onChange={handleChange} value={values.border} />
 
                                                 </div>
                                                 <div className='info_input'>
 
-                                                    <InputLabels name={"Pasramani"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Pasramani"} name="pasramani" error={touched.pasramani && Boolean(errors.pasramani)}
+                                                    <InputLabels name={String.Pasramani} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Pasramani} name="pasramani" error={touched.pasramani && Boolean(errors.pasramani)}
                                                         helperText={touched.pasramani && errors.pasramani} onChange={handleChange} value={values.pasramani} />
 
                                                 </div>
                                                 <div className='info_input'>
 
-                                                    <InputLabels name={"Steam"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Steam"} name="steam" error={touched.steam && Boolean(errors.steam)}
+                                                    <InputLabels name={String.Steam} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Steam} name="steam" error={touched.steam && Boolean(errors.steam)}
                                                         helperText={touched.steam && errors.steam} onChange={handleChange} value={values.steam} />
                                                 </div>
 
@@ -908,29 +901,29 @@ export default function AddQualityForm() {
 
                                             <div className='add_info_wrap' >
                                                 <div className='info_input'>
-                                                    <InputLabels name={"panno"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Panno"} name="panno" error={touched.panno && Boolean(errors.panno)}
+                                                    <InputLabels name={String.Panno} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Panno} name="panno" error={touched.panno && Boolean(errors.panno)}
                                                         helperText={touched.panno && errors.panno} onChange={handleChange} value={values.panno} />
 
                                                 </div>
                                                 <div className='info_input'>
-                                                    <InputLabels name={"Nozzle"} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.Nozzle} m={"0 0.5rem 0 0"} />
 
 
-                                                    <TextFields width={"90%"} placeholder={"Nozzle"} name="nozzle" error={touched.nozzle && Boolean(errors.nozzle)}
+                                                    <TextFields width={"90%"} placeholder={String.Nozzle} name="nozzle" error={touched.nozzle && Boolean(errors.nozzle)}
                                                         helperText={touched.nozzle && errors.nozzle} onChange={handleChange} value={values.nozzle} />
 
                                                 </div>
                                                 <div className='info_input'>
-                                                    <InputLabels name={"Letis"} m={"0 0.5rem 0 0"} />
+                                                    <InputLabels name={String.Letis} m={"0 0.5rem 0 0"} />
 
-                                                    <TextFields width={"90%"} placeholder={"Letis"} name="letis" error={touched.letis && Boolean(errors.letis)}
+                                                    <TextFields width={"90%"} placeholder={String.Letis} name="letis" error={touched.letis && Boolean(errors.letis)}
                                                         helperText={touched.letis && errors.letis} onChange={handleChange} value={values.letis} />
 
                                                 </div>
                                                 <div className='info_input'>
-                                                    <InputLabels name={"Gsm"} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={"Gsm"} name="gsm" error={touched.gsm && Boolean(errors.gsm)}
+                                                    <InputLabels name={String.Gsm} m={"0 0.5rem 0 0"} />
+                                                    <TextFields width={"90%"} placeholder={String.Gsm} name="gsm" error={touched.gsm && Boolean(errors.gsm)}
                                                         helperText={touched.gsm && errors.gsm} onChange={handleChange} value={values.gsm} />
                                                 </div>
 

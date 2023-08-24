@@ -78,7 +78,7 @@ export default function Otp() {
                 const isCreatedCompany = response?.data?.result?.isCreatedCompany;
                 const isJoinedCompany = response?.data?.result?.isJoinedCompany;
                 const userName = response?.data?.result?.userName;
-               
+
                 console.log(companyid, "-----", username,)
                 localStorage.setItem("token", JSON.stringify(token));
                 localStorage.setItem("username", JSON.stringify(userName));

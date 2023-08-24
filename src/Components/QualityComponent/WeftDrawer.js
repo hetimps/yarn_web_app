@@ -1,5 +1,5 @@
-import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close';
+import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useState } from 'react';
@@ -148,33 +148,39 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                         return (
 
                             <Form >
-                                <div className='heading' >
 
-                                    <div >
+                                <Paper className='heading_paper'>
+                                    <div className='heading' >
 
-                                        <Typography
-                                            className="heading_text"
-                                            variant="span"
-                                            component="span">
-                                            {String.weft_heading}
-                                        </Typography>
+                                        <div >
+
+                                            <Typography
+                                                className="heading_text"
+                                                variant="span"
+                                                component="span">
+                                                {String.weft_heading}
+                                            </Typography>
+
+                                        </div>
+
+                                        <div>
+                                            <Typography
+                                                className="heading_text"
+                                                variant="span"
+                                                component="span">
+                                                {String.dweight} {weight.toFixed(2)} | {String.dcost} {cost.toFixed(2)}
+                                            </Typography>
+                                        </div>
+
+
+                                        <div onClick={toggleDrawerWefts} className='close_icon'>
+                                            <HighlightOffIcon />
+                                        </div>
+
 
                                     </div>
+                                </Paper>
 
-                                    <div>
-                                        <Typography
-                                            className="heading_text"
-                                            variant="span"
-                                            component="span">
-                                            {String.dweight}${weight} | {String.weft_cost}{cost}
-                                        </Typography>
-                                    </div>
-
-                                    <div onClick={toggleDrawerWefts} className='close_icon'>
-                                        <CloseIcon />
-                                    </div>
-
-                                </div>
 
 
 
@@ -196,14 +202,14 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                         setFieldValue('weftYarn', newValue._id || '');
                                                         setFieldValue('weftYarnRate', newValue.yarnRate || '');
                                                         setFieldValue('wefYarnName', newValue.yarnName || '');
-                                                        setFieldTouched('weftYarn', false); // Reset the touched state
-                                                        setFieldError('weftYarn', ''); // Reset the error message
+                                                        setFieldTouched('weftYarn', false);
+                                                        setFieldError('weftYarn', '');
                                                     } else {
                                                         setFieldValue('weftYarn', '');
                                                         setFieldValue('weftYarnRate', '');
                                                         setFieldValue('wefYarnName', '');
-                                                        setFieldTouched('weftYarn', true); // Mark the field as touched
-                                                        setFieldError('weftYarn', String.weftYarn_required); // Set the error message
+                                                        setFieldTouched('weftYarn', true);
+                                                        setFieldError('weftYarn', String.weftYarn_required);
                                                     }
                                                 }}
                                                 renderOption={(props, yarnItem) => (
@@ -361,8 +367,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 error={touched.tpm && Boolean(errors.tpm)}
                                                 helperText={touched.tpm && errors.tpm} placeholder={String.wefttpm_yarn} name={"tpm"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
                                         </div>
-
-
 
                                         <div className='btns'>
                                             <Stack direction="row" spacing={1}>

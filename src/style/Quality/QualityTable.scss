@@ -16,6 +16,11 @@
     padding: 9px !important;
 }
 
+.MuiInputBase-root {
+    border-radius: 12px !important;
+    height: 50px;
+}
+
 .table_tital {
 
     display: flex;
@@ -50,6 +55,29 @@
     }
 }
 
+
+.menus {
+    box-shadow: none !important;
+
+    .menu{
+      
+      
+        display: flex;
+        justify-content: space-between;
+
+        .edit {
+            color: $primary;
+            background-color: none;
+            font-size: 20px;
+            margin-right: 4px;
+           
+        }
+    }
+    .MuiMenu-paper{
+       border-radius: 10px;
+    }
+    
+}
 
 .Table_container {
     margin-top: 0.5rem !important;
@@ -95,6 +123,7 @@
         }
     }
 
+    
 
     .table_border {
         border-right: 1px solid $bodar_color;
@@ -104,10 +133,16 @@
         font-weight: bolder;
     }
 
-    .edit_icon{
-        color: $primary;
+    .more_icon {
+        color: $font_color;
         cursor: pointer;
+        width: 20px;
+        font-weight: 500;
+
     }
+
+
+
 
     .tables_main_hading {
         &:after {
