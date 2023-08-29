@@ -4,23 +4,24 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import AppBars from '../Components/ComonComponent/AppBar';
 import Drawers from '../Components/ComonComponent/Drawers';
-import QualityTable from '../Components/QualityComponent/QualityTable';
-
-import {DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
 
 
+import { DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
+import EditQualityForm from '../Components/QualityComponent/EditQualityForm';
 
-export default function Quality() {
 
+
+export default function EditQuality() {
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+
+      <CssBaseline/>
       <AppBars haddings="Quality" />
-      <Drawers />
+      <Drawers/>
 
       <Main open={true}>
         <DrawerHeader />
-        < QualityTable />
+        <EditQualityForm/>
       </Main>
     </Box>
   );

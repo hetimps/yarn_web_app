@@ -12,6 +12,8 @@ import * as Yup from "yup";
 import { useResendOtpMutation, useUserVerifyMutation } from '../api/Otp';
 import { toast } from 'react-hot-toast';
 import Loader from '../Components/ComonComponent/Loader';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../Redux/AuthSlice';
 
 
 export function matchIsNumeric(text) {
@@ -29,17 +31,17 @@ export default function Otp() {
 
     const location = useLocation();
     const navigate = useNavigate();
-
+    const dispatch = useDispatch()
 
     const { state } = location;
 
-    const countryCode = state.countryCode;
-    const mobileNo = state.mobileNo;
+    const countryCode = state?.countryCode;
+    const mobileNo = state?.mobileNo;
 
-    const HideMobileNo = `${mobileNo.slice(0, 3)}${String.hide_number}${mobileNo.slice(-2)}`;
+    const HideMobileNo = `${mobileNo?.slice(0, 3)}${String?.hide_number}${mobileNo?.slice(-2)}`;
 
     const defaultValue = {
-        Otp: state.loginOtp,
+        Otp: state?.loginOtp,
     };
 
     const validationSchema = Yup.object().shape({
@@ -71,7 +73,7 @@ export default function Otp() {
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
 
-            if (status === 200) {
+            if (status === 200 && response?.data?.result) {
                 const token = response?.data?.result?.token;
                 const username = response?.data?.result?.userName;
                 const companyid = response?.data?.result?.companyId;
@@ -79,7 +81,9 @@ export default function Otp() {
                 const isJoinedCompany = response?.data?.result?.isJoinedCompany;
                 const userName = response?.data?.result?.userName;
 
-                console.log(companyid, "-----", username,)
+                response?.data?.result?.userName && dispatch(setCurrentUser(response?.data?.result))
+
+                console.log(response?.data?.result, "-----", username,)
                 localStorage.setItem("token", JSON.stringify(token));
                 localStorage.setItem("username", JSON.stringify(userName));
                 toast.success(message)
@@ -129,7 +133,6 @@ export default function Otp() {
             else {
                 toast.error(message)
             }
-
         }
         catch (error) {
             console.log(error)

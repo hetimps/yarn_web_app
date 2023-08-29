@@ -18,8 +18,22 @@ body {
 .MuiList-root,
 .MuiList-padding,
 .MuiMenu-list,
+
 .css-6hp17o-MuiList-root-MuiMenu-list {
     max-height: 300px !important;
+}
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+    box-shadow:none !important;
+   
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
+
+}
+
+.editpage_loader{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 
@@ -27,7 +41,7 @@ body {
 
     .MuiInputBase-root {
 
-        border-radius: 12px !important;
+        border-radius: 7px !important;
         height: 45px;
     }
 
@@ -156,13 +170,14 @@ body {
 
 
                     .css-9tj150-MuiButton-endIcon {
-                        margin-right: -16px
+                        margin-right: -18px
                     }
 
                     .add_waicons {
 
                         background-color: $primary;
                         color: $white !important;
+                        border-radius: 0 7px 7px 0;
 
 
                         .add_waicons_button {
@@ -186,13 +201,14 @@ body {
 
 
                     .css-9tj150-MuiButton-endIcon {
-                        margin-right: -16px
+                        margin-right: -18px
                     }
 
                     .add_weicons {
 
                         background-color: $primary;
                         color: $white !important;
+                        border-radius: 0 7px 7px 0;
 
                         .add_weicons_button {
                             color: white;
@@ -213,6 +229,7 @@ body {
             .wrap_box {
                 display: flex;
                 flex-direction: row;
+                
 
                 .box_content {
                     border: 2px dashed $primary;
@@ -223,7 +240,8 @@ body {
                     width: 20rem;
                     height: 8rem;
                     padding: 0.5rem;
-                    margin-left: 0.5rem;
+                    margin-right: 0.5rem;
+                    
 
                     .heading_text {
                         font-size: 14px;
@@ -276,6 +294,7 @@ body {
 
                         .cost_label {
                             margin-top: 0.2rem;
+                            margin-left: 1rem;
                             font-weight: 600 !important;
 
                         }

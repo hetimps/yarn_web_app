@@ -82,7 +82,7 @@ export default function Company() {
         </Paper>
       </Box>
 
-      <CompanyDialog open={openAdd} onClose={handleCloseAdd} />
+      <CompanyDialog open={openAdd} onClose={handleCloseAdd}  />
       <JoinDialog open={openJoin} onClose={handleCloseJoin} />
     </>
   )

@@ -50,7 +50,7 @@ export default function AddCompannyDialog({ open, onClose }) {
         <>
             <Dialog
                 open={open}
-                onClose={onClose}
+               
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='cdialog_container'>

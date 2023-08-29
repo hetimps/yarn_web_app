@@ -1,4 +1,4 @@
-import { Box, Button, InputLabel, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import { Box, Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Search from '../ComonComponent/Search'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -14,6 +14,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
+
 export default function QualityTable() {
 
     const [page, setPage] = useState(1);
@@ -25,12 +26,9 @@ export default function QualityTable() {
     const [QualityData, setQualityData] = useState([]);
     const [total, setTotal] = useState("")
     const [ref, setRef] = useState(false);
-    const [selectedRowId, setSelectedRowId] = useState(null); //
+    const [selectedRowId, setSelectedRowId] = useState(null);
 
     const navigate = useNavigate();
-
-
-
 
     useEffect(() => {
         setRef(true);
@@ -63,12 +61,15 @@ export default function QualityTable() {
         direction: '',
     });
 
+    console.log("usetgwdbi", sortConfig)
+
     const handleSort = (columnName) => {
         let direction = 'asc';
         if (sortConfig.columnName === columnName && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
         setSortConfig({ columnName, direction });
+
     };
     const sortedData = QualityData ? [...QualityData].sort((a, b) => {
         if (sortConfig.columnName !== '') {
@@ -80,34 +81,6 @@ export default function QualityTable() {
         }
         return 0;
     }) : [];
-
-
-    
-    // const sortedData = QualityData ? [...QualityData].sort((a, b) => {
-    //     if (sortConfig.columnName !== '') {
-    //         const keyA = a[sortConfig.columnName];
-    //         const keyB = b[sortConfig.columnName];
-    
-    //         if (sortConfig.columnName === 'gsm') {
-    //             // Convert to numbers before comparing for the 'gsm' column
-    //             const numKeyA = parseFloat(keyA);
-    //             const numKeyB = parseFloat(keyB);
-    
-    //             if (numKeyA < numKeyB) return sortConfig.direction === 'asc' ? -1 : 1;
-    //             if (numKeyA > numKeyB) return sortConfig.direction === 'asc' ? 1 : -1;
-    //         } else if (sortConfig.columnName === 'totalWarpCost') { // Replace 'totalWarpCost' with the actual key of your last column
-    //             // Add sorting logic for the last column here
-    //             if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
-    //             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
-    //         } else {
-    //             // For other columns
-    //             if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
-    //             if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
-    //         }
-    //     }
-    //     return 0;
-    // }) : [];
-    
 
 
     const addQuality = () => {
@@ -379,7 +352,6 @@ export default function QualityTable() {
                                             <TableCell className="table_border" align="left">
                                                 <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id)}>
                                                     <MoreVertIcon className='more_icon' />
-
                                                 </Box>
                                             </TableCell>
 

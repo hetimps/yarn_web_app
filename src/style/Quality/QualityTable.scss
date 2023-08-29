@@ -6,7 +6,6 @@
     box-sizing: border-box;
 }
 
-
 .company_count {
     margin-top: 2rem !important;
 
@@ -59,9 +58,9 @@
 .menus {
     box-shadow: none !important;
 
-    .menu{
-      
-      
+    .menu {
+
+
         display: flex;
         justify-content: space-between;
 
@@ -70,13 +69,14 @@
             background-color: none;
             font-size: 20px;
             margin-right: 4px;
-           
+
         }
     }
-    .MuiMenu-paper{
-       border-radius: 10px;
+
+    .MuiMenu-paper {
+        border-radius: 10px;
     }
-    
+
 }
 
 .Table_container {
@@ -123,7 +123,7 @@
         }
     }
 
-    
+
 
     .table_border {
         border-right: 1px solid $bodar_color;

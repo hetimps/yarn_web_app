@@ -103,8 +103,8 @@ export const String = {
     Width: "Width",
     Production:"Production :",
     RPM: "RPM",
-    Eff : "Eff.",
-    Mach:  "Mach.",
+    Eff : "Efficiency",
+    Mach:  "Machine",
     qPick: "Pick",
     efficiency: "Total",
     Reed : "Reed",
@@ -135,13 +135,13 @@ export const String = {
     cadd: "Add",
     ccancel: "cancel",
     clabel: "Company Name",
-    company_placeholder: "Enter Comapnay Name",
+    company_placeholder: "Enter Company Name",
     company_required: "Company name is required",
     valid_compnay: "Enter valid company name",
 
     //wrap drawer
     warpyarn_required: "Yarn name is required",
-    warpcompany_required: "Compnay name is required",
+    warpcompany_required: "Company name is required",
     warpdeniar_required: "Deniar is required",
     warpbeamends_required: "Ends is required",
     warpShortage_required: "Shortage is required",
@@ -191,6 +191,7 @@ export const String = {
     wefttpm_yarn: "TPM",
 
 
-    //
+    //edit quality
+    edit_Qulaity: "Edit Quality",
 
 }

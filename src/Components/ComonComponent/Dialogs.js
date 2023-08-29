@@ -7,7 +7,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 export default function Dialogs({ open, onClose, tital, text, log_out }) {
     return (
         <>
-            <Dialog className="dialog" open={open} onClose={onClose}>
+            <Dialog className="dialog" open={open} >
                 <Box className="dialog_wraper" >
 
                     <DialogTitle >

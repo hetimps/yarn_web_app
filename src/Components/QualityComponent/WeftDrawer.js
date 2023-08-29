@@ -2,7 +2,7 @@ import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGetCompanyQuery, useGetYarnQuery } from '../../api/Quality';
 import AddYarnDialog from './AddYarnDialog';
 import { Form, Formik } from 'formik';
@@ -14,11 +14,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
 
+    console.log(weftData, "weftDataweftData")
     let initialValues = {
         weftCompany: "",
         weftYarn: "",
-        weftWeight: "",
-        weftCost: "",
         weftDeniar: "",
         weftPick: "",
         weftWidth: "",
@@ -27,6 +26,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         tpm: "",
         wefYarnName: "",
         wefCompnayName: "",
+        weftCost: "",
+        weftWeight: "",
     };
 
     if (editweftData.index !== undefined && weftData[editweftData.index]) {
@@ -36,8 +37,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         initialValues = {
             weftCompany: "",
             weftYarn: "",
-            weftWeight: "",
-            weftCost: "",
             weftDeniar: "",
             weftPick: "",
             weftWidth: "",
@@ -46,8 +45,14 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             tpm: "",
             wefYarnName: "",
             wefCompnayName: "",
+            weftCost: "",
+            weftWeight: "",
         };
     }
+
+    console.log(weftSumweight, "weftSumCostweftSumCost")
+
+
 
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
@@ -83,22 +88,83 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         tpm: Yup.string().matches(Regex.wrap_item, String.wefttpm_valid)
     });
 
-    const calculation = async (values) => {
+
+
+    useEffect(() => {
+        if (weftData && weftData.length > 0) {
+
+            const defaultWeftPicks = weftData.map((weftItem) => Number(weftItem.weftPick));
+            setPickSum(defaultWeftPicks);
+
+            const defaultWeftWidth = weftData.map((weftItem) => Number(weftItem.weftWidth));
+            setWidth(defaultWeftWidth);
+
+        }
+    }, [weftData]);
+
+    useEffect(() => {
+        if (weftData && weftData.length > 0) {
+            const defaultWeftCost = weftData.map((weftItem) => Number(weftItem.weftCost));
+            setweftSumCost(defaultWeftCost)
+
+            const defaultWeftWeight = weftData.map((weftItem) => Number(weftItem.weftWeight));
+            setweftSumweight(defaultWeftWeight)
+        }
+    }, [weftData])
+
+
+
+    const addWeftPickValue = async (value) => {
+        if (!pickSum.includes(value)) {
+            setPickSum([...pickSum, value]);
+        }
+    };
+
+    const addWidthValue = async (value) => {
+        if (!Width.includes(value)) {
+            setWidth([...Width, value]);
+        }
+    };
+
+
+
+    const addweftCost = async (value) => {
+        if (!weftSumCost.includes(value)) {
+            setweftSumCost([...weftSumCost, value]);
+        }
+    };
+
+    const addweftWeight = async (value) => {
+        if (!weftSumweight.includes(value)) {
+            setweftSumCost([...weftSumweight, value]);
+        }
+    };
+
+
+
+
+
+    const calculation = async (values, setFieldValue) => {
+
         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
         const cost = Number((value * values.weftYarnRate).toFixed(2));
         const weight = Number((value * 100).toFixed(2));
         const pick = Number(values.weftPick)
         const width = Number(values.weftWidth)
-        values.weftWeight = weight
-        values.weftCost = cost
-        setweftSumCost([...weftSumCost, cost])
-        setweftSumweight([...weftSumweight, weight])
-        setPickSum([...pickSum, pick])
-        setWidth([...Width, width])
+
+        values.weftWeight = weight;
+        values.weftCost = cost;
+
+
+
+        addweftWeight(weight)
+        addweftCost(cost)
+        addWeftPickValue(pick)
+        addWidthValue(width)
     }
 
-    const handleSubmit = async (values) => {
 
+    const handleSubmit = async (values, { resetForm, setFieldValue }) => {
 
         if (editweftData.index !== undefined) {
             const updatedWeftData = [...weftData];
@@ -108,12 +174,11 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             setweftData([...weftData, values]);
         }
 
+        calculation(values, setFieldValue);
 
-        calculation(values);
 
-        if (editweftData.index !== undefined) {
-            editweftData.index = undefined
-        }
+
+        resetForm();
         toggleDrawerWeft();
     }
 

@@ -6,15 +6,19 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import Dialogs from './Dialogs';
 import { String } from '../../constants/String';
 import { AppBar } from './Comon_Component';
+import { useDispatch } from 'react-redux';
+import { setCurrentUser } from '../../Redux/AuthSlice';
 
 
 export default function AppBars({ haddings }) {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [openConfirmation, setOpenConfirmation] = useState(false);
     const handleLogout = () => {
         navigate('/Phonno');
         localStorage.removeItem("token")
         localStorage.removeItem("username")
+        dispatch(setCurrentUser(null))
     };
 
     // dialog
@@ -25,7 +29,7 @@ export default function AppBars({ haddings }) {
         setOpenConfirmation(false);
     };
     
-    const UserName = JSON.parse(localStorage.getItem("username"))
+    const UserName = JSON?.parse(localStorage?.getItem("username"))
     return (
         <>
             <AppBar position="fixed" open={true} className='appbar'>

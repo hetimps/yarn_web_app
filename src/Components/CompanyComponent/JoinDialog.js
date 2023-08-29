@@ -36,6 +36,7 @@ export default function JoinDialog({ open, onClose }) {
             if (status === 200) {
                 toast.success(message)
                 navigaet("/Join")
+              
             }
             else {
                 toast.error(message)

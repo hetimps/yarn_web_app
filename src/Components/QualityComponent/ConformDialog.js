@@ -6,7 +6,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 export default function ConformDialog({ open, onClose, tital, back }) {
   return (
     <>
-     <Dialog className="cdialog" open={open} onClose={onClose}>
+     <Dialog className="cdialog" open={open} >
                 <Box className="cdialog_wraper" >
 
                 
