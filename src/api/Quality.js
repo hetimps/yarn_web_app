@@ -9,12 +9,15 @@ export const prepareHeaders = (headers) => {
     }
     return headers;
 };
+
 export const QualityApi = createApi({
     reducerPath: 'QualityApi',
     baseQuery: fetchBaseQuery({
         baseUrl: '/api',
         prepareHeaders: prepareHeaders
     }),
+    tagTypes: ["Quality","Yarn","Company"],
+    
     endpoints: (builder) => ({
         GetQuality: builder.query({
             query: ({ page, limit, search }) => ({
@@ -79,8 +82,8 @@ export const QualityApi = createApi({
             }),
 
         }),
-        EditQuality : builder.mutation({
-            query: ({body,id}) => ({
+        EditQuality: builder.mutation({
+            query: ({ body, id }) => ({
                 url: '/quality/update-quality',
                 method: 'PUT',
                 params: {
@@ -88,8 +91,19 @@ export const QualityApi = createApi({
                 },
                 body,
             }),
+        }),
+        DeleteQuality: builder.mutation({
+            query: ({ id }) => ({
+                url: "/quality/delete-quality",
+                method: 'DELETE',
+                params: {
+                    id
+                },
+                // invalidatesTags: ["Quality"]
+            }),
+            invalidatesTags: ["Quality"]
         })
     }),
 });
 
-export const { useEditQualityMutation,useGetQualityQuery, useAddQualityMutation, useAddYarnMutation, useGetYarnQuery, useGetCompanyQuery, useAddCompanyMutation,useGetEditQualityQuery } = QualityApi;
+export const { useDeleteQualityMutation, useEditQualityMutation, useGetQualityQuery, useAddQualityMutation, useAddYarnMutation, useGetYarnQuery, useGetCompanyQuery, useAddCompanyMutation, useGetEditQualityQuery } = QualityApi;

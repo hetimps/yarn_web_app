@@ -45,7 +45,7 @@ export default function Drawers() {
 
                     <List className='draewr_item'>
 
-                        <ListItem disablePadding onClick={() => Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" || location.pathname === "/Addquality" || location.pathname === "/Editquality" ? "active" : ""
+                        <ListItem disablePadding onClick={() => Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" || location.pathname === "/Addquality" || location.pathname === "/Editquality" || location.pathname === "/Viewquality" ? "active" : ""
                             }`}  >
                             <ListItemButton component="a" disableRipple>
                                 <ListItemIcon className='draewr_dashboard_icon'  >

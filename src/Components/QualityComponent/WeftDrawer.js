@@ -13,8 +13,6 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
-
-    console.log(weftData, "weftDataweftData")
     let initialValues = {
         weftCompany: "",
         weftYarn: "",
@@ -33,6 +31,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
     if (editweftData.index !== undefined && weftData[editweftData.index]) {
         initialValues = weftData[editweftData.index];
     }
+    
     else {
         initialValues = {
             weftCompany: "",
@@ -92,26 +91,16 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
     useEffect(() => {
         if (weftData && weftData.length > 0) {
-
             const defaultWeftPicks = weftData.map((weftItem) => Number(weftItem.weftPick));
             setPickSum(defaultWeftPicks);
-
             const defaultWeftWidth = weftData.map((weftItem) => Number(weftItem.weftWidth));
             setWidth(defaultWeftWidth);
-
-        }
-    }, [weftData]);
-
-    useEffect(() => {
-        if (weftData && weftData.length > 0) {
             const defaultWeftCost = weftData.map((weftItem) => Number(weftItem.weftCost));
             setweftSumCost(defaultWeftCost)
-
             const defaultWeftWeight = weftData.map((weftItem) => Number(weftItem.weftWeight));
             setweftSumweight(defaultWeftWeight)
         }
-    }, [weftData])
-
+    }, [weftData, setPickSum, setWidth, setweftSumCost, setweftSumweight]);
 
 
     const addWeftPickValue = async (value) => {
@@ -119,53 +108,43 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             setPickSum([...pickSum, value]);
         }
     };
-
     const addWidthValue = async (value) => {
         if (!Width.includes(value)) {
             setWidth([...Width, value]);
         }
     };
-
-
-
     const addweftCost = async (value) => {
         if (!weftSumCost.includes(value)) {
             setweftSumCost([...weftSumCost, value]);
         }
     };
-
     const addweftWeight = async (value) => {
         if (!weftSumweight.includes(value)) {
             setweftSumCost([...weftSumweight, value]);
         }
     };
 
-
-
-
-
     const calculation = async (values, setFieldValue) => {
-
         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
-        const cost = Number((value * values.weftYarnRate).toFixed(2));
+        const cost =  Number((value * values.weftYarnRate).toFixed(2));
         const weight = Number((value * 100).toFixed(2));
         const pick = Number(values.weftPick)
         const width = Number(values.weftWidth)
 
+       
         values.weftWeight = weight;
         values.weftCost = cost;
-
-
-
         addweftWeight(weight)
         addweftCost(cost)
         addWeftPickValue(pick)
         addWidthValue(width)
     }
 
+    
+    
+
 
     const handleSubmit = async (values, { resetForm, setFieldValue }) => {
-
         if (editweftData.index !== undefined) {
             const updatedWeftData = [...weftData];
             updatedWeftData[editweftData.index] = values;
@@ -173,11 +152,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         } else {
             setweftData([...weftData, values]);
         }
-
         calculation(values, setFieldValue);
-
-
-
         resetForm();
         toggleDrawerWeft();
     }
@@ -246,14 +221,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                     </div>
                                 </Paper>
 
-
-
-
                                 <div className='from'>
-
-
                                     <div className='yarns_wrap'>
-
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
@@ -302,9 +271,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 )}
                                             />
                                         </FormControl>
-
-
-
                                         <IconButton className='add_icon' onClick={handleOpenAddYarn}>
                                             <AddCircleOutlineIcon className='add_yarn' />
                                         </IconButton>
@@ -314,10 +280,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                     <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftYarn && errors.weftYarn}</FormHelperText>
 
 
-
-
                                     <div className='company_wrap'>
-
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
@@ -349,7 +312,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                             />
                                         </FormControl>
 
-
                                         <IconButton className='add_icon'>
                                             <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
                                         </IconButton>
@@ -358,11 +320,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                     <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftCompany && errors.weftCompany}</FormHelperText>
 
                                     <div className='input_all'>
-
-
                                         <div className='inputs'>
-
-
                                             <InputLabel className="drawer_label" >
                                                 {String.weftDeniar_placeholder}
                                             </InputLabel>
@@ -372,7 +330,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 value={values.weftDeniar}
                                                 error={touched.weftDeniar && Boolean(errors.weftDeniar)}
                                                 helperText={touched.weftDeniar && errors.weftDeniar} placeholder={String.weftDeniar_placeholder} name="weftDeniar" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-
                                         </div>
 
                                         <div className='inputs'>
@@ -395,7 +352,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 value={values.weftWidth}
                                                 error={touched.weftWidth && Boolean(errors.weftWidth)}
                                                 helperText={touched.weftWidth && errors.weftWidth} placeholder={String.weftWidth_placeholder} name="weftWidth" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-
                                         </div>
 
                                         <div className='inputs'>
@@ -418,8 +374,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 value={values.weftWastage}
                                                 error={touched.weftWastage && Boolean(errors.weftWastage)}
                                                 helperText={touched.weftWastage && errors.weftWastage} placeholder={String.weftWastage_placeholder} name={"weftWastage"} autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-
-
                                         </div>
 
                                         <div className='inputs'>
@@ -435,10 +389,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
                                         <div className='btns'>
                                             <Stack direction="row" spacing={1}>
-
                                                 <Button onClick={toggleDrawerWefts} className='btn_cancel' variant="outlined">{String.warp_Cancel}</Button>
                                                 <Button className='btn_done' type='submit' variant="contained">{String.warp_done}</Button>
-
                                             </Stack>
                                         </div>
                                     </div>

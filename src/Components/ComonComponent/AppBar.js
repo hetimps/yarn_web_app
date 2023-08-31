@@ -8,12 +8,14 @@ import { String } from '../../constants/String';
 import { AppBar } from './Comon_Component';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '../../Redux/AuthSlice';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 
 export default function AppBars({ haddings }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [openConfirmation, setOpenConfirmation] = useState(false);
+
     const handleLogout = () => {
         navigate('/Phonno');
         localStorage.removeItem("token")
@@ -61,7 +63,7 @@ export default function AppBars({ haddings }) {
                 </Toolbar>
             </AppBar>
 
-            <Dialogs open={openConfirmation} onClose={handleCloseConfirmation} tital={String.dialog_tital} text={String.dialog_desc} log_out={handleLogout} />
+            <Dialogs icon={<NewReleasesIcon/>} open={openConfirmation} onClose={handleCloseConfirmation} tital={String.dialog_tital} text={String.dialog_desc} Action={handleLogout} />
         </>
 
     )

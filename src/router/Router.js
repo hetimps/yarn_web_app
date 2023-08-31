@@ -12,6 +12,8 @@ import Yarn from '../pages/Yarn';
 import User from '../pages/User';
 import AddQuality from '../pages/AddQuality';
 import EditQuality from '../pages/EditQuality';
+import ViewQuality from '../pages/ViewQuality';
+
 
 
 
@@ -36,6 +38,7 @@ export default function Router() {
                 <Route path="/User" element={<User />}></Route>
                 <Route path="/Addquality" element={<AddQuality />}></Route>
                 <Route path="/Editquality" element={<EditQuality />}></Route>
+                <Route path="/Viewquality" element={<ViewQuality />}></Route>
                 <Route path="*" element={<Navigate to="/Phonno" />} />
             </Routes>
         </BrowserRouter >

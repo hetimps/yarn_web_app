@@ -11,7 +11,7 @@ body {
 }
 
 .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
-    border-color: $primary !important;
+    border-color: $red !important;
 }
 
 
@@ -113,6 +113,9 @@ body {
             }
         }
     }
+
+
+
 
 
 

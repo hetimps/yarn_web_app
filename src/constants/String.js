@@ -73,6 +73,9 @@ export const String = {
     Fixed_Cost : "Fixed Cost",
     Per_Pick : "Per Pick",
     Enter_Cost : "Enter Cost",
+    edit_menu :  "Edit",
+    delete_menu : "Delete",
+    view_menu : "View",
 
 
     //add quality
@@ -193,5 +196,12 @@ export const String = {
 
     //edit quality
     edit_Qulaity: "Edit Quality",
+    //delete quality
+    delete_dialog_tital: "Confirm Delete",
+    delete_dialog_desc : 'Are you sure,you want to delete this quality?',
+
+    view_quality : "View Quality",
+
+  
 
 }

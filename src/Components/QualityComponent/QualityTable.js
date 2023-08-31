@@ -7,21 +7,24 @@ import { IoMdAdd } from "react-icons/io";
 import { String } from '../../constants/String'
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import EditIcon from "@mui/icons-material/Edit";
-import { useGetQualityQuery } from '../../api/Quality'
+import { useDeleteQualityMutation, useGetQualityQuery } from '../../api/Quality'
 import Loader from '../ComonComponent/Loader'
 import { useNavigate } from 'react-router-dom'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { toast } from 'react-hot-toast'
+import DeleteDialogs from './DeleteDialogs'
 
 
 export default function QualityTable() {
 
     const [page, setPage] = useState(1);
-    const limit = 15;
+    const limit = 20;
     const [hasmore, setHasMore] = useState(true);
     const [search, setsearch] = useState("");
     const [input, setinput] = useState("");
+    const [DeleteQuality, { isLoading }] = useDeleteQualityMutation({});
     const { data, isFetching, refetch } = useGetQualityQuery({ page, limit, search: search });
     const [QualityData, setQualityData] = useState([]);
     const [total, setTotal] = useState("")
@@ -100,10 +103,54 @@ export default function QualityTable() {
     const handleEdit = () => {
         navigate("/Editquality", {
             state: {
-                "_id": selectedRowId // Use the selected row's _id
+                "_id": selectedRowId 
             }
         });
     };
+
+    const handleView = ()=>{
+        navigate("/Viewquality", {
+            state: {
+                "_id": selectedRowId 
+            }
+        });
+    }
+
+
+
+    const Delete_Quality = async () => {
+        try {
+            const response = await DeleteQuality({ id: selectedRowId });
+            const status = response?.data?.statusCode;
+            const message = response?.data?.message;
+    
+            if (status === 200) {
+                toast.success(message);
+    
+                handleMenuClose();
+                handleCloseConfirmation();
+            } else {
+                toast.error(message);
+                handleMenuClose();
+                handleCloseConfirmation();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    const [openConfirmation, setOpenConfirmation] = useState(false);
+
+    const handleOpenConfirmation = () => {
+        setOpenConfirmation(true);
+    };
+    const handleCloseConfirmation = () => {
+        setOpenConfirmation(false);
+    };
+
+  
+
+
     return (
         <>
             <div className='table_tital'>
@@ -282,7 +329,7 @@ export default function QualityTable() {
                                     </Box>
                                 </TableCell>
                                 <TableCell className="table_border table_cell" >
-                                    <Box className="table_hading_cell" sx={{ marginTop: "-54px" }}   >
+                                    <Box className="table_hading_cell" sx={{ marginTop: "-54px", width: "5px" }}    >
                                         {/* {String.action} */}
                                     </Box>
                                 </TableCell>
@@ -292,7 +339,7 @@ export default function QualityTable() {
                             </TableRow>
                         </TableHead>
 
-                        {isFetching && page === 1 ? (<Box className="table_loading" >
+                        {(isFetching || isLoading) && page === 1 ? (<Box className="table_loading" >
                             <Loader />
                         </Box>) : (!isFetching && sortedData?.length <= 0) || (sortedData?.length <= 0 && search) ? (
                             <Box className="table_loading" >
@@ -359,21 +406,31 @@ export default function QualityTable() {
                                                 className="menus"
                                                 anchorEl={anchorEl}
                                                 open={Boolean(anchorEl)}
-                                                onClose={handleMenuClose}>
+                                                onClose={handleMenuClose}
+                                            >
+                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id)}>
+                                                    <EditIcon className='edit' />
+                                                    <span className='menu-text'>{String.edit_menu}</span>
+                                                </MenuItem>
 
+                                                <MenuItem className='menu' onClick={handleOpenConfirmation}>
+                                                    <DeleteIcon className='edit' />
+                                                    <span className='menu-text'>{String.delete_menu}</span>
+                                                </MenuItem>
 
-
-                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id)} > <EditIcon className='edit' /></MenuItem>
-
-                                                <MenuItem className='menu' ><DeleteIcon className='edit' />  </MenuItem>
-                                                <MenuItem className='menu' >< VisibilityIcon className='edit' /> </MenuItem>
+                                                <MenuItem className='menu' onClick={() => handleView(row?._id)}>
+                                                    <VisibilityIcon className='edit' />
+                                                    <span className='menu-text'>{String.view_menu}</span>
+                                                </MenuItem>
                                             </Menu>
+
                                         </TableRow>
                                     )
 
                                 })}
                             </TableBody>)}
                     </Table>
+                    <DeleteDialogs loading={isLoading} open={openConfirmation} onClose={handleCloseConfirmation} tital={String.delete_dialog_tital} text={String.delete_dialog_desc} Action={Delete_Quality} />
                 </InfiniteScroll>
             </TableContainer>
 
@@ -382,3 +439,4 @@ export default function QualityTable() {
         </>
     )
 }
+// onClick={() => Delete_Quality()}

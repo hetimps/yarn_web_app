@@ -240,6 +240,11 @@
                 margin-bottom: -15px;
 
             }
+            .dialog_delete_icon{
+                color: $red;
+                font-size: 4rem;
+                margin-bottom: -15px;
+            }
         }
 
         .dialog_tital_txt {
@@ -270,6 +275,19 @@
             text-transform: capitalize !important;
             font-family: $font-family !important;
             background-color: $primary;
+            color: $white !important;
+            box-shadow: none !important;
+            margin-top: -10px !important;
+            margin-bottom: 12px !important;
+            width: 80px !important;
+            height: 2.6rem;
+            margin-left: 0.5rem;
+        }
+
+        .ddialog_yes{
+            text-transform: capitalize !important;
+            font-family: $font-family !important;
+            background-color: $red;
             color: $white !important;
             box-shadow: none !important;
             margin-top: -10px !important;

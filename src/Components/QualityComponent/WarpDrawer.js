@@ -16,33 +16,17 @@ import { useEffect } from 'react';
 export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
 
 
-    console.log(WrapSumweight,"WrapSumweight")
-    useEffect(() => {
-        if (wrapData && wrapData.length > 0) {
-
-            const defaultWrapCost = wrapData.map((wrapData) => Number(wrapData.warpCost));
-            setWrapSumCost(defaultWrapCost)
-
-        }
-    }, [wrapData])
-
-
-    useEffect(() => {
-        if (wrapData && wrapData.length > 0) {
-
-
-            const defaultWrapWeight = wrapData.map((wrapData) => Number(wrapData.warpWeight));
-            setWrapSumweight(defaultWrapWeight)
-
-        }
-    }, [wrapData])
-
+    console.log(WrapSumweight, "WrapSumweight")
     useEffect(() => {
         if (wrapData && wrapData.length > 0) {
             const defaultTar = wrapData.map((wrapData) => Number(wrapData.warpBeamEnds));
             setTar(defaultTar)
+            const defaultWrapCost = wrapData.map((wrapData) => Number(wrapData.warpCost));
+            setWrapSumCost(defaultWrapCost)
+            const defaultWrapWeight = wrapData.map((wrapData) => Number(wrapData.warpWeight));
+            setWrapSumweight(defaultWrapWeight)
         }
-    }, [wrapData])
+    }, [wrapData, setTar, setWrapSumCost, setWrapSumweight])
 
 
     const addwrapCost = (value) => {
@@ -63,14 +47,10 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         }
     };
 
-
-    console.log(wrapSumCost, "qqqqqqqqqqqqqqqqqqqqqq")
-
     let initialValues =
     {
         warpCompany: "",
         warpYarn: "",
-
         warpDeniar: "",
         warpBeamEnds: "",
         warpShortage: "",
@@ -78,8 +58,8 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         tpm: "",
         warpYarnName: "",
         warpCompnayName: "",
-        warpWeight:"",
-        warpCost:""
+        warpWeight: "",
+        warpCost: ""
     };
 
     if (editdata.index !== undefined && wrapData[editdata.index]) {
@@ -90,7 +70,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         {
             warpCompany: "",
             warpYarn: "",
-
             warpDeniar: "",
             warpBeamEnds: "",
             warpShortage: "",
@@ -100,8 +79,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
             warpCompnayName: "",
         };
     }
-
-
 
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
@@ -128,10 +105,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
     const { data: CompanyData } = useGetCompanyQuery();
 
 
-    console.log(YarnData?.result)
-
-
-
     const validationSchema = Yup.object().shape({
         warpYarn: Yup.string().required(String.warpyarn_required),
         warpCompany: Yup.string().required(String.warpcompany_required),
@@ -142,15 +115,12 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         tpm: Yup.string().matches(Regex.wrap_item, String.tpm_valid)
     });
 
-    const cal = async (values, setFieldValue) => { // Pass setFieldValue as a parameter
+    const calculation = async (values, setFieldValue) => {
         const value = (((values?.warpDeniar * values?.warpBeamEnds) * values?.warpShortage / 100 + (values?.warpDeniar * values?.warpBeamEnds)) / 9000000)
         const cost = Number((value * values?.warpYarnRate).toFixed(2));
-
         const weight = Number((value * 100)?.toFixed(2));
-
         values.warpWeight = weight;
         values.warpCost = cost;
-
         const tar = values?.warpBeamEnds;
         addwrapCost(cost)
         addwrapWeight(weight)
@@ -159,16 +129,14 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
 
     const handleSubmit = (values, { setFieldValue }) => {
         if (editdata.index !== undefined) {
-
             const updatedWrapData = [...wrapData];
             updatedWrapData[editdata.index] = values;
             setWrapData(updatedWrapData);
         } else {
-
             setWrapData([...wrapData, values]);
         }
 
-        cal(values, setFieldValue);
+        calculation(values, setFieldValue);
 
         if (editdata.index !== undefined) {
             editdata.index = undefined
@@ -202,8 +170,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                         const cost = Number((value * values.warpYarnRate).toFixed(2));
                         return (
                             <Form>
-
-
 
                                 <Paper className='heading_paper'>
 
@@ -401,7 +367,6 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                 error={touched.warpYarnRate && Boolean(errors.warpYarnRate)}
                                                 helperText={touched.warpYarnRate && errors.warpYarnRate} placeholder={String.yrate_placeholder} name="warpYarnRate" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
                                         </div>
-
 
                                         <div className='inputs'>
                                             <InputLabel className="drawer_label" >
