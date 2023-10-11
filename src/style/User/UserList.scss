@@ -1,0 +1,257 @@
+@import "../Color.js/color";
+
+
+.user_List {
+
+    .user_invite_buttons_container {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+        .user__search_container_wraper {
+            display: flex;
+        }
+
+        .user_invite_search_container {
+            margin-top: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .user_invite_count {
+            margin-top: 2rem;
+        }
+
+        .alluser_invite_count {
+            margin-top: 5rem;
+        }
+
+
+        .user_invite_buttons {
+            color: $primary;
+            display: flex;
+            margin-top: 0.8rem !important;
+            font-family: $font-family !important;
+            text-transform: capitalize;
+            font-weight: 600;
+            background-color: $secondary;
+            border-radius: 9px;
+            width: 9rem;
+            height: 3.12rem;
+
+            :hover {
+                background-color: $secondary;
+            }
+
+        }
+    }
+
+
+}
+
+
+
+
+//user list
+
+.user_list {
+    margin-top: 1rem !important;
+    // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px;
+    // background-color: red;
+    border-radius: 10px !important;
+
+
+    .user_list_item {
+        display: flex;
+        align-items: center;
+        border-radius: 10px !important;
+        padding-top: 0px;
+        margin: -7px 0px -7px -6px;
+    }
+
+    .user_list_img {
+        width: 55px;
+        height: 55px;
+        border-radius: 8px;
+        object-fit: cover;
+        background-color: $primary;
+    }
+
+    .user_list_content {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user_list_text {
+        margin-left: 1.7rem;
+        margin-top: 00px;
+        margin-bottom: 00px;
+    }
+
+    .time_container {
+        display: flex;
+        margin-left: 1.7rem;
+        margin-top: 5px;
+    }
+
+    .watch_icon {
+
+        color: $grey;
+        font-size: 1rem !important;
+        margin-right: 3px;
+    }
+
+    .user_list_text_time {
+
+        margin-left: 0rem !important;
+    }
+
+    .user_list_icon_right {
+        color: $green;
+        font-size: 1.7rem !important;
+    }
+
+    .user_list_icon_cancel {
+        color: $red;
+        font-size: 1.7rem !important;
+    }
+
+    .user_list_icon_edit {
+        color: $primary;
+        font-size: 1.5rem !important;
+        border: 2px solid $primary;
+        border-radius: 50%;
+        padding: 2px;
+    }
+
+    // .css-i4bv87-MuiSvgIcon-root {
+    //     font-size: 2rem;
+
+    // }
+}
+
+//loader
+.user_list_loader {
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-data-message {
+    height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px !important;
+}
+
+// data not found
+.user_list_data_not_found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+//accepted dialog -------------
+
+.adialog_container {
+
+
+
+    .MuiDialog-paper {
+        border-radius: 20px;
+        width: 22%;
+        padding: 0.5rem 0.5rem;
+    }
+
+    .ainvite_dialog_tital {
+
+
+
+
+        font-family: $font-family !important;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: -10px !important;
+        margin-top: 5px !important;
+
+
+
+
+        .ainvite_dialog_tital_txt {
+            text-align: center;
+            margin: auto;
+
+        }
+
+        .ainvite_dialog_close {
+            cursor: pointer;
+            // margin-top: 0.5rem !important;
+            font-size: 20px !important;
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            margin-right: 8px !important;
+            margin-top: 5px !important;
+
+
+        }
+
+    }
+
+
+    .ainvite_dialog_content {
+
+
+        .ainvite_form {
+            margin-top: 0.5rem;
+
+            .checkbox_conatiner {
+                justify-content: space-between;
+            }
+
+            .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+                border-color: $primary !important;
+            }
+
+            .ainvite_dialog_butto_container {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 1.5rem;
+                gap: 1rem;
+
+                .ainvite_dialog_button {
+                    font-family: $font-family;
+                    text-transform: capitalize;
+                    color: $white;
+                    border-radius: 12px;
+                    height: 2.9rem;
+                    width: 100%;
+                    font-size: 1rem;
+                    margin-bottom: 0.8rem !important;
+                }
+
+
+                .cancel_dialog_button {
+                    font-family: $font-family;
+                    text-transform: capitalize;
+                    color: $font_color !important;
+                    border-radius: 12px;
+                    height: 2.9rem;
+                    width: 100%;
+                    font-size: 1rem;
+                    margin-bottom: 0.8rem !important;
+                    border-color: $font_color !important;
+                }
+            }
+        }
+
+    }
+
+}

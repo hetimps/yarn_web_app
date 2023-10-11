@@ -16,22 +16,22 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-hot-toast'
 import DeleteDialogs from './DeleteDialogs'
 
-
 export default function QualityTable() {
-
     const [page, setPage] = useState(1);
     const limit = 20;
     const [hasmore, setHasMore] = useState(true);
     const [search, setsearch] = useState("");
     const [input, setinput] = useState("");
-    const [DeleteQuality, { isLoading }] = useDeleteQualityMutation({});
-    const { data, isFetching, refetch } = useGetQualityQuery({ page, limit, search: search });
     const [QualityData, setQualityData] = useState([]);
     const [total, setTotal] = useState("")
     const [ref, setRef] = useState(false);
     const [selectedRowId, setSelectedRowId] = useState(null);
-
     const navigate = useNavigate();
+    const [DeleteQuality, { isLoading }] = useDeleteQualityMutation({});
+    const { data, isFetching, refetch } = useGetQualityQuery({ page, limit, search: search });
+    const ppp = useGetQualityQuery({ page, limit, search: search });
+
+    console.log(ppp,"ppp")
 
     useEffect(() => {
         setRef(true);
@@ -64,7 +64,6 @@ export default function QualityTable() {
         direction: '',
     });
 
-    console.log("usetgwdbi", sortConfig)
 
     const handleSort = (columnName) => {
         let direction = 'asc';
@@ -93,7 +92,8 @@ export default function QualityTable() {
 
     const handleMenuOpen = (event, rowId) => {
         setAnchorEl(event.currentTarget);
-        setSelectedRowId(rowId); // Store the selected row's _id
+        setSelectedRowId(rowId);
+
     };
 
     const handleMenuClose = () => {
@@ -103,30 +103,28 @@ export default function QualityTable() {
     const handleEdit = () => {
         navigate("/Editquality", {
             state: {
-                "_id": selectedRowId 
+                "_id": selectedRowId
             }
         });
     };
 
-    const handleView = ()=>{
+    const handleView = () => {
         navigate("/Viewquality", {
             state: {
-                "_id": selectedRowId 
+                "_id": selectedRowId
             }
         });
     }
-
-
 
     const Delete_Quality = async () => {
         try {
             const response = await DeleteQuality({ id: selectedRowId });
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
-    
+
             if (status === 200) {
                 toast.success(message);
-    
+
                 handleMenuClose();
                 handleCloseConfirmation();
             } else {
@@ -138,7 +136,7 @@ export default function QualityTable() {
             console.log(error);
         }
     };
-    
+
     const [openConfirmation, setOpenConfirmation] = useState(false);
 
     const handleOpenConfirmation = () => {
@@ -147,9 +145,6 @@ export default function QualityTable() {
     const handleCloseConfirmation = () => {
         setOpenConfirmation(false);
     };
-
-  
-
 
     return (
         <>
@@ -235,7 +230,6 @@ export default function QualityTable() {
                                 <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
                                 </TableCell>
-
                             </TableRow>
 
                             <TableRow className="table_header">
@@ -252,7 +246,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityWeight')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -260,7 +253,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell" >
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityCost')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -268,8 +260,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px", borderBottom: "none" }}>
                                         {String.pick}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalPick')} />
-
-
                                     </Box>
                                 </TableCell>
 
@@ -277,7 +267,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.tar}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalBeamEnds')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -285,7 +274,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.width}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalWidth')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -293,7 +281,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.gsm}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort("gsm")} />
-
                                     </Box>
                                 </TableCell>
 
@@ -301,7 +288,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWeftWeight')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -309,7 +295,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell">
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWeftCost')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -317,7 +302,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWarpWeight')} />
-
                                     </Box>
                                 </TableCell>
 
@@ -325,7 +309,6 @@ export default function QualityTable() {
                                     <Box className="table_hading_cell">
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWarpCost')} />
-
                                     </Box>
                                 </TableCell>
                                 <TableCell className="table_border table_cell" >
@@ -333,9 +316,6 @@ export default function QualityTable() {
                                         {/* {String.action} */}
                                     </Box>
                                 </TableCell>
-
-
-
                             </TableRow>
                         </TableHead>
 
@@ -348,20 +328,14 @@ export default function QualityTable() {
                         ) : (
                             <TableBody>
                                 {sortedData.map((row, index) => {
-
-                                    console.log("_iddddddddd", row._id)
-
                                     return (
-
                                         <TableRow
                                             key={index}
-
                                             sx={{
                                                 '& td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
                                                 '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
-                                                '&:hover': { backgroundColor: '#f5f5f5' },
-                                            }}
-                                        >
+                                                '&:hover': { backgroundColor: '#f5f5f5' }
+                                            }}>
                                             <TableCell className="table_border" component="th" scope="row">
                                                 {row?.qualityName || '-'}
                                             </TableCell>
@@ -395,7 +369,6 @@ export default function QualityTable() {
                                             <TableCell className="table_border" align="left">
                                                 {row?.warp?.totalWarpCost || '-'}
                                             </TableCell>
-
                                             <TableCell className="table_border" align="left">
                                                 <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id)}>
                                                     <MoreVertIcon className='more_icon' />
@@ -406,9 +379,9 @@ export default function QualityTable() {
                                                 className="menus"
                                                 anchorEl={anchorEl}
                                                 open={Boolean(anchorEl)}
-                                                onClose={handleMenuClose}
-                                            >
-                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id)}>
+                                                onClose={handleMenuClose}>
+                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id
+                                                )}>
                                                     <EditIcon className='edit' />
                                                     <span className='menu-text'>{String.edit_menu}</span>
                                                 </MenuItem>
@@ -423,20 +396,14 @@ export default function QualityTable() {
                                                     <span className='menu-text'>{String.view_menu}</span>
                                                 </MenuItem>
                                             </Menu>
-
                                         </TableRow>
                                     )
-
                                 })}
                             </TableBody>)}
                     </Table>
                     <DeleteDialogs loading={isLoading} open={openConfirmation} onClose={handleCloseConfirmation} tital={String.delete_dialog_tital} text={String.delete_dialog_desc} Action={Delete_Quality} />
                 </InfiniteScroll>
             </TableContainer>
-
-
-
         </>
     )
 }
-// onClick={() => Delete_Quality()}

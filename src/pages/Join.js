@@ -20,22 +20,20 @@ export default function Join() {
 
   const { data, isFetching, refetch } = useCheckStatusQuery();
 
-
   // const [requestStatus, setrequestStatus] = useState("");
-
 
   const status = async () => {
 
     if (!isFetching) {
-      await refetch();
+      const response = await refetch();
 
-      const RequestStatus = data?.result?.requestStatus;
-    
-      if (RequestStatus === "pending") {
-        toast.error(String.pending_status)
-      }
+      const RequestStatus = response?.data?.result?.requestStatus;
 
-      else if (RequestStatus === "rejected") {
+      console.log(RequestStatus, "RequestStatus")
+
+      if (RequestStatus === "rejected") {
+
+        console.log(RequestStatus, "1")
         navigaet("/Company");
         toast.error(String.rejected_status)
       }
@@ -43,6 +41,9 @@ export default function Join() {
       else if (RequestStatus === "approved") {
         navigaet("/Quality");
         toast.success(String.approved_status)
+      }
+      else {
+        toast.error(String.pending_status)
       }
 
     }

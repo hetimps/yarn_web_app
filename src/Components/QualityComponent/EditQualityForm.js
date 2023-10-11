@@ -18,14 +18,16 @@ import { toast } from 'react-hot-toast';
 import WarpDrawer from './WarpDrawer';
 import WeftDrawer from './WeftDrawer';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
+
+
 export default function EditQualityForm() {
 
     const { state } = useLocation();
     const [id, setId] = useState(state ? state?._id : '');
     const { data, isFetching, refetch } = useGetEditQualityQuery(id);
     const [qeditdata, setQEditdata] = useState([]);
-
 
     useEffect(() => {
         refetch();
@@ -37,7 +39,7 @@ export default function EditQualityForm() {
             setId(state?._id);
         }
         if (data) {
-     
+
             setQEditdata(data?.result);
             setSelectedOption(data?.result?.expenseType)
         }
@@ -66,8 +68,8 @@ export default function EditQualityForm() {
     const defaultValue = {
         qulaity: data?.result?.qualityName,
         cost: data?.result?.cost,
-        rpm: data?.result?.rpm ,
-        eff: data?.result?.efficiency,
+        rpm: data?.result?.rpm || 0,
+        eff: data?.result?.efficiency || 0,
         mach: data?.result?.machine,
         reed: data?.result?.info?.reed,
         border: data?.result?.info?.border,
@@ -142,9 +144,7 @@ export default function EditQualityForm() {
             ? Number(totalCosts) + Number(value.cost)
             : Number(totalCosts) + Number(value.cost * sumOfPicks);
 
-        const cost = selectedOption === "Fixed Cost"
-            ? Number(value.cost)
-            : Number(value.cost * sumOfPicks);
+        const cost = Number(value.cost)
 
         const TotalBeamEnds = tars
 
@@ -156,26 +156,26 @@ export default function EditQualityForm() {
             ? 0
             : (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2));
 
-            
-                console.log("rpmrpmrpm",value.rpm);
-
-            
         const body = {
+
             qualityName: qualityName,
             qualityWeight: qualityWeight,
             qualityCost: qualityCost,
             TotalBeamEnds: TotalBeamEnds,
             TotalPick: TotalPick,
             TotalWidth: TotalWidth,
+
             warp: {
                 totalWarpWeight: WrapsumOfweights,
                 totalWarpCost: WrapsumOfCosts,
                 warpData: wrapData.map((element) => {
-                    const { warpYarnName, warpCompnayName, tpm, _id, ...rest } = element;
-
+                    const { warpYarnName, warpCompnayName
+                        , tpm, warpCompany, warpYarn, _id, ...rest } = element;
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
+                    rest.warpCompany = element?.warpCompany?._id || element?.warpCompany;
+                    rest.warpYarn = element?.warpYarn?._id || element?.warpYarn;
                     return rest;
                 })
             },
@@ -184,16 +184,15 @@ export default function EditQualityForm() {
                 totalWeftWeight: WeftsumOfweights,
                 totalWeftCost: WeftsumOfCosts,
                 weftData: weftData.map((element) => {
-                    const { wefYarnName, wefCompnayName, _id, tpm, ...rest } = element;
-
+                    const { wefYarnName, wefCompnayName, weftCompnay, wetfYarn, _id, tpm, ...rest } = element;
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
+                    rest.weftCompany = element?.weftCompany?._id || element?.weftCompany;
+                    rest.weftYarn = element?.weftYarn?._id || element?.weftYarn;
                     return rest;
                 })
             },
-           
-
 
             expenseType: selectedOption,
             cost: cost,
@@ -213,10 +212,9 @@ export default function EditQualityForm() {
             }
         }
 
-       
+
         try {
             const response = await EditQuality({ body, id })
-
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
             if (status === 200) {
@@ -242,6 +240,27 @@ export default function EditQualityForm() {
         setOpenConfirmation(false);
     };
 
+    const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
+
+
+    const handleOpenWrapConfirmation = () => {
+        setcancelWrapConfirmation(true);
+    };
+    const handleCloseWrapConfirmation = () => {
+        setcancelWrapConfirmation(false);
+    };
+
+
+    const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
+
+
+    const handleOpenWefConfirmation = () => {
+        setcancelWefConfirmation(true);
+    };
+    const handleCloseWefConfirmation = () => {
+        setcancelWefConfirmation(false);
+    };
+
     const Back = () => {
         navigaet("/Quality")
     }
@@ -261,13 +280,14 @@ export default function EditQualityForm() {
 
     const [wrapSumweight, setWrapSumweight] = useState([])
 
-    const WrapsumOfCost = wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
-    const WrapsumOfweight = wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
+    const WrapsumOfCost = wrapData?.length === 0 ? (0) : wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
+    const WrapsumOfweight = wrapData?.length === 0 ? (0) : wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
 
 
     const [WrapsumOfCosts, setWrapsumOfCosts] = useState(0)
 
     const [WrapsumOfweights, setWrapsumOfweights] = useState(0)
+
 
     useEffect(() => {
         setWrapsumOfCosts(qeditdata?.warp?.totalWarpCost)
@@ -287,8 +307,8 @@ export default function EditQualityForm() {
     const [weftSumCost, setweftSumCost] = useState([])
     const [weftSumweight, setweftSumweight] = useState([])
 
-    const WeftsumOfCost = weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
-    const WeftsumOfweight = weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
+    const WeftsumOfCost = weftData?.length === 0 ? (0) : weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
+    const WeftsumOfweight = weftData?.length === 0 ? (0) : weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
 
 
 
@@ -315,36 +335,32 @@ export default function EditQualityForm() {
     useEffect(() => {
         settotalWeights(qeditdata?.qualityWeight)
         settotalCosts(qeditdata?.qualityCost)
-    }, [qeditdata])
+    }, [settotalWeights, settotalCosts, refetch])
 
     useEffect(() => {
         const totalWeight = parseFloat(WrapsumOfweights) + parseFloat(WeftsumOfweights);
         const totalCost = parseFloat(WrapsumOfCosts) + parseFloat(WeftsumOfCosts);
         settotalWeights(totalWeight.toFixed(2))
         settotalCosts(totalCost.toFixed(2))
-
     }, [WrapsumOfweights, WeftsumOfweights, WrapsumOfCosts, WeftsumOfCosts])
 
 
     //pick
 
-
-
     const [pickSum, setPickSum] = useState([]);
+    const sumOfPick = weftData?.length === 0 ? (0) : pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
 
-    const sumOfPick = pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
     const sumOfPicks = Number(sumOfPick.toFixed(2))
 
 
     //width
 
     const [Width, setWidth] = useState([]);
-    const widths = Width.reduce((sum, width) => sum + parseFloat(width), 0);
-
+    const widths = weftData?.length === 0 ? (0) : Width.reduce((sum, width) => sum + parseFloat(width), 0);
 
     //tar
     const [Tar, setTar] = useState([]);
-    const tars = Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
+    const tars = wrapData?.length === 0 ? (0) : Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
 
     const [editdata, seteditdata] = useState([]);
     const editData = (index) => {
@@ -355,6 +371,22 @@ export default function EditQualityForm() {
         }
         seteditdata(editData)
     }
+
+    const removeWrapBox = (index) => {
+        const updatedWrapData = [...wrapData];
+        updatedWrapData.splice(index, 1);
+        setWrapData(updatedWrapData);
+        handleCloseWrapConfirmation();
+
+    };
+
+    const removeweftBox = (index) => {
+        const updatedWeftData = [...weftData];
+        updatedWeftData.splice(index, 1);
+        setweftData(updatedWeftData);
+        handleCloseWefConfirmation();
+    }
+
 
     const [editweftData, seteditweftData] = useState([]);
 
@@ -404,10 +436,22 @@ export default function EditQualityForm() {
                                     <Stack direction="row" spacing={1}>
                                         <Button className='btn_weight' variant="contained" >{String.weight} {totalWeights} {String.akg}</Button>
                                         <Button className='btn_cost' variant="contained" >
-                                            {selectedOption === "Fixed Cost"
-                                                ? (`${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`)
-                                                : (`${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`)
+
+                                            {/* 
+                                            {(selectedOption === "Fixed Cost")
+                                                ? (qeditdata?.cost !== values.cost
+                                                    ? `${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`
+                                                    : `${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`)
+                                                : (`${String.Cost} ${qeditdata?.qualityCost} ${String.money}`) 
+                                            } */}
+
+                                            {(selectedOption === "Fixed Cost")
+
+                                                ? `${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`
+                                                : `${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`
+
                                             }
+
                                         </Button>
                                     </Stack>
                                 </div>
@@ -464,6 +508,7 @@ export default function EditQualityForm() {
 
                                     <div className='wrap_box' >
 
+
                                         {wrapData?.map((wrap, index) => {
                                             const value = (((wrap.warpDeniar * wrap.warpBeamEnds) * wrap.warpShortage / 100 + (wrap.warpDeniar * wrap.warpBeamEnds)) / 9000000)
                                             const weight = (value * 100).toFixed(2);
@@ -480,15 +525,21 @@ export default function EditQualityForm() {
                                                         }}
                                                     >
 
+                                                        <div className='close_icon' onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            handleOpenWrapConfirmation()
+                                                            // removeWrapBox(index);
+                                                        }}>
+                                                            <CancelIcon className='close' />
+                                                        </div>
 
                                                         <div className='heading1' >
 
                                                             <div>
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
-                                                                    {wrap.warpCompnayName}
+                                                                    {wrap?.warpCompany?.yarnCompanyName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
 
@@ -515,7 +566,7 @@ export default function EditQualityForm() {
                                                                     className='heading_text'
                                                                     variant="span"
                                                                     component="span">
-                                                                    {wrap.warpYarnName}
+                                                                    {wrap?.warpYarn?.yarnName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
 
@@ -645,15 +696,22 @@ export default function EditQualityForm() {
                                                             );
                                                         }}>
 
+                                                        <div className='close_icon' onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            // removeweftBox(index);
+                                                            handleOpenWefConfirmation()
+                                                        }}>
+                                                            <CancelIcon className='close' />
+                                                        </div>
+
 
                                                         <div className='heading1' >
 
                                                             <div>
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
-                                                                    {weft.wefCompnayName}
+                                                                    {weft?.weftCompany?.yarnCompanyName || weft?.wefCompnayName}
                                                                 </Typography>
                                                             </div>
 
@@ -674,7 +732,7 @@ export default function EditQualityForm() {
                                                                     className='heading_text'
                                                                     variant="span"
                                                                     component="span">
-                                                                    {weft.wefYarnName}
+                                                                    {weft?.weftYarn?.yarnName || weft?.wefYarnName}
                                                                 </Typography>
                                                             </div>
 
@@ -771,8 +829,8 @@ export default function EditQualityForm() {
                                             <InputLabel className="qulaity_label">
                                                 {String.Expense}
                                             </InputLabel>
-                                            <div className='costs'>
 
+                                            <div className='costs'>
                                                 <div className='expense_radios'>
                                                     <RadioGroup
                                                         className='radios'
@@ -928,15 +986,15 @@ export default function EditQualityForm() {
 
                                 </div>
                             </Paper>
-
                         </div>
                     </Form>
                 )}
             </Formik >)}
 
-
             <ConformDialog open={openConfirmation} onClose={handleCloseConfirmation} tital={String.con_dialog_tital} text={String.dialog_desc} back={Back} />
 
+            <ConformDialog open={cancelWrapConfirmation} onClose={handleCloseWrapConfirmation} tital={String.wrapdialog_tital} back={removeWrapBox} />
+            <ConformDialog open={cancelWeftConfirmation} onClose={handleCloseWefConfirmation} tital={String.weftdialog_tital} back={removeweftBox} />
             <WarpDrawer editdata={editdata} seteditdata={seteditdata} Tar={Tar} setTar={setTar} WrapSumweight={wrapSumweight} setWrapSumweight={setWrapSumweight} wrapSumCost={wrapSumCost} setWrapSumCost={setWrapSumCost} wrapData={wrapData} setWrapData={setWrapData} toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
 
             <WeftDrawer editweftData={editweftData} seteditweftData={seteditweftData} setWidth={setWidth} Width={Width} pickSum={pickSum} setPickSum={setPickSum} weftSumweight={weftSumweight} setweftSumweight={setweftSumweight} weftSumCost={weftSumCost} setweftSumCost={setweftSumCost} weftData={weftData} setweftData={setweftData} toggleDrawerWeft={toggleDrawerWeft} isDrawerOpenWeft={isDrawerOpenWeft} />

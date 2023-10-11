@@ -13,10 +13,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useEffect } from 'react';
 
 
-export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
+export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
 
-
-    console.log(WrapSumweight, "WrapSumweight")
     useEffect(() => {
         if (wrapData && wrapData.length > 0) {
             const defaultTar = wrapData.map((wrapData) => Number(wrapData.warpBeamEnds));
@@ -26,6 +24,8 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
             const defaultWrapWeight = wrapData.map((wrapData) => Number(wrapData.warpWeight));
             setWrapSumweight(defaultWrapWeight)
         }
+
+
     }, [wrapData, setTar, setWrapSumCost, setWrapSumweight])
 
 
@@ -34,6 +34,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
             setWrapSumCost([...wrapSumCost, value]);
         }
     };
+
 
     const addwrapWeight = (value) => {
         if (!WrapSumweight.includes(value)) {
@@ -63,7 +64,22 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
     };
 
     if (editdata.index !== undefined && wrapData[editdata.index]) {
-        initialValues = wrapData[editdata.index];
+        const wrapDatas = wrapData[editdata.index];
+
+
+        initialValues = {
+            warpCompany: wrapDatas?.warpCompany?._id || wrapDatas?.warpCompany,
+            warpYarn: wrapDatas?.warpYarn?._id || wrapDatas?.warpYarn,
+            warpDeniar: wrapDatas?.warpDeniar,
+            warpBeamEnds: wrapDatas?.warpBeamEnds,
+            warpShortage: wrapDatas?.warpShortage,
+            warpYarnRate: wrapDatas?.warpYarn?.yarnRate || wrapDatas?.warpYarnRate,
+            tpm: wrapDatas?.tpm,
+            warpYarnName: wrapDatas?.warpYarn?.yarnName || wrapDatas?.warpYarnName,
+            warpCompnayName: wrapDatas?.warpCompany?.yarnCompanyName || wrapDatas?.warpCompnayName,
+            warpWeight: wrapDatas?.warpWeight,
+            warpCost: wrapDatas?.warpCost
+        }
     }
     else {
         initialValues =
@@ -80,6 +96,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         };
     }
 
+   
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
 
@@ -125,9 +142,13 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         addwrapCost(cost)
         addwrapWeight(weight)
         addTar(tar)
+
     }
 
+  
+
     const handleSubmit = (values, { setFieldValue }) => {
+
         if (editdata.index !== undefined) {
             const updatedWrapData = [...wrapData];
             updatedWrapData[editdata.index] = values;
@@ -136,12 +157,14 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
             setWrapData([...wrapData, values]);
         }
 
+    
         calculation(values, setFieldValue);
 
         if (editdata.index !== undefined) {
             editdata.index = undefined
         }
         toggleDrawer();
+
     }
 
     const toggleDrawers = () => {
@@ -212,6 +235,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                 options={YarnData?.result || []}
                                                 getOptionLabel={(option) => option ? `${option.yarnName} - ${option.yarnRate} ₹` : ''}
                                                 value={YarnData?.result?.find((yarnItem) => yarnItem._id === values.warpYarn) || null}
+
                                                 onChange={(e, newValue) => {
                                                     if (newValue) {
                                                         setFieldValue('warpYarn', newValue._id || '');
@@ -227,6 +251,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                         setFieldError('warpYarn', String.warpyarn_required);
                                                     }
                                                 }}
+
                                                 renderOption={(props, yarnItem) => (
                                                     <MenuItem
                                                         {...props}
@@ -235,6 +260,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                         value={yarnItem?._id}
                                                         sx={{ display: "flex", justifyContent: "space-between" }}
                                                     >
+                        
                                                         <div>
                                                             {yarnItem?.yarnName}
                                                         </div>
@@ -243,6 +269,8 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                         </div>
                                                     </MenuItem>
                                                 )}
+
+
                                                 renderInput={(params) => (
                                                     <TextField
                                                         {...params}
@@ -250,11 +278,9 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                         variant='outlined'
                                                     />
                                                 )}
+
                                             />
-
                                         </FormControl>
-
-
 
                                         <IconButton className='add_icon' onClick={handleOpenAddYarn}>
                                             <AddCircleOutlineIcon className='add_yarn' />
@@ -280,6 +306,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                 getOptionLabel={(option) => option?.yarnCompanyName || ''}
                                                 value={CompanyData?.result?.find((company) => company._id === values.warpCompany) || null}
                                                 onChange={(e, newValue) => {
+
                                                     if (newValue) {
                                                         setFieldValue('warpCompany', newValue._id || '');
                                                         setFieldValue('warpCompnayName', newValue.yarnCompanyName || '');

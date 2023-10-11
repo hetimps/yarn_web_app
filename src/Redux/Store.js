@@ -7,8 +7,9 @@ import { UserApi } from '../api/UserInfo';
 import { CompanyApi } from '../api/Compnay';
 import { JoinApi } from '../api/Join';
 import { QualityApi } from '../api/Quality';
-import authReducer from './AuthSlice';
 import { AuthApi } from '../api/Auth';
+import { CompanyUser } from '../api/Companyuser.js';
+
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +20,9 @@ export const store = configureStore({
         [CompanyApi.reducerPath]: CompanyApi.reducer,
         [JoinApi.reducerPath]: JoinApi.reducer,
         [QualityApi.reducerPath]: QualityApi.reducer,
-        [AuthApi.reducerPath]:AuthApi.reducer,
+        [AuthApi.reducerPath]: AuthApi.reducer,
+        [CompanyUser.reducerPath] : CompanyUser.reducer,
+        
     },
 
     middleware: (getDefaultMiddleware) =>
@@ -31,6 +34,7 @@ export const store = configureStore({
             .concat(JoinApi.middleware)
             .concat(QualityApi.middleware)
             .concat(AuthApi.middleware)
+            .concat(CompanyUser.middleware)
 })
 
 setupListeners(store.dispatch);

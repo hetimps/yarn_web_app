@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from '@mui/icons-material/Clear';
 import "../../style/Quality/Drawer_Navbar.scss"
 
-export default function Search({ setpage, setsearch, setinput, input, isFetching }) {
+export default function Search({ setpage, setsearch, setinput, input, isFetching ,disabled }) {
 
     const onKeyDown = (e) => {
         if (e.key === "Enter") {
@@ -52,6 +52,8 @@ export default function Search({ setpage, setsearch, setinput, input, isFetching
                 value={input}
                 onChange={isFetching ? null : handleChange} 
                 onKeyDown={onKeyDown}
+
+                disabled={disabled}
             />
         </>
     )

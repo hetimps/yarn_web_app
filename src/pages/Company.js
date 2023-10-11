@@ -57,19 +57,19 @@ export default function Company() {
                   </Typography>
                 </Box>
                 <Formik>
-                    <Form>
-                      <Box className="login_filed">
+                  <Form>
+                    <Box className="login_filed">
 
-                        <div >
-                          <Box className="user_btns">
-                            <Button onClick={handleOpenAdd} className='user_btn' variant="outlined">{String.add_company}</Button>
-                            <Button onClick={handleOpenJoin} className='user_btn' variant="outlined">{String.join_company}</Button>
-                          </Box>
+                      <div >
+                        <Box className="user_btns">
+                          <Button onClick={handleOpenAdd} className='user_btn' variant="outlined">{String.add_company}</Button>
+                          <Button onClick={handleOpenJoin} className='user_btn' variant="outlined">{String.join_company}</Button>
+                        </Box>
 
-                        </div>
+                      </div>
 
-                      </Box>
-                    </Form>
+                    </Box>
+                  </Form>
                 </Formik>
               </Container>
             </Grid>
@@ -82,7 +82,7 @@ export default function Company() {
         </Paper>
       </Box>
 
-      <CompanyDialog open={openAdd} onClose={handleCloseAdd}  />
+      <CompanyDialog open={openAdd} onClose={handleCloseAdd} />
       <JoinDialog open={openJoin} onClose={handleCloseJoin} />
     </>
   )

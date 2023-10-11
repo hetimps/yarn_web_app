@@ -22,14 +22,15 @@ body {
 .css-6hp17o-MuiList-root-MuiMenu-list {
     max-height: 300px !important;
 }
-.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
-    box-shadow:none !important;
-   
+
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+    box-shadow: none !important;
+
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
 
 }
 
-.editpage_loader{
+.editpage_loader {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,9 +54,11 @@ body {
         align-items: center;
         justify-content: space-between;
 
+
         .first_heading {
             display: flex;
             align-items: center;
+
 
 
             .add_arrow {
@@ -70,7 +73,6 @@ body {
             }
 
             .add_tital {
-
                 margin-left: 1rem;
                 font-size: 1.3rem;
             }
@@ -152,6 +154,39 @@ body {
             }
 
 
+            .abc {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .box {
+                width: 200px;
+                height: 150px;
+                border: 1px solid #ccc;
+                margin: 10px;
+                position: relative;
+            }
+
+            .content {
+                padding: 10px;
+            }
+
+            .close-button {
+                position: absolute;
+                top: -9px;
+                right: -6px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 18px;
+                color: #999;
+            }
+
+            .close-button:hover {
+                color: #333;
+            }
 
 
 
@@ -223,7 +258,7 @@ body {
 
                 .error-text {
                     font-weight: 600;
-                    color: $primary;
+                    color: $red;
                     font-size: 0.75rem;
                     margin-top: 0.3rem;
                 }
@@ -231,8 +266,26 @@ body {
 
             .wrap_box {
                 display: flex;
-                flex-direction: row;
-                
+                // flex-direction: row;
+                flex-wrap: wrap;
+                position: relative;
+
+                .close_icon {
+                    display: flex;
+                    justify-content: flex-end;
+                    cursor: pointer;
+                    position: absolute;
+                    top: -7px;
+                    right: -8px;
+                    z-index: 1;
+
+                    .close {
+                        font-size: 19px !important;
+                        color: $primary !important;
+
+                    }
+                }
+
 
                 .box_content {
                     border: 2px dashed $primary;
@@ -241,10 +294,12 @@ body {
                     display: flex;
                     flex-direction: column;
                     width: 20rem;
-                    height: 8rem;
+                    height: 9rem;
                     padding: 0.5rem;
-                    margin-right: 0.5rem;
-                    
+                    margin-right: 3rem;
+                    position: relative;
+
+
 
                     .heading_text {
                         font-size: 14px;
@@ -281,6 +336,9 @@ body {
                 }
 
             }
+
+
+
 
             .expense_pepar {
                 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -717,6 +775,15 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center !important;
+
+        .cdialog_tital_heading {
+            text-align: center;
+            font-weight: 600;
+            font-size: 20px !important;
+            margin-bottom: 5px;
+
+
+        }
 
         .cdialog_info {
             text-align: center;

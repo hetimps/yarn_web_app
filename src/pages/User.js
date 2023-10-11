@@ -4,9 +4,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import AppBars from '../Components/ComonComponent/AppBar';
 import Drawers from '../Components/ComonComponent/Drawers';
-import QualityTable from '../Components/QualityComponent/QualityTable';
 
-import {DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
+import { DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
+import UserList from '../Components/UserComponent/UserList';
 
 
 export default function User() {
@@ -18,7 +18,7 @@ export default function User() {
 
       <Main open={true}>
         <DrawerHeader />
-        < QualityTable />
+        < UserList />
       </Main>
     </Box>
   );

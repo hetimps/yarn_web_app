@@ -84,11 +84,8 @@ export default function AddCompannyDialog({ open, onClose }) {
                                         error={touched.yarnCompanyName && Boolean(errors.yarnCompanyName)}
                                         helperText={touched.yarnCompanyName && errors.yarnCompanyName} placeholder={String.company_placeholder} id="outlined-basic" autoComplete='off' sx={{ width: "100%" }} variant="outlined" />
                                 </div>
-
-
-
+                                
                                 <div className='btns'>
-
                                     {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
                                         <Button onClick={onClose} variant="outlined" className='ccancel'>{String.ccancel}</Button>
                                         <Button type='submit' variant="contained" className='cadd' >

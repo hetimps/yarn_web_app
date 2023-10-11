@@ -34,7 +34,7 @@ export default function CompanyDialog({ open, onClose }) {
 
             if (status === 200) {
                 toast.success(message)
-               
+
                 navigaet("/Quality")
             }
             else {

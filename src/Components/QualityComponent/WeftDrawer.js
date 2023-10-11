@@ -28,10 +28,25 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         weftWeight: "",
     };
 
+    console.log("weftDataweftData", weftData)
     if (editweftData.index !== undefined && weftData[editweftData.index]) {
-        initialValues = weftData[editweftData.index];
+        const weftDatas = weftData[editweftData.index];
+        initialValues = {
+            weftCompany: weftDatas?.weftCompany?._id || weftDatas?.weftCompany,
+            weftYarn: weftDatas?.weftYarn?._id || weftDatas?.weftYarn,
+            weftDeniar: weftDatas?.weftDeniar,
+            weftPick: weftDatas?.weftPick,
+            weftWidth: weftDatas?.weftWidth,
+            weftWastage: weftDatas?.weftWastage,
+            weftYarnRate: weftDatas?.weftYarn?.yarnRate || weftDatas?.weftYarnRate,
+            tpm: weftDatas?.tpm,
+            wefYarnName: weftDatas?.weftYarn?.yarnName || weftDatas?.wefYarnName,
+            wefCompnayName: weftDatas?.weftCompany?.yarnCompanyName || weftDatas?.wefCompnayName,
+            weftWeight: weftDatas.weftWeight
+        }
+
     }
-    
+
     else {
         initialValues = {
             weftCompany: "",
@@ -126,12 +141,12 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
     const calculation = async (values, setFieldValue) => {
         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
-        const cost =  Number((value * values.weftYarnRate).toFixed(2));
+        const cost = Number((value * values.weftYarnRate).toFixed(2));
         const weight = Number((value * 100).toFixed(2));
         const pick = Number(values.weftPick)
         const width = Number(values.weftWidth)
 
-       
+
         values.weftWeight = weight;
         values.weftCost = cost;
         addweftWeight(weight)
@@ -140,8 +155,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         addWidthValue(width)
     }
 
-    
-    
+
+
 
 
     const handleSubmit = async (values, { resetForm, setFieldValue }) => {
@@ -281,6 +296,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
 
                                     <div className='company_wrap'>
+
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
@@ -290,6 +306,9 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 getOptionLabel={(option) => option?.yarnCompanyName || ''}
                                                 value={CompanyData?.result?.find((company) => company._id === values.weftCompany) || null}
                                                 onChange={(e, newValue) => {
+
+                                                    { console.log(newValue, "newValuenewValue") }
+
                                                     if (newValue) {
                                                         setFieldValue('weftCompany', newValue._id || '');
                                                         setFieldValue('wefCompnayName', newValue.yarnCompanyName || '');
