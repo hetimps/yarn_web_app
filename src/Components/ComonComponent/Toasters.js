@@ -1,15 +1,14 @@
 import React from 'react'
 import { Toaster } from 'react-hot-toast'
 
-
 export default function Toasters() {
     const toasterStyles = {
         fontFamily: 'Poppins,sans-serif', 
     };
+
     return (
         <>
             <Toaster toastOptions={{
-
                 // duration: 10000,
                 style: toasterStyles, success: {
                     iconTheme: {
@@ -25,8 +24,7 @@ export default function Toasters() {
                 }
             }}
                 position="top-right"
-                reverseOrder={false}
-            />
+                reverseOrder={false}/>
         </>
     )
 }

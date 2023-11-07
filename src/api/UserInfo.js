@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const prepareHeaders = (headers) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    console.log(token)
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-    }
-    return headers;
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log(token)
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+  return headers;
 };
 
 export const UserApi = createApi({
@@ -24,11 +24,11 @@ export const UserApi = createApi({
       }),
 
     }),
-    
+
   }),
 });
 
-export const { useUserInfoMutation} = UserApi;
+export const { useUserInfoMutation } = UserApi;
 
 
 

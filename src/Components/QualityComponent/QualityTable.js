@@ -15,8 +15,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-hot-toast'
 import DeleteDialogs from './DeleteDialogs'
+import { useProfileQuery } from '../../api/Auth'
 
-export default function QualityTable() {
+export default function QualityTable({ Userdata, UserisFetching }) {
     const [page, setPage] = useState(1);
     const limit = 20;
     const [hasmore, setHasMore] = useState(true);
@@ -29,9 +30,7 @@ export default function QualityTable() {
     const navigate = useNavigate();
     const [DeleteQuality, { isLoading }] = useDeleteQualityMutation({});
     const { data, isFetching, refetch } = useGetQualityQuery({ page, limit, search: search });
-    const ppp = useGetQualityQuery({ page, limit, search: search });
-
-    console.log(ppp,"ppp")
+    const [createdByMap, setCreatedByMap] = useState({});
 
     useEffect(() => {
         setRef(true);
@@ -49,7 +48,7 @@ export default function QualityTable() {
             }
             setHasMore(data?.result?.data?.length === limit);
         }
-    }, [data, page, ref, isFetching, search, input, limit]);
+    }, [data, page, ref, isFetching, search, input, limit, Userdata, UserisFetching]);
 
     useEffect(() => {
         refetch()
@@ -64,14 +63,12 @@ export default function QualityTable() {
         direction: '',
     });
 
-
     const handleSort = (columnName) => {
         let direction = 'asc';
         if (sortConfig.columnName === columnName && sortConfig.direction === 'asc') {
             direction = 'desc';
         }
         setSortConfig({ columnName, direction });
-
     };
     const sortedData = QualityData ? [...QualityData].sort((a, b) => {
         if (sortConfig.columnName !== '') {
@@ -84,22 +81,26 @@ export default function QualityTable() {
         return 0;
     }) : [];
 
-
     const addQuality = () => {
         navigate("/Addquality")
     }
     const [anchorEl, setAnchorEl] = useState(null);
+    // const handleMenuOpen = (event, rowId ,createdBy) => {
+    //     setAnchorEl(event.currentTarget);
+    //     setSelectedRowId(rowId);
+    //     setCreatedBy(createdBy)
 
-    const handleMenuOpen = (event, rowId) => {
+    // };
+
+    const handleMenuOpen = (event, rowId, createdBy) => {
         setAnchorEl(event.currentTarget);
         setSelectedRowId(rowId);
-
+        // Use an object spread to update the createdByMap
+        setCreatedByMap((prevMap) => ({ ...prevMap, [rowId]: createdBy }));
     };
-
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-
     const handleEdit = () => {
         navigate("/Editquality", {
             state: {
@@ -107,7 +108,6 @@ export default function QualityTable() {
             }
         });
     };
-
     const handleView = () => {
         navigate("/Viewquality", {
             state: {
@@ -146,6 +146,35 @@ export default function QualityTable() {
         setOpenConfirmation(false);
     };
 
+    const [showAddQualityButton, setShowAddQualityButton] = useState(true);
+    const [showEditButton, setShowEditButton] = useState(true);
+    const [showDeleteButton, setShowDeleteButton] = useState(true);
+    const [adminShowButton, setAdminShowButton] = useState(false);
+    const [adminShowEditButton, setAdminShowEditButton] = useState(false);
+    const [adminShowDeleteButton, setAdminShowDeleteButton] = useState(false);
+    const [showMoreIcon, setShowMoreIcon] = useState(true);
+
+    // const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
+
+    useEffect(() => {
+        if (!UserisFetching) {
+            if (Userdata?.result?.role === "view") {
+                setShowMoreIcon(false)
+                setShowAddQualityButton(false);
+                setShowEditButton(false);
+                setShowDeleteButton(false);
+            }
+            else if (Userdata?.result?.role === "admin" || Userdata?.result?.role === "root") {
+                setAdminShowEditButton(true);
+                setAdminShowDeleteButton(true);
+                setAdminShowButton(true)
+            } else if (Userdata?.result?.role === "write" || Userdata?.result?.role === "view") {
+                setAdminShowButton(false)
+            }
+            Userdata?.result?.requestStatus === "rejected" && navigate("/Company")
+        }
+    }, [Userdata, navigate, UserisFetching, sortedData])
+
     return (
         <>
             <div className='table_tital'>
@@ -154,10 +183,7 @@ export default function QualityTable() {
                     <Typography className="data_count" variant="span" id="tableTitle" component="div">
                         {sortedData?.length === 0 ? (
                             <span> {null}</span>
-                        ) : (
-                            <>
-                                {sortedData?.length.toString().padStart(2, '0')} {String.quality_on_screen}  ({total.toString().padStart(2, '0')} Found)
-                            </>
+                        ) : (<> {sortedData?.length.toString().padStart(2, '0')} {String.quality_on_screen}  ({total.toString().padStart(2, '0')} Found)</>
                         )}
                     </Typography>
                 </div>
@@ -169,11 +195,10 @@ export default function QualityTable() {
                             input={input}
                             setsearch={setsearch}
                             setpage={setPage} />
-
                     </Box>
-                    <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' onClick={addQuality} >
+                    {showAddQualityButton && <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' onClick={addQuality} >
                         {String.add_quality}
-                    </Button>
+                    </Button>}
                 </div>
                 {/* </div> */}
             </div>
@@ -190,10 +215,8 @@ export default function QualityTable() {
                         <Loader />
                     </Box>) : (null)}>
                     <Table aria-label="simple table">
-
                         <TableHead sx={{ position: 'sticky', top: 0 }}>
                             <TableRow className="table_header" >
-
                                 <TableCell className="table_border tables_main_hading " colSpan={3} sx={{ borderBottom: "none" }}>
                                     <Box className="table_hading_cell" >
                                         {String.quality}
@@ -227,13 +250,11 @@ export default function QualityTable() {
                                         {String.warp}
                                     </Box>
                                 </TableCell>
-                                <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
+                                {showMoreIcon && <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
-                                </TableCell>
+                                </TableCell>}
                             </TableRow>
-
                             <TableRow className="table_header">
-
                                 <TableCell className="table_border table_cell"  >
                                     <Box className="table_hading_cell tables_hading_show" sx={{ width: "12rem" }}   >
                                         {String.quality_name}
@@ -241,81 +262,71 @@ export default function QualityTable() {
                                     </Box>
                                 </TableCell>
 
-
                                 <TableCell className="table_border table_cell" sx={{ bordertop: "none" }}>
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityWeight')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell">
                                     <Box className="table_hading_cell" >
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityCost')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" sx={{ borderTop: "none" }}   >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px", borderBottom: "none" }}>
                                         {String.pick}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalPick')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.tar}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalBeamEnds')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.width}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('TotalWidth')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px" }} >
                                         {String.gsm}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort("gsm")} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWeftWeight')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell">
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWeftCost')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell">
                                         {String.kg}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWarpWeight')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell">
                                         {String.money}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('totalWarpCost')} />
                                     </Box>
                                 </TableCell>
-                                <TableCell className="table_border table_cell" >
+                                {showMoreIcon && <TableCell className="table_border table_cell" >
                                     <Box className="table_hading_cell" sx={{ marginTop: "-54px", width: "5px" }}    >
                                         {/* {String.action} */}
                                     </Box>
-                                </TableCell>
+                                </TableCell>}
                             </TableRow>
                         </TableHead>
 
@@ -334,16 +345,16 @@ export default function QualityTable() {
                                             sx={{
                                                 '& td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
                                                 '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
-                                                '&:hover': { backgroundColor: '#f5f5f5' }
-                                            }}>
+                                                '&:hover': { backgroundColor: '#f5f5f5' }}}>
+
                                             <TableCell className="table_border" component="th" scope="row">
                                                 {row?.qualityName || '-'}
                                             </TableCell>
                                             <TableCell className="table_border" align="left">
-                                                {row?.qualityWeight || '-'}
+                                                {row?.qualityWeight.toFixed(2) || '-'}
                                             </TableCell>
                                             <TableCell className="table_border" align="left">
-                                                {row?.qualityCost || '-'}
+                                                {row?.qualityCost.toFixed(2) || '-'}
                                             </TableCell>
                                             <TableCell className="table_border" align="left">
                                                 {row?.TotalPick || '-'}
@@ -369,32 +380,60 @@ export default function QualityTable() {
                                             <TableCell className="table_border" align="left">
                                                 {row?.warp?.totalWarpCost || '-'}
                                             </TableCell>
-                                            <TableCell className="table_border" align="left">
-                                                <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id)}>
-                                                    <MoreVertIcon className='more_icon' />
-                                                </Box>
-                                            </TableCell>
+
+                                            {/* {showMoreIcon && (<TableCell className="table_border" align="left">
+                                                {(((Userdata?.result?.role === "write" && Userdata?.result?.companyId?.createdBy !== row?.createdBy)) || adminShowButton) ? (
+                                                    <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
+                                                        <MoreVertIcon className='more_icon' />
+                                                    </Box>
+                                                ) : null}
+                                            </TableCell>)} */}
+
+                                            {showMoreIcon && (<TableCell className="table_border" align="left">
+                                                {(((Userdata?.result?.role === "write" && Userdata?.result?.createdBy === row?.createdBy)) || adminShowButton) ? (
+                                                    <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
+                                                        <MoreVertIcon className='more_icon' />
+                                                    </Box>
+                                                ) : null}
+                                            </TableCell>)}
+
+                                            {/* {showMoreIcon && (
+                                                <TableCell className="table_border" align="left">
+                                                    {Userdata?.result?.role === "write" &&
+                                                        Userdata?.result?.createdBy === row?.createdBy ? (
+                                                        <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
+                                                            <MoreVertIcon className='more_icon' />
+                                                        </Box>
+                                                    ) : null}
+                                                </TableCell>
+                                            )} */}
 
                                             <Menu
                                                 className="menus"
                                                 anchorEl={anchorEl}
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleMenuClose}>
-                                                <MenuItem className='menu' onClick={() => handleEdit(row?._id
+                                                {/* {(showEditButton && (Userdata?.result?.role === "write" && Userdata?.result?.companyId?.createdBy !== row?.createdBy)) ? <MenuItem className='menu' onClick={() => handleEdit(row?._id
                                                 )}>
                                                     <EditIcon className='edit' />
                                                     <span className='menu-text'>{String.edit_menu}</span>
-                                                </MenuItem>
+                                                </MenuItem> : (null)} */}
+                                                {((showEditButton && (Userdata?.result?.role === "write" && Userdata?.result?.createdBy === createdByMap[selectedRowId])) || adminShowEditButton) && (
+                                                    <MenuItem className='menu' onClick={() => handleEdit(selectedRowId)}>
+                                                        <EditIcon className='edit' />
+                                                        <span className='menu-text'>{String.edit_menu}</span>
+                                                    </MenuItem>
+                                                )}
 
-                                                <MenuItem className='menu' onClick={handleOpenConfirmation}>
+                                                {((showDeleteButton && (Userdata?.result?.role === "write" && Userdata?.result?.createdBy === createdByMap[selectedRowId])) || adminShowDeleteButton) && (<MenuItem className='menu' onClick={handleOpenConfirmation}>
                                                     <DeleteIcon className='edit' />
                                                     <span className='menu-text'>{String.delete_menu}</span>
-                                                </MenuItem>
+                                                </MenuItem>)}
 
-                                                <MenuItem className='menu' onClick={() => handleView(row?._id)}>
+                                                {((Userdata?.result?.role === "write" && Userdata?.result?.createdBy === createdByMap[selectedRowId]) || adminShowButton) && (<MenuItem className='menu' onClick={() => handleView(row?._id)}>
                                                     <VisibilityIcon className='edit' />
                                                     <span className='menu-text'>{String.view_menu}</span>
-                                                </MenuItem>
+                                                </MenuItem>)}
                                             </Menu>
                                         </TableRow>
                                     )

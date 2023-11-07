@@ -34,21 +34,16 @@ export default function EditQualityForm() {
     }, [refetch])
 
     useEffect(() => {
-
         if (state && !isFetching) {
             setId(state?._id);
         }
         if (data) {
-
             setQEditdata(data?.result);
             setSelectedOption(data?.result?.expenseType)
         }
     }, [state, isFetching, data]);
 
-
     const navigaet = useNavigate();
-
-
     const [selectedOption, setSelectedOption] = useState("");
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -82,9 +77,7 @@ export default function EditQualityForm() {
     };
 
     const [wrapDataRequired, setWrapDataRequired] = useState(false);
-
     const [weftDataRequired, setWeftDataRequired] = useState(false);
-
 
     const validationSchema = Yup.object().shape({
 
@@ -123,20 +116,17 @@ export default function EditQualityForm() {
         else {
             setWrapDataRequired(false);
         }
-
         if (weftData.length === 0) {
             setWeftDataRequired(true);
         }
         else {
             setWeftDataRequired(false);
         }
-
         if (wrapData.length === 0 || weftData.length === 0) {
             return;
         }
 
         //api data
-
         const qualityName = value.qulaity
         const qualityWeight = totalWeights
 
@@ -157,14 +147,12 @@ export default function EditQualityForm() {
             : (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2));
 
         const body = {
-
             qualityName: qualityName,
             qualityWeight: qualityWeight,
             qualityCost: qualityCost,
             TotalBeamEnds: TotalBeamEnds,
             TotalPick: TotalPick,
             TotalWidth: TotalWidth,
-
             warp: {
                 totalWarpWeight: WrapsumOfweights,
                 totalWarpCost: WrapsumOfCosts,
@@ -179,7 +167,6 @@ export default function EditQualityForm() {
                     return rest;
                 })
             },
-
             weft: {
                 totalWeftWeight: WeftsumOfweights,
                 totalWeftCost: WeftsumOfCosts,
@@ -193,8 +180,9 @@ export default function EditQualityForm() {
                     return rest;
                 })
             },
-
             expenseType: selectedOption,
+            expenseCost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
+            // cost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
             cost: cost,
             totalefficiency: totalefficiency,
             rpm: value.rpm !== "" ? value.rpm : 0,
@@ -211,8 +199,6 @@ export default function EditQualityForm() {
                 gsm: value.gsm
             }
         }
-
-
         try {
             const response = await EditQuality({ body, id })
             const status = response?.data?.statusCode;
@@ -232,7 +218,6 @@ export default function EditQualityForm() {
 
     // dialog
     const [openConfirmation, setOpenConfirmation] = useState(false);
-
     const handleOpenConfirmation = () => {
         setOpenConfirmation(true);
     };
@@ -241,8 +226,6 @@ export default function EditQualityForm() {
     };
 
     const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
-
-
     const handleOpenWrapConfirmation = () => {
         setcancelWrapConfirmation(true);
     };
@@ -250,10 +233,7 @@ export default function EditQualityForm() {
         setcancelWrapConfirmation(false);
     };
 
-
     const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
-
-
     const handleOpenWefConfirmation = () => {
         setcancelWefConfirmation(true);
     };
@@ -265,9 +245,7 @@ export default function EditQualityForm() {
         navigaet("/Quality")
     }
 
-
     // set data
-
     useEffect(() => {
         setWrapData(qeditdata?.warp?.warpData)
         setweftData(qeditdata?.weft?.weftData)
@@ -283,11 +261,9 @@ export default function EditQualityForm() {
     const WrapsumOfCost = wrapData?.length === 0 ? (0) : wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WrapsumOfweight = wrapData?.length === 0 ? (0) : wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
 
-
     const [WrapsumOfCosts, setWrapsumOfCosts] = useState(0)
 
     const [WrapsumOfweights, setWrapsumOfweights] = useState(0)
-
 
     useEffect(() => {
         setWrapsumOfCosts(qeditdata?.warp?.totalWarpCost)
@@ -310,17 +286,13 @@ export default function EditQualityForm() {
     const WeftsumOfCost = weftData?.length === 0 ? (0) : weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WeftsumOfweight = weftData?.length === 0 ? (0) : weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
 
-
-
     const [WeftsumOfCosts, setWeftsumOfCosts] = useState(0);
     const [WeftsumOfweights, setWeftsumOfweights] = useState(0)
-
 
     useEffect(() => {
         setWeftsumOfCosts(qeditdata?.weft?.totalWeftCost)
         setWeftsumOfweights(qeditdata?.weft?.totalWeftWeight)
     }, [qeditdata])
-
 
     useEffect(() => {
         setWeftsumOfCosts(Number(WeftsumOfCost.toFixed(2)))
@@ -346,15 +318,12 @@ export default function EditQualityForm() {
 
 
     //pick
-
     const [pickSum, setPickSum] = useState([]);
     const sumOfPick = weftData?.length === 0 ? (0) : pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
 
     const sumOfPicks = Number(sumOfPick.toFixed(2))
 
-
     //width
-
     const [Width, setWidth] = useState([]);
     const widths = weftData?.length === 0 ? (0) : Width.reduce((sum, width) => sum + parseFloat(width), 0);
 
@@ -377,7 +346,6 @@ export default function EditQualityForm() {
         updatedWrapData.splice(index, 1);
         setWrapData(updatedWrapData);
         handleCloseWrapConfirmation();
-
     };
 
     const removeweftBox = (index) => {
@@ -386,8 +354,6 @@ export default function EditQualityForm() {
         setweftData(updatedWeftData);
         handleCloseWefConfirmation();
     }
-
-
     const [editweftData, seteditweftData] = useState([]);
 
     const editWeftData = (index) => {
@@ -400,9 +366,7 @@ export default function EditQualityForm() {
 
     return (
         <>
-
             {isFetching ? (
-
                 <div className='editpage_loader'>
                     <Loader />
                 </div>
@@ -419,10 +383,8 @@ export default function EditQualityForm() {
 
                     <Form>
                         <div className='add_form'>
-
                             {/* heading */}
                             <div className='add_heading'>
-
                                 <div className='first_heading' >
                                     <IconButton className='add_arrow' onClick={handleOpenConfirmation}>
                                         <ArrowBackIcon className='add_qicon' />
@@ -436,22 +398,17 @@ export default function EditQualityForm() {
                                     <Stack direction="row" spacing={1}>
                                         <Button className='btn_weight' variant="contained" >{String.weight} {totalWeights} {String.akg}</Button>
                                         <Button className='btn_cost' variant="contained" >
-
-                                            {/* 
-                                            {(selectedOption === "Fixed Cost")
+                                            {/* {(selectedOption === "Fixed Cost")
                                                 ? (qeditdata?.cost !== values.cost
                                                     ? `${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`
                                                     : `${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`)
-                                                : (`${String.Cost} ${qeditdata?.qualityCost} ${String.money}`) 
+                                                : (`${String.Cost} ${qeditdata?.qualityCost} ${String.money}`)
                                             } */}
 
                                             {(selectedOption === "Fixed Cost")
-
                                                 ? `${String.Cost} ${(Number(totalCosts) + Number(values.cost)).toFixed(2)} ${String.money}`
                                                 : `${String.Cost} ${(Number(totalCosts) + Number(values.cost * sumOfPicks)).toFixed(2)} ${String.money}`
-
                                             }
-
                                         </Button>
                                     </Stack>
                                 </div>
@@ -461,13 +418,9 @@ export default function EditQualityForm() {
                                 </div>
                             </div>
 
-
-
                             <Paper className='from_paper'>
                                 <div className='add_form_filed'>
-
                                     <div className='qulaity_wrap'>
-
                                         <InputLabel className="qulaity_label">
                                             {String.Quality}
                                         </InputLabel>
@@ -478,26 +431,16 @@ export default function EditQualityForm() {
                                             helperText={touched.qulaity && errors.qulaity}
                                             placeholder={String.quality_placeholder} width={"50%"} name={"qulaity"} />
                                     </div>
-
                                     <div className='add_form_btns'>
-
                                         <Button className='btn_warp' variant="outlined"
                                             endIcon={
-
                                                 <div className='add_waicons' onClick={toggleDrawer}>
                                                     <IconButton className='add_waicons_button' >
                                                         <ControlPointIcon />
                                                     </IconButton>
-                                                </div>
-
-                                            } >
-                                            <div>
-                                                {String.warp_b}
-                                            </div>
-
-                                            <div>
-                                                {String.warp_w} {WrapsumOfweights.toFixed(2)} | {String.warp_c} {WrapsumOfCosts.toFixed(2)}
-
+                                                </div>} >
+                                            <div>{String.warp_b} </div>
+                                            <div>{String.warp_w} {WrapsumOfweights.toFixed(2)} | {String.warp_c} {WrapsumOfCosts.toFixed(2)}
                                             </div>
                                         </Button>
                                         {wrapDataRequired && wrapData.length === 0 && (
@@ -505,25 +448,19 @@ export default function EditQualityForm() {
                                         )}
                                     </div>
 
-
                                     <div className='wrap_box' >
-
-
                                         {wrapData?.map((wrap, index) => {
                                             const value = (((wrap.warpDeniar * wrap.warpBeamEnds) * wrap.warpShortage / 100 + (wrap.warpDeniar * wrap.warpBeamEnds)) / 9000000)
                                             const weight = (value * 100).toFixed(2);
                                             const cost = (value * wrap.warpYarnRate).toFixed(2);
                                             return (
-
                                                 <>
                                                     <Box className='box_content' component="span"
-
                                                         onClick={() => {
                                                             editData(
                                                                 index,
                                                             );
-                                                        }}
-                                                    >
+                                                        }}>
 
                                                         <div className='close_icon' onClick={(e) => {
                                                             e.stopPropagation()
@@ -532,9 +469,7 @@ export default function EditQualityForm() {
                                                         }}>
                                                             <CancelIcon className='close' />
                                                         </div>
-
                                                         <div className='heading1' >
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -542,25 +477,15 @@ export default function EditQualityForm() {
                                                                     {wrap?.warpCompany?.yarnCompanyName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
-
-
                                                             <div>
-
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
-
                                                                     {String.money} : {cost}
-
-
                                                                 </Typography>
                                                             </div>
-
-
                                                         </div>
                                                         <div className='heading2' >
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -569,7 +494,6 @@ export default function EditQualityForm() {
                                                                     {wrap?.warpYarn?.yarnName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -578,15 +502,9 @@ export default function EditQualityForm() {
                                                                     {String.kg} : {weight}
                                                                 </Typography>
                                                             </div>
-
-
-
                                                         </div>
-
                                                         <div className='after_heading' >
-
                                                             <div>
-
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
                                                                 <Typography
                                                                     className='heading_text'
@@ -594,11 +512,8 @@ export default function EditQualityForm() {
                                                                     component="span">
                                                                     {wrap.warpDeniar}
                                                                 </Typography>
-
                                                             </div>
-
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Shortage}</InputLabel>
                                                                 <Typography
@@ -607,10 +522,8 @@ export default function EditQualityForm() {
                                                                     component="span">
                                                                     {wrap.warpShortage}
                                                                 </Typography>
-
                                                             </div>
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Ends}</InputLabel>
                                                                 <Typography
@@ -621,8 +534,6 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Y_Rate}</InputLabel>
                                                                 <Typography
@@ -633,8 +544,6 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.TPM}</InputLabel>
                                                                 <Typography
@@ -644,7 +553,6 @@ export default function EditQualityForm() {
                                                                     {wrap.tpm}
                                                                 </Typography>
                                                             </div>
-
                                                         </div>
                                                     </Box >
                                                 </>
@@ -655,22 +563,13 @@ export default function EditQualityForm() {
                                     <div className='add_form_btns'>
                                         <Button className='btn_weft' variant="outlined"
                                             endIcon={
-
                                                 <div className='add_weicons' onClick={toggleDrawerWeft}>
                                                     <IconButton className='add_weicons_button' >
                                                         <ControlPointIcon />
                                                     </IconButton>
-
                                                 </div>}>
-
-                                            <div>
-                                                {String.weft_b}
-                                            </div>
-
-                                            <div>
-                                                {String.warp_w} {WeftsumOfweights.toFixed(2)} | {String.Weft_c} {WeftsumOfCosts.toFixed(2)}
-                                            </div>
-
+                                            <div>{String.weft_b}</div>
+                                            <div>{String.warp_w} {WeftsumOfweights.toFixed(2)} | {String.Weft_c} {WeftsumOfCosts.toFixed(2)}</div>
                                         </Button>
                                         {weftDataRequired && weftData.length === 0 && (
                                             <div className="error-text">{String.WeftData_required}</div>
@@ -678,22 +577,15 @@ export default function EditQualityForm() {
                                     </div>
 
                                     <div className='wrap_box' >
-
                                         {weftData?.map((weft, index) => {
-
                                             const value = (((weft.weftDeniar * weft.weftPick * weft.weftWidth) * weft.weftWastage / 100 + (weft.weftDeniar * weft.weftPick * weft.weftWidth)) / 9000000)
                                             const cost = Number((value * weft.weftYarnRate).toFixed(2));
                                             const weight = Number((value * 100).toFixed(2));
-
                                             return (
-
                                                 <>
                                                     <Box className='box_content' component="span"
-
                                                         onClick={() => {
-                                                            editWeftData(
-                                                                index,
-                                                            );
+                                                            editWeftData(index,);
                                                         }}>
 
                                                         <div className='close_icon' onClick={(e) => {
@@ -704,9 +596,7 @@ export default function EditQualityForm() {
                                                             <CancelIcon className='close' />
                                                         </div>
 
-
                                                         <div className='heading1' >
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -714,7 +604,6 @@ export default function EditQualityForm() {
                                                                     {weft?.weftCompany?.yarnCompanyName || weft?.wefCompnayName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -722,11 +611,8 @@ export default function EditQualityForm() {
                                                                     {String.money} : {cost}
                                                                 </Typography>
                                                             </div>
-
-
                                                         </div>
                                                         <div className='heading2' >
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -735,7 +621,6 @@ export default function EditQualityForm() {
                                                                     {weft?.weftYarn?.yarnName || weft?.wefYarnName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -745,11 +630,8 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                         </div>
-
                                                         <div className='after_heading' >
-
                                                             <div>
-
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
                                                                 <Typography
                                                                     className='heading_text'
@@ -758,9 +640,7 @@ export default function EditQualityForm() {
                                                                     {weft.weftDeniar}
                                                                 </Typography>
                                                             </div>
-
                                                             <div style={{ borderLeft: "1px dashed grey" }} />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Pick}</InputLabel>
                                                                 <Typography
@@ -769,10 +649,8 @@ export default function EditQualityForm() {
                                                                     component="span">
                                                                     {weft.weftPick}
                                                                 </Typography>
-
                                                             </div>
                                                             <div style={{ borderLeft: "1px dashed grey" }} />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Wastage}</InputLabel>
                                                                 <Typography
@@ -783,7 +661,6 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Width}</InputLabel>
                                                                 <Typography
@@ -794,7 +671,6 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Y_Rate}</InputLabel>
                                                                 <Typography
@@ -805,7 +681,6 @@ export default function EditQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.TPM}</InputLabel>
                                                                 <Typography
@@ -821,7 +696,6 @@ export default function EditQualityForm() {
                                             )
                                         })}
                                     </div>
-
 
                                     <Paper className='expense_pepar'>
                                         <div className='add_expense'>
@@ -844,20 +718,17 @@ export default function EditQualityForm() {
                                                     </RadioGroup>
                                                 </div>
 
-
                                                 <div className='cost_label'>
+                                                    {console.log(values.cost, "const")}
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
-
-
 
                                                 {selectedOption === 'Fixed Cost' && (
                                                     <div className='expense_wrap'>
                                                         <TextFields onChange={handleChange}
                                                             value={values.cost} width={"12rem"} placeholder={String.Enter_Cost} name="cost"
                                                             error={touched.cost && Boolean(errors.cost)}
-                                                            helperText={touched.cost && errors.cost}
-                                                        />
+                                                            helperText={touched.cost && errors.cost} />
                                                     </div>
                                                 )}
 
@@ -875,7 +746,6 @@ export default function EditQualityForm() {
 
                                     <Paper className='productions_pepar'>
                                         <div className='add_production'>
-
                                             <div className='productions_lables'>
                                                 <InputLabel className="qulaity_label">
                                                     {String.Production}
@@ -890,16 +760,13 @@ export default function EditQualityForm() {
                                                 </div>
 
                                                 <div className='production_input'>
-
                                                     <InputLabels name={String.Eff} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Eff}
                                                         name="eff" error={touched.eff && Boolean(errors.eff)}
-                                                        helperText={touched.eff && errors.eff} onChange={handleChange} value={values.eff}
-                                                    />
+                                                        helperText={touched.eff && errors.eff} onChange={handleChange} value={values.eff} />
                                                 </div>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.Mach} m={"0 0.5rem 0 0"} />
-
                                                     <TextFields width={"90%"} placeholder={String.Mach}
                                                         name="mach" error={touched.mach && Boolean(errors.mach)}
                                                         helperText={touched.mach && errors.mach} onChange={handleChange} value={values.mach} />
@@ -914,13 +781,7 @@ export default function EditQualityForm() {
                                                     <InputLabels name={String.efficiency} m={"0 0.5rem 0 0"} />
                                                     <div style={{ top: 0, left: 0 }}>
                                                         {sumOfPicks === 0 || values?.rpm === undefined || values?.eff === undefined ? (
-                                                            <TextFields width={"90%"} value={`${(0).toFixed(2)} m/d`} m={"0 0 0 5rem"} />
-                                                        ) : (
-                                                            <TextFields
-                                                                value={`${(((values.rpm / sumOfPicks / 39.37) * (values.eff / 100) * 720).toFixed(2))} m/d`}
-                                                                m={"0 0 0 5rem"}
-                                                            />
-                                                        )}
+                                                            <TextFields width={"90%"} value={`${(0).toFixed(2)} m/d`} m={"0 0 0 5rem"} />) : (<TextFields value={`${(((values.rpm / sumOfPicks / 39.37) * (values.eff / 100) * 720).toFixed(2))} m/d`} m={"0 0 0 5rem"} />)}
                                                     </div>
                                                 </div>
                                             </div>
@@ -954,8 +815,6 @@ export default function EditQualityForm() {
                                                         helperText={touched.steam && errors.steam} onChange={handleChange} value={values.steam} />
                                                 </div>
                                             </div>
-
-
                                             <div className='add_info_wrap' >
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Panno} m={"0 0.5rem 0 0"} />
@@ -971,34 +830,25 @@ export default function EditQualityForm() {
                                                     <InputLabels name={String.Letis} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Letis} name="letis" error={touched.letis && Boolean(errors.letis)}
                                                         helperText={touched.letis && errors.letis} onChange={handleChange} value={values.letis} />
-
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Gsm} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Gsm} name="gsm" error={touched.gsm && Boolean(errors.gsm)}
                                                         helperText={touched.gsm && errors.gsm} onChange={handleChange} value={values.gsm} />
                                                 </div>
-
                                             </div>
                                         </div>
-
                                     </Paper>
-
                                 </div>
                             </Paper>
                         </div>
-                    </Form>
-                )}
+                    </Form>)}
             </Formik >)}
-
             <ConformDialog open={openConfirmation} onClose={handleCloseConfirmation} tital={String.con_dialog_tital} text={String.dialog_desc} back={Back} />
-
             <ConformDialog open={cancelWrapConfirmation} onClose={handleCloseWrapConfirmation} tital={String.wrapdialog_tital} back={removeWrapBox} />
             <ConformDialog open={cancelWeftConfirmation} onClose={handleCloseWefConfirmation} tital={String.weftdialog_tital} back={removeweftBox} />
             <WarpDrawer editdata={editdata} seteditdata={seteditdata} Tar={Tar} setTar={setTar} WrapSumweight={wrapSumweight} setWrapSumweight={setWrapSumweight} wrapSumCost={wrapSumCost} setWrapSumCost={setWrapSumCost} wrapData={wrapData} setWrapData={setWrapData} toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
-
             <WeftDrawer editweftData={editweftData} seteditweftData={seteditweftData} setWidth={setWidth} Width={Width} pickSum={pickSum} setPickSum={setPickSum} weftSumweight={weftSumweight} setweftSumweight={setweftSumweight} weftSumCost={weftSumCost} setweftSumCost={setweftSumCost} weftData={weftData} setweftData={setweftData} toggleDrawerWeft={toggleDrawerWeft} isDrawerOpenWeft={isDrawerOpenWeft} />
         </>
-
     )
 }

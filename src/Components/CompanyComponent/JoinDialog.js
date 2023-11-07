@@ -12,9 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../ComonComponent/Loader';
 
 export default function JoinDialog({ open, onClose }) {
-
     const navigaet = useNavigate();
-
     const defaultValue = {
         companyName: "",
     };
@@ -27,7 +25,6 @@ export default function JoinDialog({ open, onClose }) {
     const handleSubmit = async (values) => {
         console.log(values)
         try {
-
             const response = await Join_Company(values)
             console.log(response)
             const status = response?.data?.statusCode;
@@ -35,8 +32,11 @@ export default function JoinDialog({ open, onClose }) {
 
             if (status === 200) {
                 toast.success(message)
-                navigaet("/Join")
-              
+                navigaet("/Join",{
+                    state : {
+                        "isJoinedCompany": true,
+                    }
+                })
             }
             else {
                 toast.error(message)
@@ -46,7 +46,6 @@ export default function JoinDialog({ open, onClose }) {
             console.log(error)
         }
     }
-
     return (
         <>
             <Dialog
@@ -55,7 +54,6 @@ export default function JoinDialog({ open, onClose }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='dialog_container'>
-
                 <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }} order={1}>
                         <MdClear className="invite_dialog_close" onClick={onClose} />

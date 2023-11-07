@@ -12,10 +12,7 @@ body {
 
 .MuiInputBase-input {
     font-family: $font-family !important;
-
 }
-
-
 
 .MuiFormHelperText-root {
     font-family: $font-family !important;
@@ -25,9 +22,7 @@ body {
 }
 
 .login-container {
-
     .MuiInputBase-root {
-
         border-radius: 12px !important;
         height: 50px;
     }
@@ -42,7 +37,6 @@ body {
     .login_pepar {
         border-radius: 40px !important;
         width: 1080px !important;
-
 
         // img
         .login_img {
@@ -98,14 +92,12 @@ body {
                             color: $primary;
                             font-size: 0.9rem;
                             font-weight: 600;
-
                         }
                     }
 
                     .btn-out {
                         position: relative;
                         width: 100%;
-
 
                         .login_button {
                             position: relative;
@@ -121,10 +113,6 @@ body {
 
                         }
 
-
-
-                       
-
                         //otp link
                         .link {
                             font-family: $font-family ;
@@ -137,9 +125,6 @@ body {
 }
 
 // custome_buttons
-
-
-
 .buttoms_login {
     font-family: $font-family !important;
     text-transform: capitalize !important;
@@ -152,7 +137,6 @@ body {
 }
 
 // phon number
-
 .react-tel-input .form-control {
     font-family: $font-family !important;
     width: 100% !important;
@@ -169,8 +153,6 @@ body {
 
 
 @media (max-width: 1000px) {
-
-
     .login-container {
         background-image: none !important;
         width: 100% !important;
@@ -182,7 +164,6 @@ body {
             align-items: center;
             justify-content: center;
             border-radius: 0rem !important;
-
 
             .login_img {
                 display: none;
@@ -199,7 +180,6 @@ body {
             width: 100% !important;
             border-radius: 0rem !important;
 
-
             .main {
                 width: 400px !important;
 
@@ -214,5 +194,4 @@ body {
 
         }
     }
-
 }

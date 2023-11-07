@@ -10,22 +10,14 @@ body {
     font-family: $font-family;
 }
 
-
 .login-container {
-
     .login_pepar {
 
         //form
         .forms_container {
-
             .main {
-
                 .login_filed {
-
-
-
                     .user_btns {
-
                         .user_btn {
                             width: 100%;
                             border-radius: 12px !important;
@@ -44,19 +36,13 @@ body {
     }
 }
 
-
 // dialog
 
-
 .dialog_container {
-
-    
     .MuiInputBase-root {
-
         border-radius: 12px !important;
         height: 50px;
     }
-
 
     .MuiDialog-paper {
         border-radius: 20px;
@@ -65,23 +51,14 @@ body {
     }
 
     .invite_dialog_tital {
-
-       
-    
- 
         font-family: $font-family !important;
         font-size: 18px;
         font-weight: 600;
         margin-bottom: -10px !important;
         margin-top: 5px !important;
-        
-
-
 
         .invite_dialog_tital_txt {
-
             margin: auto;
-
         }
 
         .invite_dialog_close {
@@ -91,18 +68,12 @@ body {
             position: absolute !important;
             top: 0;
             right: 0;
-           margin-right: 8px !important ;
-           margin-top: 5px !important ;
-     
-
+            margin-right: 8px !important;
+            margin-top: 5px !important;
         }
-
     }
 
-
     .invite_dialog_content {
-
-
         .invite_form {
             margin-top: 0.5rem;
 
@@ -128,7 +99,6 @@ body {
                 }
             }
         }
-
     }
 
 }

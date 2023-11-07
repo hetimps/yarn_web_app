@@ -25,9 +25,7 @@ body {
 
 .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
     box-shadow: none !important;
-
     box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
-
 }
 
 .editpage_loader {
@@ -37,11 +35,9 @@ body {
     height: 100vh;
 }
 
-
 .add_form {
 
     .MuiInputBase-root {
-
         border-radius: 7px !important;
         height: 45px;
     }
@@ -54,29 +50,23 @@ body {
         align-items: center;
         justify-content: space-between;
 
-
         .first_heading {
             display: flex;
             align-items: center;
-
-
 
             .add_arrow {
                 background-color: $primary;
                 color: $white;
 
-
                 .add_qicon {
                     font-size: 20px;
                 }
-
             }
 
             .add_tital {
                 margin-left: 1rem;
                 font-size: 1.3rem;
             }
-
         }
 
         .second_heading {
@@ -116,29 +106,19 @@ body {
         }
     }
 
-
-
-
-
-
     //from
 
     .from_paper {
-
-
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         padding: 1.2rem;
         margin-top: 1.3rem;
         border-radius: 30px;
 
         .add_form_filed {
-
-
             .label {
                 font-family: $font-family ;
                 font-weight: 500;
                 color: $black;
-
             }
 
             .qulaity_label {
@@ -188,12 +168,8 @@ body {
                 color: #333;
             }
 
-
-
-
             .add_form_btns {
                 margin-top: 0.7rem;
-
 
                 .btn_warp {
                     color: $black;
@@ -206,22 +182,18 @@ body {
                     display: flex;
                     justify-content: space-between;
 
-
                     .css-9tj150-MuiButton-endIcon {
                         margin-right: -18px
                     }
 
                     .add_waicons {
-
                         background-color: $primary;
                         color: $white !important;
                         border-radius: 0 7px 7px 0;
 
-
                         .add_waicons_button {
                             color: white;
                         }
-
                     }
                 }
 
@@ -237,13 +209,11 @@ body {
                     justify-content: space-between;
                     width: 100;
 
-
                     .css-9tj150-MuiButton-endIcon {
                         margin-right: -18px
                     }
 
                     .add_weicons {
-
                         background-color: $primary;
                         color: $white !important;
                         border-radius: 0 7px 7px 0;
@@ -251,9 +221,7 @@ body {
                         .add_weicons_button {
                             color: white;
                         }
-
                     }
-
                 }
 
                 .error-text {
@@ -275,17 +243,15 @@ body {
                     justify-content: flex-end;
                     cursor: pointer;
                     position: absolute;
-                    top: -7px;
+                    top: -10px;
                     right: -8px;
                     z-index: 1;
 
                     .close {
                         font-size: 19px !important;
                         color: $primary !important;
-
                     }
                 }
-
 
                 .box_content {
                     border: 2px dashed $primary;
@@ -294,12 +260,10 @@ body {
                     display: flex;
                     flex-direction: column;
                     width: 20rem;
-                    height: 9rem;
+                    height: 7.6rem;
                     padding: 0.5rem;
                     margin-right: 3rem;
                     position: relative;
-
-
 
                     .heading_text {
                         font-size: 14px;
@@ -328,17 +292,11 @@ body {
                     }
 
                     .dashed_border {
-
                         border-left: 1px dashed $font_color;
                     }
-
-
                 }
 
             }
-
-
-
 
             .expense_pepar {
                 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -347,7 +305,6 @@ body {
                 border-radius: 10px;
 
                 .add_expense {
-
                     .costs {
                         display: flex;
                         align-items: center;
@@ -357,12 +314,9 @@ body {
                             margin-top: 0.2rem;
                             margin-left: 1rem;
                             font-weight: 600 !important;
-
                         }
 
                         .expense_radios {
-
-
                             .radios {
                                 margin-top: 0.2rem;
                             }
@@ -371,10 +325,8 @@ body {
                         .expense_wraps {
                             display: flex;
                             align-items: center;
-
                         }
                     }
-
 
                     .MuiFormControlLabel-label {
                         color: $font_color;
@@ -390,16 +342,13 @@ body {
                 border-radius: 10px;
 
                 .add_production {
-
                     .production_input_wrap {
                         margin-top: 1rem;
                         display: flex;
                         align-items: center;
                     }
-
                 }
             }
-
 
             .info_pepar {
                 box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -435,7 +384,6 @@ body {
 .drawer {
 
     .MuiInputBase-root {
-
         border-radius: 12px !important;
         height: 50px;
     }
@@ -454,14 +402,9 @@ body {
             .close_icon {
                 cursor: pointer;
                 margin-top: 4px;
-
             }
-
         }
-
     }
-
-
 
     .from {
         margin-top: 1rem;
@@ -476,7 +419,6 @@ body {
                 width: 98%;
             }
 
-
             .add_icon {
                 background-color: $primary;
                 border-radius: 7px;
@@ -485,12 +427,8 @@ body {
                     color: $white;
                     cursor: pointer;
                     font-size: 28px;
-
                 }
             }
-
-
-
         }
 
         .company_wrap {
@@ -517,8 +455,6 @@ body {
                     font-size: 28px;
                 }
             }
-
-
         }
 
 
@@ -526,8 +462,6 @@ body {
             margin-top: 1rem;
 
             .inputs {
-
-
                 margin-top: 0.8rem;
 
                 .drawer_label {
@@ -539,12 +473,9 @@ body {
 
                 .input {
                     width: 100%;
-
                 }
-
             }
         }
-
 
         .btns {
             right: 0;
@@ -556,7 +487,6 @@ body {
             justify-content: space-between;
 
             .btn_done {
-
                 background-color: $primary;
                 color: $white;
                 text-transform: capitalize;
@@ -566,7 +496,6 @@ body {
                 font-size: 16px;
                 margin-top: 1rem;
                 width: 6rem !important;
-
             }
 
             .btn_cancel {
@@ -581,7 +510,6 @@ body {
                 width: 6rem !important;
             }
         }
-
     }
 }
 
@@ -598,7 +526,6 @@ body {
 
         .icons {
             display: flex;
-
 
             .add_icon {
                 color: $primary;
@@ -617,12 +544,15 @@ body {
 
 .ydialog_container {
     .MuiInputBase-root {
-
         border-radius: 12px !important;
         height: 45px;
     }
 
     .invite_dialog_tital {
+        .yinvite_dialog_tital_txt {
+            text-align: center;
+            font-size: 23px;
+        }
 
         .ydialog_close {
             cursor: pointer;
@@ -649,6 +579,11 @@ body {
             margin-top: 1rem;
         }
 
+        // .yedit_check_box{
+        //     margin-top: 8px;
+        //     margin-left: -5px !important;
+        //     width: 100% !important;
+        // }
     }
 
     .btns {
@@ -685,7 +620,7 @@ body {
 
     .MuiDialog-paper {
         border-radius: 20px !important;
-        width: 400px;
+        width: 415px;
     }
 
 }
@@ -714,14 +649,12 @@ body {
     }
 
     .cdialog_content {
-
         .label {
             font-family: $font-family;
             font-weight: 600;
             margin-bottom: 0.4rem;
             color: $font_color;
         }
-
     }
 
     .btns {
@@ -740,7 +673,6 @@ body {
             margin-top: 1rem;
             width: 6rem !important;
             width: 6rem !important;
-
         }
 
         .cadd {
@@ -748,7 +680,6 @@ body {
             color: $white;
             text-transform: capitalize;
             font-family: $font-family;
-
             height: 2.7rem;
             font-size: 16px;
             margin-top: 1rem;
@@ -758,9 +689,8 @@ body {
 
     .MuiDialog-paper {
         border-radius: 20px !important;
-        width: 400px;
+        width: 415px;
     }
-
 }
 
 
@@ -781,13 +711,10 @@ body {
             font-weight: 600;
             font-size: 20px !important;
             margin-bottom: 5px;
-
-
         }
 
         .cdialog_info {
             text-align: center;
-
         }
 
     }
@@ -818,7 +745,7 @@ body {
 
     .MuiDialog-paper {
         border-radius: 20px !important;
-        width: 400px;
+        width: 415px;
     }
 
 }

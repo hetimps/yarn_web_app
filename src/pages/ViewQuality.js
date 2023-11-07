@@ -11,11 +11,9 @@ import ViewQualityForm from '../Components/QualityComponent/ViewQualityForm';
 export default function ViewQuality() {
   return (
     <Box sx={{ display: 'flex' }}>
-
       <CssBaseline/>
       <AppBars haddings="Quality" />
       <Drawers/>
-
       <Main open={true}>
         <DrawerHeader />
         <ViewQualityForm/>

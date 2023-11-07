@@ -1,33 +1,25 @@
 @import "../Color.js/color";
 
-
 .user_List {
 
     .user_invite_buttons_container {
-
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-
         .user__search_container_wraper {
             display: flex;
         }
-
         .user_invite_search_container {
             margin-top: 0.8rem;
             margin-right: 0.5rem;
         }
-
         .user_invite_count {
             margin-top: 2rem;
         }
-
         .alluser_invite_count {
             margin-top: 5rem;
         }
-
-
         .user_invite_buttons {
             color: $primary;
             display: flex;
@@ -39,15 +31,11 @@
             border-radius: 9px;
             width: 9rem;
             height: 3.12rem;
-
             :hover {
                 background-color: $secondary;
             }
-
         }
     }
-
-
 }
 
 
@@ -61,7 +49,6 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px;
     // background-color: red;
     border-radius: 10px !important;
-
 
     .user_list_item {
         display: flex;
@@ -98,30 +85,28 @@
     }
 
     .watch_icon {
-
         color: $grey;
         font-size: 1rem !important;
         margin-right: 3px;
     }
 
     .user_list_text_time {
-
         margin-left: 0rem !important;
     }
 
     .user_list_icon_right {
         color: $green;
-        font-size: 1.7rem !important;
+        font-size: 2rem !important;
     }
 
     .user_list_icon_cancel {
         color: $red;
-        font-size: 1.7rem !important;
+        font-size: 2rem !important;
     }
 
     .user_list_icon_edit {
         color: $primary;
-        font-size: 1.5rem !important;
+        font-size: 1.7rem !important;
         border: 2px solid $primary;
         border-radius: 50%;
         padding: 2px;
@@ -160,9 +145,6 @@
 //accepted dialog -------------
 
 .adialog_container {
-
-
-
     .MuiDialog-paper {
         border-radius: 20px;
         width: 22%;
@@ -170,23 +152,15 @@
     }
 
     .ainvite_dialog_tital {
-
-
-
-
         font-family: $font-family !important;
         font-size: 18px;
         font-weight: 600;
         margin-bottom: -10px !important;
         margin-top: 5px !important;
 
-
-
-
         .ainvite_dialog_tital_txt {
             text-align: center;
             margin: auto;
-
         }
 
         .ainvite_dialog_close {
@@ -198,16 +172,11 @@
             right: 0;
             margin-right: 8px !important;
             margin-top: 5px !important;
-
-
         }
-
     }
 
 
     .ainvite_dialog_content {
-
-
         .ainvite_form {
             margin-top: 0.5rem;
 
@@ -236,7 +205,6 @@
                     font-size: 1rem;
                     margin-bottom: 0.8rem !important;
                 }
-
 
                 .cancel_dialog_button {
                     font-family: $font-family;

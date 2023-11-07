@@ -208,10 +208,37 @@ export const String = {
     //user page
 
     reject_conformgialog_tital: "Are you sure to remove this user invitation?",
-    reject_conformgialog_heading : "Remove Invitation",
-    accepted_dialog_button : "Assign",
-    cancel_dialog_button:"Cancel",
-    accepted_dialog_tital :"What permission do you want to assign to this user?"
+    reject_conformgialog_heading: "Remove Invitation",
+    accepted_dialog_button: "Assign",
+    cancel_dialog_button: "Cancel",
+    accepted_dialog_tital: "What permission do you want to assign to this user?",
+    pending_request: "Pending Request",
+    all_user: "All User",
+
+
+    //yarn table
+    yarnName: "Yarn Name ",
+    yarnRate: "Yarn Rate",
+    yarn_on_screen: "Yarn on screen",
+    add_yarn: "Add Yarn",
+    add_yarn_tital: "Add Yarn",
+    edit_yarn_tital: "Update Yarn",
+    update_yarn: "Update",
+    yarn_checkbox: "Can you reflect this data with all quality?",
+
+
+    // history yarn
+    history_yarn_tital: "History",
+
+    //profile pae
+
+    account:"Account",
+    name : "Name",
+    phone_number : "Phone Number",
+    email_address : "Email Address",
+    company_information : "Company Information",
+    Enter_Company_Address : "Enter Company Address",
+    Company_address : "Company Address"
 
 
 }

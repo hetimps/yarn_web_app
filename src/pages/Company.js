@@ -10,9 +10,7 @@ import JoinDialog from '../Components/CompanyComponent/JoinDialog';
 
 
 export default function Company() {
-
   const [openAdd, setOpenAdd] = useState(false);
-
   const handleCloseAdd = () => {
     setOpenAdd(false);
   };
@@ -20,9 +18,7 @@ export default function Company() {
     setOpenAdd(true);
   };
 
-
   const [openJoin, setOpenJoin] = useState(false);
-
   const handleCloseJoin = () => {
     setOpenJoin(false);
   };

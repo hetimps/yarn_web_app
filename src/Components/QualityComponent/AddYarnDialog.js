@@ -6,9 +6,10 @@ import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
-import { useAddYarnMutation } from '../../api/Quality';
+
 import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
+import { useAddYarnMutation } from '../../api/Yarn';
 
 
 export default function AddYarnDialog({ open, onClose }) {
@@ -20,10 +21,8 @@ export default function AddYarnDialog({ open, onClose }) {
 
     const validationSchema = Yup.object().shape({
         yarnName: Yup.string().required(String.yarn_required).matches(Regex.yarn_name, String.valid_name),
-
         yarnRate: Yup.string().required(String.yarn_rate).matches(Regex.yarn_rate, String.valid_rate),
     });
-
 
     const [Add_Yarn, { isLoading }] = useAddYarnMutation();
 
@@ -50,17 +49,19 @@ export default function AddYarnDialog({ open, onClose }) {
         <>
             <Dialog
                 open={open}
-               
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='ydialog_container'>
 
-                {/* <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
-                    <Box sx={{ marginLeft: "20px " }}>
+                <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
+                    {/* <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="ydialog_close" onClick={onClose} />
-                    </Box>
+                    </Box> */}
 
-                </DialogTitle> */}
+                    <Box className="yinvite_dialog_tital_txt">
+                        {String.add_yarn_tital}
+                    </Box>
+                </DialogTitle>
 
                 <DialogContent className='ydialog_content'>
                     <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit} >
@@ -77,7 +78,6 @@ export default function AddYarnDialog({ open, onClose }) {
                                         {String.yarn_label}
                                     </InputLabel>
                                     <TextField
-
                                         onChange={handleChange}
                                         name='yarnName'
                                         value={values.yarnName}
@@ -91,7 +91,6 @@ export default function AddYarnDialog({ open, onClose }) {
                                         {String.rate_label}
                                     </InputLabel>
                                     <TextField
-
                                         name='yarnRate'
                                         onChange={handleChange}
                                         value={values.yarnRate}
@@ -100,7 +99,6 @@ export default function AddYarnDialog({ open, onClose }) {
                                 </div>
 
                                 <div className='btns'>
-
                                     {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
                                         <Button onClick={onClose} variant="outlined" className='ycancel'>{String.ycancel}</Button>
                                         <Button type='submit' variant="contained" className='yadd' >

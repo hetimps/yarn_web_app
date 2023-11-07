@@ -15,13 +15,10 @@ import Loader from '../Components/ComonComponent/Loader';
 import CustomButtons from "../Components/ComonComponent/CustomButtons";
 import { Regex } from "../constants/Regex";
 
-
 const PhonNo = () => {
-
   const defaultValue = {
     phoneNumber: "",
   };
-
 
   const isValidLast10Digits = (value) => {
     return Regex.mobile_no.test(value);
@@ -35,7 +32,6 @@ const PhonNo = () => {
         return isValidLast10Digits(last10Digits);
       })
   });
-
 
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
@@ -52,7 +48,6 @@ const PhonNo = () => {
     const phoneNumber = values.phoneNumber;
     const Number = (phoneNumber.substr(length));
     console.log(Number);
-
     const body = {
       countryCode: PhonCode,
       mobileNo: Number
@@ -68,9 +63,7 @@ const PhonNo = () => {
         const loginOtp = response?.data?.result?.loginOtp;
         const mobileNo = response?.data?.result?.mobileNo;
         const countryCode = response?.data?.result?.countryCode;
-
         toast.success(message)
-
         navigate("/Otp", {
           state: {
             "countryCode": countryCode,
@@ -83,7 +76,6 @@ const PhonNo = () => {
         toast.error(message)
       }
     }
-
     catch (error) {
       console.log(error)
     }

@@ -4,9 +4,7 @@ import { InputLabel } from '@mui/material'
 
 export default function InputLabels({ name, m }) {
     const style = {
-
         margin: m || "0rem 0rem 0rem 0rem",
-
     }
     return (
         <>

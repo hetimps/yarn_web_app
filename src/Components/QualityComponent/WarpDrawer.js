@@ -2,7 +2,7 @@ import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, 
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useState } from 'react';
-import { useGetCompanyQuery, useGetYarnQuery } from '../../api/Quality';
+import { useGetCompanyQuery } from '../../api/Quality';
 import AddYarnDialog from './AddYarnDialog';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
@@ -11,9 +11,10 @@ import AddCompannyDialog from './AddCompannyDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useEffect } from 'react';
+import { useGetYarnQuery } from '../../api/Yarn';
 
 
-export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
+export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
 
     useEffect(() => {
         if (wrapData && wrapData.length > 0) {
@@ -24,7 +25,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
             const defaultWrapWeight = wrapData.map((wrapData) => Number(wrapData.warpWeight));
             setWrapSumweight(defaultWrapWeight)
         }
-
 
     }, [wrapData, setTar, setWrapSumCost, setWrapSumweight])
 
@@ -96,7 +96,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
         };
     }
 
-   
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
 
@@ -120,8 +119,7 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
     const { data: YarnData } = useGetYarnQuery();
 
     const { data: CompanyData } = useGetCompanyQuery();
-
-
+    
     const validationSchema = Yup.object().shape({
         warpYarn: Yup.string().required(String.warpyarn_required),
         warpCompany: Yup.string().required(String.warpcompany_required),
@@ -142,13 +140,9 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
         addwrapCost(cost)
         addwrapWeight(weight)
         addTar(tar)
-
     }
 
-  
-
     const handleSubmit = (values, { setFieldValue }) => {
-
         if (editdata.index !== undefined) {
             const updatedWrapData = [...wrapData];
             updatedWrapData[editdata.index] = values;
@@ -156,15 +150,12 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
         } else {
             setWrapData([...wrapData, values]);
         }
-
-    
         calculation(values, setFieldValue);
 
         if (editdata.index !== undefined) {
             editdata.index = undefined
         }
         toggleDrawer();
-
     }
 
     const toggleDrawers = () => {
@@ -178,7 +169,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
             <Drawer transitionDuration={1000} anchor="right" open={isDrawerOpen} className='drawer' >
 
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} >
-
                     {({
                         values,
                         handleChange,
@@ -197,7 +187,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                 <Paper className='heading_paper'>
 
                                     <div className='heading' >
-
                                         <div>
                                             <Typography
                                                 className="heading_text"
@@ -205,7 +194,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                 component="span">
                                                 {String.warp_heafing}
                                             </Typography>
-
                                         </div>
 
                                         <div>
@@ -221,11 +209,10 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                             <HighlightOffIcon />
                                         </div>
                                     </div>
+
                                 </Paper>
 
-
                                 <div className='from'>
-
                                     <div className='yarns_wrap'>
                                         <FormControl fullWidth>
                                             <Autocomplete
@@ -235,7 +222,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                 options={YarnData?.result || []}
                                                 getOptionLabel={(option) => option ? `${option.yarnName} - ${option.yarnRate} ₹` : ''}
                                                 value={YarnData?.result?.find((yarnItem) => yarnItem._id === values.warpYarn) || null}
-
                                                 onChange={(e, newValue) => {
                                                     if (newValue) {
                                                         setFieldValue('warpYarn', newValue._id || '');
@@ -258,9 +244,7 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                         className='yarn_menu'
                                                         key={yarnItem?._id}
                                                         value={yarnItem?._id}
-                                                        sx={{ display: "flex", justifyContent: "space-between" }}
-                                                    >
-                        
+                                                        sx={{ display: "flex", justifyContent: "space-between" }}>
                                                         <div>
                                                             {yarnItem?.yarnName}
                                                         </div>
@@ -269,8 +253,6 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                         </div>
                                                     </MenuItem>
                                                 )}
-
-
                                                 renderInput={(params) => (
                                                     <TextField
                                                         {...params}
@@ -278,25 +260,16 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                         variant='outlined'
                                                     />
                                                 )}
-
                                             />
                                         </FormControl>
-
                                         <IconButton className='add_icon' onClick={handleOpenAddYarn}>
                                             <AddCircleOutlineIcon className='add_yarn' />
                                         </IconButton>
-
-
                                     </div>
-
 
                                     <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.warpYarn && errors.warpYarn}</FormHelperText>
 
-
-
-
                                     <div className='company_wrap'>
-
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
@@ -327,22 +300,15 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                     />
                                                 )}
                                             />
-
                                         </FormControl>
-
-
-
                                         <IconButton className='add_icon'>
                                             <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
                                         </IconButton>
-
                                     </div>
                                     <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.warpCompany && errors.warpCompany}</FormHelperText>
 
                                     <div className='input_all'>
-
                                         <div className='inputs'>
-
                                             <InputLabel className="drawer_label" >
                                                 {String.deniar_placeholder}
                                             </InputLabel>
@@ -380,9 +346,7 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
                                                 value={values.warpShortage}
                                                 error={touched.warpShortage && Boolean(errors.warpShortage)}
                                                 helperText={touched.warpShortage && errors.warpShortage} placeholder={String.shortage_placeholder} name="warpShortage" autoComplete='off' id="outlined-basic" variant="outlined"></TextField>
-
                                         </div>
-
 
                                         <div className='inputs'>
                                             <InputLabel className="drawer_label" >
@@ -417,12 +381,9 @@ export default function WarpDrawer({  editdata, Tar, setTar, setWrapSumweight, W
 
                                 </div>
                             </Form>
-                        )
-                    }
-                    }
+                        )}}
                 </Formik>
             </Drawer >
-
             <AddYarnDialog open={openAdd} onClose={handleCloseAddYarn} />
             <AddCompannyDialog open={openAddCompnay} onClose={handleCloseAddCompany} />
         </>

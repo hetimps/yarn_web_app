@@ -3,13 +3,14 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useEffect, useState } from 'react';
-import { useGetCompanyQuery, useGetYarnQuery } from '../../api/Quality';
+import { useGetCompanyQuery } from '../../api/Quality';
 import AddYarnDialog from './AddYarnDialog';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
 import { Regex } from '../../constants/Regex';
 import AddCompannyDialog from './AddCompannyDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useGetYarnQuery } from '../../api/Yarn';
 
 
 export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
@@ -44,9 +45,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             wefCompnayName: weftDatas?.weftCompany?.yarnCompanyName || weftDatas?.wefCompnayName,
             weftWeight: weftDatas.weftWeight
         }
-
     }
-
     else {
         initialValues = {
             weftCompany: "",
@@ -63,11 +62,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             weftWeight: "",
         };
     }
-
-    console.log(weftSumweight, "weftSumCostweftSumCost")
-
-
-
     // add yarn
     const [openAdd, setOpenAdd] = useState(false);
     const handleCloseAddYarn = () => {
@@ -90,7 +84,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
     const { data: YarnData } = useGetYarnQuery();
     const { data: CompanyData } = useGetCompanyQuery();
 
-
     const validationSchema = Yup.object().shape({
         weftYarn: Yup.string().required(String.weftYarn_required),
         weftCompany: Yup.string().required(String.weftCompany_required),
@@ -101,8 +94,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         weftWastage: Yup.string().required(String.weftWastage_required).matches(Regex.wrap_item, String.weftWastage_valid),
         tpm: Yup.string().matches(Regex.wrap_item, String.wefttpm_valid)
     });
-
-
 
     useEffect(() => {
         if (weftData && weftData.length > 0) {
@@ -116,7 +107,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
             setweftSumweight(defaultWeftWeight)
         }
     }, [weftData, setPickSum, setWidth, setweftSumCost, setweftSumweight]);
-
 
     const addWeftPickValue = async (value) => {
         if (!pickSum.includes(value)) {
@@ -145,8 +135,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         const weight = Number((value * 100).toFixed(2));
         const pick = Number(values.weftPick)
         const width = Number(values.weftWidth)
-
-
         values.weftWeight = weight;
         values.weftCost = cost;
         addweftWeight(weight)
@@ -154,10 +142,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         addWeftPickValue(pick)
         addWidthValue(width)
     }
-
-
-
-
 
     const handleSubmit = async (values, { resetForm, setFieldValue }) => {
         if (editweftData.index !== undefined) {
@@ -182,7 +166,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
     return (
         <>
             <Drawer transitionDuration={1000} anchor="right" open={isDrawerOpenWeft} className='drawer'>
-
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}  >
                     {({
                         values,
@@ -193,11 +176,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                         setFieldError,
                         setFieldTouched
                     }) => {
-
                         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
-
                         const cost = Number((value * values.weftYarnRate).toFixed(2));
-
                         const weight = Number((value * 100).toFixed(2));
 
                         return (
@@ -206,16 +186,13 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
                                 <Paper className='heading_paper'>
                                     <div className='heading' >
-
                                         <div >
-
                                             <Typography
                                                 className="heading_text"
                                                 variant="span"
                                                 component="span">
                                                 {String.weft_heading}
                                             </Typography>
-
                                         </div>
 
                                         <div>
@@ -226,13 +203,9 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 {String.dweight} {weight.toFixed(2)} | {String.dcost} {cost.toFixed(2)}
                                             </Typography>
                                         </div>
-
-
                                         <div onClick={toggleDrawerWefts} className='close_icon'>
                                             <HighlightOffIcon />
                                         </div>
-
-
                                     </div>
                                 </Paper>
 
@@ -296,7 +269,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
 
 
                                     <div className='company_wrap'>
-
                                         <FormControl fullWidth>
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
@@ -306,9 +278,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 getOptionLabel={(option) => option?.yarnCompanyName || ''}
                                                 value={CompanyData?.result?.find((company) => company._id === values.weftCompany) || null}
                                                 onChange={(e, newValue) => {
-
-                                                    { console.log(newValue, "newValuenewValue") }
-
                                                     if (newValue) {
                                                         setFieldValue('weftCompany', newValue._id || '');
                                                         setFieldValue('wefCompnayName', newValue.yarnCompanyName || '');
@@ -327,15 +296,14 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                         label={String.select_company}
                                                         variant='outlined'
                                                     />
-                                                )}
-                                            />
+                                                )}/>
                                         </FormControl>
 
                                         <IconButton className='add_icon'>
                                             <AddCircleOutlineIcon className='add_company' onClick={handleOpenAddCompany} />
                                         </IconButton>
-
                                     </div>
+
                                     <FormHelperText sx={{ marginLeft: "0.9rem" }}>{touched.weftCompany && errors.weftCompany}</FormHelperText>
 
                                     <div className='input_all'>
@@ -343,7 +311,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                             <InputLabel className="drawer_label" >
                                                 {String.weftDeniar_placeholder}
                                             </InputLabel>
-
                                             <TextField onChange={handleChange}
                                                 className='input'
                                                 value={values.weftDeniar}
@@ -419,8 +386,6 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                     }}
                 </Formik>
             </Drawer>
-
-
             <AddYarnDialog open={openAdd} onClose={handleCloseAddYarn} />
             <AddCompannyDialog open={openAddCompnay} onClose={handleCloseAddCompany} />
         </>

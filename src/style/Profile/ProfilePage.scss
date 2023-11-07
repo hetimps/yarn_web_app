@@ -1,0 +1,149 @@
+@import "../Color.js/color";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.profile_conatiner {
+    margin-top: 1rem;
+
+    .MuiAccordion-rounded {
+        box-shadow: none !important;
+        position: inherit !important;
+        border-radius: 12px !important;
+        border: 1px solid $placeholder-color !important;
+    }
+
+    .yequality {
+        margin-top: 1rem;
+        height: 600px;
+        overflow: auto;
+
+        .mainaccordion {
+            margin-top: 0.5rem;
+        }
+
+        .heading {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            .accountl {
+                font-weight: 300;
+                color: $lable-color;
+                font-size: 1rem;
+            }
+
+            .accounti {
+                color: $lable-color;
+                font-size: 1.5rem;
+                margin-right: 4px;
+
+            }
+        }
+
+        .account_container {
+            .account_form {
+                display: flex;
+                gap: 15px;
+                align-items: center;
+            }
+
+            .input_constiner {
+                width: 30%;
+
+                .namel {
+                    font-weight: 600;
+                    margin-bottom: 0.2rem;
+                    color: $font_color;
+                    font-size: 1rem;
+                }
+
+                .namei {
+                    width: 100%;
+                }
+            }
+
+            .save_button{
+                color: $white;
+                margin-top: 1.5rem !important;
+                width: 6rem !important;
+                font-size: 16px;
+                height: 2.7rem;
+                font-family: $font-family;
+                text-transform: capitalize;
+            }
+
+
+
+            .btns {
+                margin-top: 1.5rem !important;
+                background-color: $primary;
+                color: $white;
+                text-transform: capitalize;
+                font-family: $font-family;
+                height: 2.7rem;
+                font-size: 16px;
+                width: 6rem !important;
+            }
+
+            .loader {
+                margin-top: 1.5rem;
+            }
+        }
+
+        .companyAccordion {
+            margin-top: 0.8rem;
+
+
+            .comapany_conatiner {
+                .comapany_form {
+                    display: flex;
+                    gap: 15px;
+                    align-items: center;
+
+
+                    .input_constiner {
+                        width: 30%;
+
+                        .namel {
+                            font-weight: 600;
+                            margin-bottom: 0.2rem;
+                            color: $font_color;
+                            font-size: 1rem;
+                        }
+
+                        .namei {
+                            width: 100%;
+                        }
+                    }
+
+                    
+
+                    .btns {
+                        margin-top: 1.5rem !important;
+                        color: $white;
+                        text-transform: capitalize;
+                        font-family: $font-family;
+                        height: 2.7rem;
+                        font-size: 16px;
+                        width: 6rem !important;
+                    }
+
+                    
+
+                    .loader {
+                        margin-top: 1.5rem;
+                    }
+
+                }
+            }
+
+
+        }
+
+
+    }
+}

@@ -10,20 +10,14 @@ import { useAddCompanyMutation} from '../../api/Quality';
 import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
 
-
 export default function AddCompannyDialog({ open, onClose }) {
-
     const defaultValue = {
         yarnCompanyName: "",
-
     };
 
     const validationSchema = Yup.object().shape({
         yarnCompanyName: Yup.string().required(String.company_required).matches(Regex.yarn_name, String.valid_compnay),
-
-
     });
-
 
     const [Add_Company, { isLoading }] = useAddCompanyMutation();
 
@@ -50,11 +44,9 @@ export default function AddCompannyDialog({ open, onClose }) {
         <>
             <Dialog
                 open={open}
-               
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='cdialog_container'>
-
                 {/* <DialogTitle id="alert-dialog-title" className='cadd_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="cdialog_close" onClick={onClose} />
@@ -70,21 +62,18 @@ export default function AddCompannyDialog({ open, onClose }) {
                             errors,
                             touched,
                         }) => (
-
                             <Form className='invite_form' >
                                 <div >
                                     <InputLabel className="label" >
                                         {String.clabel}
                                     </InputLabel>
                                     <TextField
-
                                         onChange={handleChange}
                                         name='yarnCompanyName'
                                         value={values.yarnCompanyName}
                                         error={touched.yarnCompanyName && Boolean(errors.yarnCompanyName)}
                                         helperText={touched.yarnCompanyName && errors.yarnCompanyName} placeholder={String.company_placeholder} id="outlined-basic" autoComplete='off' sx={{ width: "100%" }} variant="outlined" />
                                 </div>
-                                
                                 <div className='btns'>
                                     {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
                                         <Button onClick={onClose} variant="outlined" className='ccancel'>{String.ccancel}</Button>
@@ -97,7 +86,6 @@ export default function AddCompannyDialog({ open, onClose }) {
                             </Form>)}
                     </Formik>
                 </DialogContent>
-
             </Dialog>
         </>
     )

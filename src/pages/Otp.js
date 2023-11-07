@@ -13,8 +13,7 @@ import { useResendOtpMutation, useUserVerifyMutation } from '../api/Otp';
 import { toast } from 'react-hot-toast';
 import Loader from '../Components/ComonComponent/Loader';
 import { useDispatch } from 'react-redux';
-import { setCurrentUser } from '../Redux/AuthSlice';
-
+import { } from '../Redux/AuthSlice';
 
 export function matchIsNumeric(text) {
     const isNumber = typeof text === 'number';
@@ -26,15 +25,11 @@ const validateChar = (value, index) => {
     return matchIsNumeric(value) && value !== ' ';
 }
 
-
 export default function Otp() {
-
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch()
-
     const { state } = location;
-
     const countryCode = state?.countryCode;
     const mobileNo = state?.mobileNo;
 
@@ -56,9 +51,6 @@ export default function Otp() {
     const [resendOtp, { isLoading: resendOtpLoading }] = useResendOtpMutation();
 
     const handleSubmit = async (values) => {
-
-        console.log("Entered OTP:", values.Otp);
-
         const Otp = values.Otp;
 
         const body = {
@@ -80,24 +72,39 @@ export default function Otp() {
                 const isCreatedCompany = response?.data?.result?.isCreatedCompany;
                 const isJoinedCompany = response?.data?.result?.isJoinedCompany;
                 const userName = response?.data?.result?.userName;
-
-                response?.data?.result?.userName && dispatch(setCurrentUser(response?.data?.result))
-
-                console.log(response?.data?.result, "-----", username,)
+                const currentUser = response?.data?.result;
+                const role = response?.data?.result?.role;
+                // response?.data?.result?.userName && dispatch(setCurrentUser(response?.data?.result))
                 localStorage.setItem("token", JSON.stringify(token));
-                localStorage.setItem("username", JSON.stringify(userName));
+                // localStorage.setItem("username", JSON.stringify(userName));
                 toast.success(message)
                 if (!username) {
-                    navigate("/Userinformation")
+                    navigate("/Userinformation", {
+                        state: {
+                            response
+                        }
+                    })
                 }
                 else if (!companyid) {
-                    navigate("/Company")
+                    navigate("/Company", {
+                        state: {
+                            response
+                        }
+                    })
                 }
-                else if (isCreatedCompany) {
-                    navigate("/Quality")
+                else if ((isCreatedCompany && role === "root") || (isJoinedCompany && (role === "view" || role === "write" || role === "admin" || role === ""))) {
+                    navigate("/Quality", {
+                        state: {
+                            response
+                        }
+                    })
                 }
                 else if (isJoinedCompany) {
-                    navigate("/Join")
+                    navigate("/Join", {
+                        state: {
+                            response
+                        }
+                    })
                 }
             }
             else {
@@ -110,12 +117,10 @@ export default function Otp() {
 
     };
     const ResendOtp = async (setFieldValue) => {
-
         const body = {
             countryCode: countryCode,
             mobileNo: mobileNo,
         }
-
         try {
             const response = await resendOtp(body);
             console.log(response)
@@ -124,12 +129,9 @@ export default function Otp() {
 
             if (status === 200) {
                 const code = response?.data?.result?.loginOtp;
-
                 toast.success(message)
-
                 setFieldValue('Otp', code);
             }
-
             else {
                 toast.error(message)
             }
@@ -184,7 +186,6 @@ export default function Otp() {
                                                         length={6}
                                                         validateChar={validateChar}
                                                         style={{ fontFamily: 'Poppins' }}
-
                                                     />
 
                                                     {touched.Otp && errors.Otp && (

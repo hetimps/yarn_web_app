@@ -12,9 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../ComonComponent/Loader';
 
 export default function CompanyDialog({ open, onClose }) {
-
     const navigaet = useNavigate();
-
     const defaultValue = {
         companyName: "",
     };
@@ -31,11 +29,11 @@ export default function CompanyDialog({ open, onClose }) {
             console.log(response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
-
             if (status === 200) {
                 toast.success(message)
-
-                navigaet("/Quality")
+                navigaet("/Quality", {
+                    state: { response }
+                })
             }
             else {
                 toast.error(message)
@@ -63,7 +61,6 @@ export default function CompanyDialog({ open, onClose }) {
                         {String.add_tital}
                     </Box>
                 </DialogTitle>
-
                 <DialogContent className='invite_dialog_content'>
                     <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit}  >
                         {({

@@ -21,7 +21,6 @@ export const CompanyUser = createApi({
     endpoints: (builder) => ({
         GetCompanyUser: builder.query({
             query: ({ status, page, search }) => ({
-
                 url: '/company-user/getall-company-user',
                 params: {
                     status,
@@ -37,7 +36,6 @@ export const CompanyUser = createApi({
                 method: 'post',
                 params: {
                     id,
-
                 },
             }),
             invalidatesTags: ["CompanyUser"],

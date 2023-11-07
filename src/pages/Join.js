@@ -1,5 +1,5 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Panding from "../assets/img/panding.svg"
 import "../style/Join.scss"
@@ -12,7 +12,6 @@ import { toast } from 'react-hot-toast';
 export default function Join() {
   const navigaet = useNavigate();
 
-
   const logout = () => {
     localStorage.removeItem("token")
     navigaet("/Phonno")
@@ -21,6 +20,17 @@ export default function Join() {
   const { data, isFetching, refetch } = useCheckStatusQuery();
 
   // const [requestStatus, setrequestStatus] = useState("");
+
+  console.log(data?.result?.isJoinedCompany, "data")
+
+  useEffect(() => {
+    if (!isFetching) {
+      if (!data?.result?.isJoinedCompany) {
+        navigaet("/Company")
+      }
+    }
+  }, [isFetching, data, navigaet])
+
 
   const status = async () => {
 
@@ -40,6 +50,7 @@ export default function Join() {
 
       else if (RequestStatus === "approved") {
         navigaet("/Quality");
+        window.location.reload(false);
         toast.success(String.approved_status)
       }
       else {
@@ -56,7 +67,6 @@ export default function Join() {
       </Box>) : (<div className='container'>
         <Box >
           <img src={Panding} alt="logo" />
-
         </Box>
         <Box>
           <Typography
@@ -91,12 +101,9 @@ export default function Join() {
               <Button variant="contained" className='status_btn' onClick={status}>Status</Button>
               <Button variant="contained" className='sign_out' onClick={logout}>Sign Out</Button>
             </Stack>
-
           </Box>
         </div>
-
       </div>)}
-
     </>
   )
 }

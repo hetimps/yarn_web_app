@@ -2,13 +2,10 @@ import styled from '@emotion/styled';
 import MuiAppBar from '@mui/material/AppBar';
 
 // AppBar
-
 const drawerWidth = 240;
 
  export const AppBar = styled(MuiAppBar, {
-
     shouldForwardProp: (prop) => prop !== 'open',
-
 })(({ theme, open }) => ({
     transition: theme.transitions?.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
@@ -25,7 +22,6 @@ const drawerWidth = 240;
 }));
 
 //Drawer
-
 export const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',

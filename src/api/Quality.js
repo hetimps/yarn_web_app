@@ -16,17 +16,18 @@ export const QualityApi = createApi({
         baseUrl: '/api',
         prepareHeaders: prepareHeaders
     }),
-    tagTypes: ["Quality","Yarn","Company"],
-    
+    tagTypes: ["Quality", "Yarn", "Company"],
+
     endpoints: (builder) => ({
         GetQuality: builder.query({
-            query: ({ page, limit, search }) => ({
+            query: ({ page, limit, search, yarn }) => ({
 
                 url: '/quality/getall-quality',
                 params: {
                     page,
                     limit,
-                    search
+                    search,
+                    yarn
                 },
             }),
             providesTags: ["Quality"],
@@ -40,21 +41,21 @@ export const QualityApi = createApi({
             invalidatesTags: ["Quality"],
         }),
 
-        AddYarn: builder.mutation({
-            query: (body) => ({
-                url: "/yarn/create-yarn",
-                method: 'post',
-                body,
-            }),
-            invalidatesTags: ["Yarn"],
-        }),
+        // AddYarn: builder.mutation({
+        //     query: (body) => ({
+        //         url: "/yarn/create-yarn",
+        //         method: 'post',
+        //         body,
+        //     }),
+        //     invalidatesTags: ["Yarn"],
+        // }),
 
-        GetYarn: builder.query({
-            query: () => ({
-                url: '/yarn/getall-yarn',
-            }),
-            providesTags: ["Yarn"],
-        }),
+        // GetYarn: builder.query({
+        //     query: () => ({
+        //         url: '/yarn/getall-yarn',
+        //     }),
+        //     providesTags: ["Yarn"],
+        // }),
 
         GetCompany: builder.query({
             query: () => ({

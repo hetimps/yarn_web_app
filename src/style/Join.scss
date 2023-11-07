@@ -35,7 +35,6 @@ body {
             text-transform: capitalize;
             font-family: $font-family;
             width: 6rem;
-
         }
 
         .sign_out {
@@ -45,14 +44,11 @@ body {
             width: 6rem;
         }
     }
-
 }
 
 
 @media (max-width: 500px) {
     .container {
-
-
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,12 +56,10 @@ body {
         flex-direction: column;
 
         .join_tital {
-
             font-size: 1rem;
         }
 
         .join_desc {
-
             font-size: 0.8rem;
             // background-color: red;
         }
@@ -73,6 +67,5 @@ body {
         .btns {
             margin-top: 1rem !important;
         }
-
     }
 }

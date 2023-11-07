@@ -5,9 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 const AuthHandler = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
-
-
-
     useEffect(() => {
         console.log(pathname === "/Phonno", "Called");
         if (localStorage.getItem("token") && (pathname === '/Company' || pathname === "/Userinformation" || pathname === "/Otp" || pathname === "/Phonno")) {
@@ -15,7 +12,6 @@ const AuthHandler = () => {
             navigate('/Quality');
         }
     }, [pathname]);
-
     return null;
 };
 

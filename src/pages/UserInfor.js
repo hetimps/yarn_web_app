@@ -23,17 +23,14 @@ export default function UserInfor() {
 
   const validationSchema = Yup.object({
     userName: Yup.string().required(String.user_required).matches(Regex.user_name, String.user_required),
-
     userEmail: Yup.string().matches(Regex.email_regex, String.email_format)
   });
-
-
 
   const [User, { isLoading }] = useUserInfoMutation();
   const navigate = useNavigate();
 
   const handleSubmit = async (values) => {
-    console.log('Form submitted:', values);
+
     try {
       const response = await User(values);
       console.log(response)
@@ -43,16 +40,17 @@ export default function UserInfor() {
       if (status === 200) {
         toast.success(message)
         const userName = response?.data?.result?.userName;
-        
         localStorage.setItem("username", JSON.stringify(userName));
-        
-       
+        // navigate("/Company", {
+        //   state: {
+        //     response
+        //   }
+        // })
         navigate("/Company", {
           state: {
             "username": userName
           }
         })
-
       }
       else {
         toast.error(message)
@@ -61,9 +59,7 @@ export default function UserInfor() {
     catch (error) {
       console.log(error)
     }
-
   }
-
 
   return (
     <Box className="login-container" sx={{ flexGrow: 1 }}>
@@ -92,13 +88,11 @@ export default function UserInfor() {
                 initialValues={defaultValue}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}>
-
                 {({
                   values,
                   handleChange,
                   errors,
                   touched,
-
                 }) => (
                   <Form>
                     <Box className="login_filed">
@@ -134,9 +128,7 @@ export default function UserInfor() {
                           helperText={touched.userEmail && errors.userEmail}
                           placeholder={String.email_placeholder}
                         />
-
                       </Box>
-
                       <div className="btn-out">
                         {isLoading ? (<Box className="loader">
                           <Loader />

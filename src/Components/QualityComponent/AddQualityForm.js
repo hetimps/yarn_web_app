@@ -22,7 +22,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Cancel } from '@mui/icons-material';
 export default function AddQualityForm() {
 
-
     const navigaet = useNavigate();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -59,7 +58,6 @@ export default function AddQualityForm() {
     const [wrapDataRequired, setWrapDataRequired] = useState(false);
 
     const [weftDataRequired, setWeftDataRequired] = useState(false);
-
 
     const validationSchema = Yup.object().shape({
         qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
@@ -117,10 +115,7 @@ export default function AddQualityForm() {
             ? Number(totalCosts) + Number(value.cost)
             : Number(totalCosts) + Number(value.cost * sumOfPicks);
 
-        const cost = selectedOption === "Fixed Cost"
-            ? Number(value.cost)
-            : Number(value.cost * sumOfPicks);
-
+        const cost = Number(value.cost)
         const TotalBeamEnds = tars
 
         const TotalPick = sumOfPicks
@@ -162,6 +157,8 @@ export default function AddQualityForm() {
                 })
             },
             expenseType: selectedOption,
+            expenseCost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
+            // cost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
             cost: cost,
             totalefficiency: totalefficiency,
             rpm: value.rpm !== "" ? value.rpm : undefined,
@@ -178,6 +175,7 @@ export default function AddQualityForm() {
                 gsm: value.gsm
             }
         }
+        console.log(body, "body")
 
         try {
             const response = await Qulaity(body)
@@ -209,7 +207,6 @@ export default function AddQualityForm() {
 
     const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
 
-
     const handleOpenWrapConfirmation = () => {
         setcancelWrapConfirmation(true);
     };
@@ -219,7 +216,6 @@ export default function AddQualityForm() {
 
 
     const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
-
 
     const handleOpenWefConfirmation = () => {
         setcancelWefConfirmation(true);
@@ -291,7 +287,6 @@ export default function AddQualityForm() {
         updatedWrapData.splice(index, 1);
         setWrapData(updatedWrapData);
         handleCloseWrapConfirmation();
-
     };
 
     const removeweftBox = (index) => {
@@ -325,7 +320,6 @@ export default function AddQualityForm() {
 
                     <Form>
                         <div className='add_form'>
-
                             {/* heading */}
                             <div className='add_heading'>
                                 <div className='first_heading' >
@@ -368,6 +362,7 @@ export default function AddQualityForm() {
                                     </div>
 
                                     <div className='add_form_btns'>
+
                                         <Button className='btn_warp' variant="outlined"
                                             endIcon={
                                                 <div className='add_waicons' onClick={toggleDrawer}>
@@ -383,6 +378,7 @@ export default function AddQualityForm() {
                                                 {String.warp_w} {WrapsumOfweights.toFixed(2)} | {String.warp_c} {WrapsumOfCosts.toFixed(2)}
                                             </div>
                                         </Button>
+
                                         {wrapDataRequired && wrapData.length === 0 && (
                                             <div className="error-text">{String.wrapData_required}</div>
                                         )}
@@ -532,7 +528,8 @@ export default function AddQualityForm() {
                                                     <Box className='box_content' component="span"
                                                         onClick={() => {
                                                             editWeftData(
-                                                                index)}}>
+                                                                index)
+                                                        }}>
                                                         <div className='close_icon' onClick={(e) => {
                                                             e.stopPropagation()
                                                             // removeweftBox(index);
@@ -704,7 +701,7 @@ export default function AddQualityForm() {
                                                     <InputLabels name={String.Eff} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Eff}
                                                         name="eff" error={touched.eff && Boolean(errors.eff)}
-                                                        helperText={touched.eff && errors.eff} onChange={handleChange} value={values.eff}/>
+                                                        helperText={touched.eff && errors.eff} onChange={handleChange} value={values.eff} />
                                                 </div>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.Mach} m={"0 0.5rem 0 0"} />

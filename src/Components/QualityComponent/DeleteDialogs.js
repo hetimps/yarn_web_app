@@ -11,7 +11,6 @@ export default function DeleteDialogs({ open, onClose, tital, text, Action, load
         <>
             <Dialog className="dialog" open={open} >
                 <Box className="dialog_wraper" >
-
                     <DialogTitle >
                         <Box className="dialog_tital">
                             <Box sx={{ textAlign: "center" }} >
@@ -39,9 +38,7 @@ export default function DeleteDialogs({ open, onClose, tital, text, Action, load
                                     {String.dialog_cancel_yes}
                                 </Button>
                             </Box>)}
-
                     </DialogActions>
-
                 </Box>
             </Dialog>
         </>

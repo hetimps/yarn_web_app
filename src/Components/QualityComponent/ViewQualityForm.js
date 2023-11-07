@@ -42,13 +42,9 @@ export default function ViewQualityForm() {
         }
     }, [state, isFetching, data]);
 
-
     const navigaet = useNavigate();
 
-
     const [selectedOption, setSelectedOption] = useState("");
-
-
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const toggleDrawer = () => {
@@ -156,7 +152,6 @@ export default function ViewQualityForm() {
         const totalefficiency = (isNaN(value.rpm) || isNaN(value.eff))
             ? 0
             : (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2));
-
 
         const body = {
             qualityName: qualityName,
@@ -316,9 +311,6 @@ export default function ViewQualityForm() {
 
 
     //pick
-
-
-
     const [pickSum, setPickSum] = useState([]);
 
     const sumOfPick = pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
@@ -326,7 +318,6 @@ export default function ViewQualityForm() {
 
 
     //width
-
     const [Width, setWidth] = useState([]);
     const widths = Width.reduce((sum, width) => sum + parseFloat(width), 0);
 
@@ -433,11 +424,8 @@ export default function ViewQualityForm() {
                                                     <IconButton className='add_waicons_button' >
                                                         <ControlPointIcon />
                                                     </IconButton>
-
                                                 </div>
-
                                             }
-
                                         >
                                             <div>
                                                 {String.warp_b}
@@ -465,36 +453,24 @@ export default function ViewQualityForm() {
                                                 <>
                                                     <Box className='box_content' component="span">
 
-
                                                         <div className='heading1' >
-
                                                             <div>
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
                                                                     {wrap?.warpCompany?.yarnCompanyName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
 
-
                                                             <div>
-
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
-
                                                                     {String.money} : {cost}
-
-
                                                                 </Typography>
                                                             </div>
-
-
                                                         </div>
                                                         <div className='heading2' >
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -503,7 +479,6 @@ export default function ViewQualityForm() {
                                                                     {wrap?.warpYarn?.yarnName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -512,13 +487,9 @@ export default function ViewQualityForm() {
                                                                     {String.kg} : {weight}
                                                                 </Typography>
                                                             </div>
-
-
-
                                                         </div>
 
                                                         <div className='after_heading' >
-
                                                             <div>
 
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
@@ -528,14 +499,8 @@ export default function ViewQualityForm() {
                                                                     component="span">
                                                                     {wrap.warpDeniar}
                                                                 </Typography>
-
                                                             </div>
-
                                                             <div className='dashed_border' />
-
-
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Shortage}</InputLabel>
                                                                 <Typography
@@ -547,7 +512,6 @@ export default function ViewQualityForm() {
 
                                                             </div>
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Ends}</InputLabel>
                                                                 <Typography
@@ -558,8 +522,6 @@ export default function ViewQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Y_Rate}</InputLabel>
                                                                 <Typography
@@ -570,8 +532,6 @@ export default function ViewQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.TPM}</InputLabel>
                                                                 <Typography
@@ -581,7 +541,6 @@ export default function ViewQualityForm() {
                                                                     {wrap.tpm}
                                                                 </Typography>
                                                             </div>
-
                                                         </div>
                                                     </Box >
                                                 </>
@@ -593,14 +552,11 @@ export default function ViewQualityForm() {
                                     <div className='add_form_btns'>
                                         <Button className='btn_weft' variant="outlined"
                                             endIcon={
-
                                                 <div className='add_weicons' >
                                                     <IconButton className='add_weicons_button' >
                                                         <ControlPointIcon />
                                                     </IconButton>
-
                                                 </div>}>
-
                                             <div>
                                                 {String.weft_b}
                                             </div>
@@ -608,10 +564,6 @@ export default function ViewQualityForm() {
                                             <div>
                                                 {String.warp_w} {WeftsumOfweights.toFixed(2)} | {String.Weft_c} {WeftsumOfCosts.toFixed(2)}
                                             </div>
-
-
-
-
                                         </Button>
                                         {weftDataRequired && weftData.length === 0 && (
                                             <div className="error-text">{String.WeftData_required}</div>
@@ -620,20 +572,12 @@ export default function ViewQualityForm() {
 
 
                                     <div className='wrap_box' >
-
                                         {weftData?.map((weft, index) => {
-
                                             const value = (((weft.weftDeniar * weft.weftPick * weft.weftWidth) * weft.weftWastage / 100 + (weft.weftDeniar * weft.weftPick * weft.weftWidth)) / 9000000)
-
                                             const cost = Number((value * weft.weftYarnRate).toFixed(2));
-
                                             const weight = Number((value * 100).toFixed(2));
-
-
                                             return (
-
                                                 <>
-
                                                     <Box className='box_content' component="span">
                                                         <div className='heading1' >
                                                             <div>
@@ -646,21 +590,14 @@ export default function ViewQualityForm() {
                                                             </div>
 
                                                             <div>
-
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
-
                                                                     {String.money} : {cost}
-
                                                                 </Typography>
                                                             </div>
-
-
                                                         </div>
                                                         <div className='heading2' >
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -669,7 +606,6 @@ export default function ViewQualityForm() {
                                                                     {weft?.weftYarn?.yarnName || weft?.yarnName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography
                                                                     className='heading_text'
@@ -678,15 +614,9 @@ export default function ViewQualityForm() {
                                                                     {String.kg} : {weight}
                                                                 </Typography>
                                                             </div>
-
-
-
                                                         </div>
-
                                                         <div className='after_heading' >
-
                                                             <div>
-
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
                                                                 <Typography
                                                                     className='heading_text'
@@ -694,11 +624,8 @@ export default function ViewQualityForm() {
                                                                     component="span">
                                                                     {weft.weftDeniar}
                                                                 </Typography>
-
                                                             </div>
-
                                                             <div style={{ borderLeft: "1px dashed grey" }} />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Pick}</InputLabel>
                                                                 <Typography
@@ -707,10 +634,8 @@ export default function ViewQualityForm() {
                                                                     component="span">
                                                                     {weft.weftPick}
                                                                 </Typography>
-
                                                             </div>
                                                             <div style={{ borderLeft: "1px dashed grey" }} />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Wastage}</InputLabel>
                                                                 <Typography
@@ -721,8 +646,6 @@ export default function ViewQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Width}</InputLabel>
                                                                 <Typography
@@ -733,8 +656,6 @@ export default function ViewQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                             <div className='dashed_border' />
-
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Y_Rate}</InputLabel>
                                                                 <Typography
@@ -744,9 +665,7 @@ export default function ViewQualityForm() {
                                                                     {weft.weftYarnRate}
                                                                 </Typography>
                                                             </div>
-
                                                             <div className='dashed_border' />
-
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.TPM}</InputLabel>
                                                                 <Typography
@@ -756,9 +675,7 @@ export default function ViewQualityForm() {
                                                                     {weft.tpm}
                                                                 </Typography>
                                                             </div>
-
                                                         </div>
-
                                                     </Box>
                                                 </>
                                             )
@@ -768,7 +685,6 @@ export default function ViewQualityForm() {
 
                                     <Paper className='expense_pepar'>
                                         <div className='add_expense'>
-
                                             <InputLabel className="qulaity_label">
                                                 {String.Expense}
                                             </InputLabel>
@@ -779,52 +695,33 @@ export default function ViewQualityForm() {
                                                         row
                                                         aria-labelledby="demo-row-radio-buttons-group-label"
                                                         name="row-radio-buttons-group"
-                                                        value={selectedOption}
-                                                    >
+                                                        value={selectedOption}>
                                                         <FormControlLabel className='radio_fix' value="Fixed Cost" control={<Radio />} label={String.Fixed_Cost} />
-
                                                         <FormControlLabel value="Per Pick" control={<Radio />} label={String.Per_Pick} />
-
                                                     </RadioGroup>
                                                 </div>
 
-
                                                 <div className='cost_label'>
-
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
 
-
-
                                                 {selectedOption === 'Fixed Cost' && (
-
                                                     <div className='expense_wrap'>
-
-
                                                         <TextFields
                                                             value={values.cost} width={"12rem"} placeholder={String.Enter_Cost} name="cost"
 
                                                             error={touched.cost && Boolean(errors.cost)}
                                                             helperText={touched.cost && errors.cost}
                                                         />
-
                                                     </div>
-
-
-
                                                 )}
 
                                                 {selectedOption === 'Per Pick' && (
                                                     <div className='expense_wraps'>
-
-
                                                         <TextFields error={touched.cost && Boolean(errors.cost)}
                                                             helperText={touched.cost && errors.cost} value={values.cost} name="cost" width={"37.5%"} placeholder={String.Enter_Cost} />
-
                                                         <InputLabels name={`x ${sumOfPicks} =`} m={"0 0.7rem 0 0.7rem"} />
-
                                                         <TextFields name="costs" value={values.cost * sumOfPicks} width={"37.5%"} />
-
                                                     </div>
                                                 )}
                                             </div>
@@ -842,18 +739,13 @@ export default function ViewQualityForm() {
 
                                             <div className='production_input_wrap'>
                                                 <div className='production_input'>
-
                                                     <InputLabels name={String.RPM} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.RPM} name="rpm" error={touched.rpm && Boolean(errors.rpm)}
                                                         helperText={touched.rpm && errors.rpm} value={values.rpm} />
-
                                                 </div>
                                                 <div className='production_input'>
-
                                                     <InputLabels name={String.Eff} m={"0 0.5rem 0 0"} />
-
                                                     <TextFields width={"90%"} placeholder={String.Eff}
-
                                                         name="eff" error={touched.eff && Boolean(errors.eff)}
                                                         helperText={touched.eff && errors.eff} value={values.eff}
                                                     />
@@ -861,11 +753,9 @@ export default function ViewQualityForm() {
                                                 </div>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.Mach} m={"0 0.5rem 0 0"} />
-
                                                     <TextFields width={"90%"} placeholder={String.Mach}
                                                         name="mach" error={touched.mach && Boolean(errors.mach)}
                                                         helperText={touched.mach && errors.mach} value={values.mach} />
-
                                                 </div>
 
                                                 <div className='production_input'>
@@ -877,7 +767,6 @@ export default function ViewQualityForm() {
                                                 <div className='production_input'>
                                                     <InputLabels name={String.efficiency} m={"0 0.5rem 0 0"} />
                                                     <div style={{ top: 0, left: 0 }}>
-
                                                         {sumOfPicks === 0 || values?.rpm === undefined || values?.eff === undefined ? (
                                                             <TextFields width={"90%"} value={`${(0).toFixed(2)} m/d`} m={"0 0 0 5rem"} />
                                                         ) : (
@@ -900,25 +789,19 @@ export default function ViewQualityForm() {
 
                                             <div className='add_info_wrap'>
                                                 <div className='info_input'>
-
                                                     <InputLabels name={String.Reed} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} className="info_input_text" placeholder={String.Reed} name="reed" error={touched.reed && Boolean(errors.reed)}
                                                         helperText={touched.reed && errors.reed} value={values.reed} />
-
                                                 </div>
                                                 <div className='info_input'>
-
                                                     <InputLabels name={String.Border} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Border} name="border" error={touched.border && Boolean(errors.border)}
                                                         helperText={touched.border && errors.border} value={values.border} />
-
                                                 </div>
                                                 <div className='info_input'>
-
                                                     <InputLabels name={String.Pasramani} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Pasramani} name="pasramani" error={touched.pasramani && Boolean(errors.pasramani)}
                                                         helperText={touched.pasramani && errors.pasramani} value={values.pasramani} />
-
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Steam} m={"0 0.5rem 0 0"} />
@@ -957,10 +840,7 @@ export default function ViewQualityForm() {
                     </Form>
                 )}
             </Formik >)}
-
-
             <WarpDrawer editdata={editdata} seteditdata={seteditdata} Tar={Tar} setTar={setTar} WrapSumweight={wrapSumweight} setWrapSumweight={setWrapSumweight} wrapSumCost={wrapSumCost} setWrapSumCost={setWrapSumCost} wrapData={wrapData} setWrapData={setWrapData} toggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
-
             <WeftDrawer editweftData={editweftData} seteditweftData={seteditweftData} setWidth={setWidth} Width={Width} pickSum={pickSum} setPickSum={setPickSum} weftSumweight={weftSumweight} setweftSumweight={setweftSumweight} weftSumCost={weftSumCost} setweftSumCost={setweftSumCost} weftData={weftData} setweftData={setweftData} toggleDrawerWeft={toggleDrawerWeft} isDrawerOpenWeft={isDrawerOpenWeft} />
         </>
 

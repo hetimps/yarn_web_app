@@ -8,15 +8,16 @@ import Drawers from '../Components/ComonComponent/Drawers';
 
 import { DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
 import AddQualityForm from '../Components/QualityComponent/AddQualityForm';
+import { useProfileQuery } from '../api/Auth';
 
 
 export default function AddQuality() {
+  const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBars haddings="Quality" />
+      <AppBars haddings="Quality"  Userdata={Userdata} />
       <Drawers />
-
       <Main open={true}>
         <DrawerHeader />
         <AddQualityForm />

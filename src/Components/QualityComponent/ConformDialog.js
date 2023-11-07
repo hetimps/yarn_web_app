@@ -9,16 +9,10 @@ export default function ConformDialog({ open, onClose, heading, tital, back, isL
         <>
             <Dialog className="cdialog" open={open} >
                 <Box className="cdialog_wraper" >
-
-
-
-
                     <DialogContent>
-
                         <Box className="cdialog_tital_heading">
                             {heading}
                         </Box>
-
                         <DialogContentText className="cdialog_info">
                             {tital}
                         </DialogContentText>
@@ -34,7 +28,6 @@ export default function ConformDialog({ open, onClose, heading, tital, back, isL
                                 </Button>
                             </Box>)}
                     </DialogActions>
-
                 </Box>
             </Dialog>
         </>

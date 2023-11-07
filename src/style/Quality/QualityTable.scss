@@ -8,7 +8,6 @@
 
 .company_count {
     margin-top: 2rem !important;
-
 }
 
 .MuiTableCell-sizeMedium {
@@ -21,7 +20,6 @@
 }
 
 .table_tital {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,43 +48,32 @@
         border-radius: 9px;
         width: 9rem;
         height: 3.12rem;
-
     }
 }
 
-
 .menus {
     box-shadow: none !important;
-
     .menu {
-
-
         display: flex;
-      
         width: 100%;
-
         .edit {
             color: $primary;
             background-color: none;
             font-size: 20px;
             margin-right: 4px;
-
         }
         .menu-text{
             margin-left: 0.5rem;
         }
     }
-
     .MuiMenu-paper {
         border-radius: 10px;
     }
-
 }
 
 .Table_container {
     margin-top: 0.5rem !important;
     position: relative;
-
     .table_loading {
         position: absolute;
         top: 50%;
@@ -95,8 +82,6 @@
         font-family: $font-family !important;
         font-weight: 600;
     }
-
-
 
     .table_header {
         background-color: $background_color !important;
@@ -110,20 +95,17 @@
                 display: flex;
                 text-transform: uppercase !important;
                 padding: -20px !important;
-
                 .table_hading_icon {
                     padding-left: 4px;
                     visibility: hidden;
                 }
             }
-
             :hover {
                 .table_hading_icon {
                     padding-left: 4px;
                     visibility: visible !important;
                 }
             }
-
         }
     }
 
@@ -139,11 +121,8 @@
 
     .more_icons{
         display: flex;
-
         align-items: center;
         justify-content: center;
-       
-
         .more_icon {
             color: $font_color;
             cursor: pointer;
@@ -151,14 +130,8 @@
             font-weight: 500;
             align-items: center;
             justify-content: center;
-    
         }
     }
-
-    
-
-
-
 
     .tables_main_hading {
         &:after {
@@ -177,5 +150,4 @@
 .not_data_font_tital {
     text-align: center;
     font-family: $font-family !important;
-
 }

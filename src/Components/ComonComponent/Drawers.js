@@ -1,6 +1,5 @@
-
 import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ThemeProvider } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import logo from "../../assets/img/logo.svg";
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { useLocation, useNavigate } from 'react-router';
@@ -10,17 +9,29 @@ import { DrawerHeader } from "../ComonComponent/Comon_Component";
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
+import { useProfileQuery } from '../../api/Auth';
+import { useState } from 'react';
 
 export default function Drawers() {
 
     const navigate = useNavigate();
     const location = useLocation();
-
+    const [showUser, setShowUser] = useState(true);
+    const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
     const theme = createTheme();
 
     const Navigate = (path) => {
         navigate(path)
     }
+    useEffect(() => {
+        if (!UserisFetching) {
+            if (Userdata?.result?.role === "view" || Userdata?.result?.role === "write") {
+                setShowUser(false)
+            } else {
+                setShowUser(true)
+            }
+        }
+    }, [Userdata, navigate, UserisFetching, showUser])
 
     return (
         <>
@@ -55,7 +66,7 @@ export default function Drawers() {
                             </ListItemButton>
                         </ListItem>
 
-                        <ListItem disablePadding onClick={() => Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : ""
+                        {showUser && <ListItem disablePadding onClick={() => Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : ""
                             }`}   >
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
@@ -63,7 +74,7 @@ export default function Drawers() {
                                 </ListItemIcon>
                                 <ListItemText className='draewr_dashboard_text' primary="User" />
                             </ListItemButton>
-                        </ListItem>
+                        </ListItem>}
 
                         <ListItem disablePadding onClick={() => Navigate("/Yarn")} className={`draewr_dashboard_item ${location.pathname === "/Yarn" ? "active" : ""
                             }`}>
@@ -85,22 +96,7 @@ export default function Drawers() {
                                 <ListItemText className='draewr_dashboard_text' primary="Profile" />
                             </ListItemButton>
                         </ListItem>
-
-
-
-                        {/* <ListItem disablePadding onClick={()=>Navigate("/kyc")} className={`draewr_dashboard_item ${location.pathname === "/kyc" ? "active" : ""
-                            }`} >
-                            <ListItemButton component="a" disableRipple >
-                                <ListItemIcon className='draewr_dashboard_icon'>
-                                    <PersonSearchIcon />
-                                </ListItemIcon>
-                                <ListItemText className='draewr_dashboard_text' primary="Kyc" />
-                            </ListItemButton>
-                        </ListItem> */}
-
-
                     </List>
-
                 </Drawer>
             </ThemeProvider>
 

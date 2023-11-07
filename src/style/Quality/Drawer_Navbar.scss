@@ -36,7 +36,6 @@
 
         .draewr_dashboard_icon {
             color: $font_color;
-        
         }
 
         .draewr_dashboard_text {
@@ -166,21 +165,17 @@
                 background-color: $secondary;
             }
 
-
-
             .menuitem_icon {
                 margin-left: 1rem !important;
             }
 
-
             .appbar_right_drop_icon {
                 color: $font_color;
+
                 &:hover {
                     background-color: $white;
                 }
             }
-
-
 
             .appbar_avatar {
                 margin-left: 0.5rem;
@@ -189,7 +184,6 @@
                 height: 40px !important;
             }
 
-
             .appbar_username {
                 margin-left: 0.5rem;
                 font-size: 1.1rem !important;
@@ -197,14 +191,23 @@
 
 
 
-            .menu_item {
-                font-weight: 600 !important;
-            }
-
-
             .appbar_logout {
                 color: $font_color !important;
                 font-size: 23px !important;
+            }
+
+            .amore_icons {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+
+                .amore_icon {
+                    color: $font_color;
+                    cursor: pointer;
+                    font-weight: 500;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
         }
     }
@@ -220,6 +223,31 @@
 }
 
 
+.menus_app {
+    .menu_app {
+        display: flex;
+        width: 100%;
+
+        .edit_app {
+            color: $primary;
+            background-color: none;
+            font-size: 22px;
+            margin-right: 4px;
+        }
+        .menu-text_app {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .MuiMenu-paper {
+        border-radius: 10px;
+    }
+
+    .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+        box-shadow: none !important;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+    }
+}
 
 .dialog {
 
@@ -230,17 +258,15 @@
         align-items: center !important;
         margin-top: -18px;
 
-
         .dialog_tital {
             margin-top: 15px !important;
-
             .dialog_logout_icon {
                 color: $primary;
                 font-size: 4rem;
                 margin-bottom: -15px;
-
             }
-            .dialog_delete_icon{
+
+            .dialog_delete_icon {
                 color: $red;
                 font-size: 4rem;
                 margin-bottom: -15px;
@@ -253,8 +279,6 @@
             font-size: 20px !important;
             font-family: $font-family;
             margin-bottom: 3px;
-
-
         }
 
         .dialog_cancel {
@@ -265,13 +289,9 @@
             margin-top: -10px !important;
             margin-bottom: 12px !important;
             height: 2.6rem;
-
-
-
         }
 
         .dialog_yes {
-
             text-transform: capitalize !important;
             font-family: $font-family !important;
             background-color: $primary;
@@ -284,7 +304,7 @@
             margin-left: 0.5rem;
         }
 
-        .ddialog_yes{
+        .ddialog_yes {
             text-transform: capitalize !important;
             font-family: $font-family !important;
             background-color: $red;
@@ -310,7 +330,6 @@
     justify-content: flex-end;
 }
 
-
 .appbar_search_button {
     margin-left: 8px;
 }
@@ -320,7 +339,6 @@
     height: 50px;
     width: 300px;
     background-color: $background_color;
-
     .appbar_search_button {
         height: 50px;
         box-shadow: none;

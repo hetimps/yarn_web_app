@@ -1,0 +1,324 @@
+@import "../Color.js/color";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.yarn_icon_edit {
+    color: $primary;
+    font-size: 1.4rem !important;
+    border: 2px solid $primary;
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.yarn_icon_history {
+    color: $primary;
+    font-size: 1.7rem !important;
+    cursor: pointer;
+}
+
+.yarn_icon {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.yedit_check_box {
+    margin-top: 12px;
+    margin-left: -5px !important;
+    width: 100% !important;
+}
+
+// history dialog
+
+.hydialog_container {
+    .MuiInputBase-root {
+        border-radius: 12px !important;
+        height: 50px;
+    }
+
+    .hyinvite_dialog_tital {
+        .hyinvite_dialog_tital_txt {
+            text-align: center;
+            font-size: 23px;
+            margin: auto;
+        }
+
+        .hyinvite_dialog_close {
+            cursor: pointer;
+            // margin-top: 0.5rem !important;
+            font-size: 25px !important;
+            position: absolute !important;
+            top: 0;
+            right: 0;
+            margin-right: 8px !important;
+            margin-top: 5px !important;
+        }
+    }
+
+    .hydialog_content {
+        .hyuser_list_loader {
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hyno-data-message {
+            height: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px !important;
+        }
+
+
+        .hyuser_list {
+            margin-top: 0.5rem !important;
+            // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px;
+            // background-color: red;
+            border-radius: 10px !important;
+
+            .hyuser_list_item {
+                display: flex;
+                align-items: center !important;
+                border-radius: 10px !important;
+                // padding-top: 0px;
+                // margin: -7px 0px -7px -6px;
+                height: 25px !important;
+                justify-content: space-between;
+            }
+
+            .hyheading_text {
+                font-size: 14px;
+                color: $lable-color;
+                font-weight: 600 !important;
+            }
+
+            .time_date {
+                display: flex;
+                gap: 10px;
+            }
+
+            .reflected_checkbox {
+                margin-right: -6px !important;
+
+            }
+        }
+    }
+
+    .MuiDialog-paper {
+        border-radius: 20px !important;
+        width: 600px;
+        height: 470px;
+    }
+}
+
+//update yarn drawer
+
+.yedrawer {
+    .MuiInputBase-root {
+        border-radius: 12px !important;
+        height: 50px;
+    }
+
+    position: relative;
+
+    .yeheading_paper {
+        box-shadow: $placeholder-color 0px 0px 0px 1px, $white 0px 0px 0px 1px inset;
+        padding: 0.5rem;
+
+        .yeheading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .yeheading_text {
+                font-size: 20px;
+            }
+
+            .yeclose_icon {
+                cursor: pointer;
+                margin-top: 4px;
+            }
+        }
+    }
+
+    .ye_loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90vh !important;
+    }
+
+    .yefrom {
+        .MuiAccordion-rounded {
+            box-shadow: none !important;
+            position: inherit !important;
+            border-radius: 12px !important;
+            border: 1px solid $placeholder-color !important;
+        }
+
+        margin-top: 1rem;
+        padding: 00 10px;
+
+        .yeinputconatiner {
+            margin-top: 0.7rem;
+
+            .yelabel {
+                font-weight: 600;
+                margin-bottom: 0.4rem;
+                color: $font_color;
+            }
+
+            .yeinput {
+                width: 100%;
+            }
+        }
+
+        .yedit_check_box {
+            margin-top: 10px;
+            margin-left: -5px !important;
+            width: 100% !important;
+
+            .yeheading_text {
+                font-size: 15px;
+                color: $font_color;
+                font-weight: 600 !important;
+            }
+        }
+
+        .yequality {
+            margin-top: 1rem;
+            height: 600px;
+            overflow: auto;
+
+            .mainaccordion {
+                margin-top: 0.5rem;
+            }
+
+            .Accordion_heading {
+                display: flex;
+                justify-content: space-between !important;
+                width: 100%;
+                align-items: center;
+
+                .css-1jq90og-MuiButtonBase-root-MuiCheckbox-root {
+                    padding: 0 !important;
+                }
+
+                .Accordion_checkboxs {
+                    display: flex;
+                    gap: 2px;
+                    align-items: center;
+                }
+            }
+
+            .Accordioninfo {
+                // height: 400px;
+                // overflow: auto;
+                .btn_warp {
+                    width: 100%;
+
+                    .btn_info {
+                        display: flex;
+                        font-weight: 500;
+                        color: $font_color;
+                        gap: 10px;
+                        text-transform: capitalize;
+                    }
+                }
+
+                .wrap_box {
+                    display: flex;
+                    flex-direction: column;
+                    // flex-wrap: wrap;
+                    position: relative;
+
+                    .box_content {
+                        border: 2px dashed $primary;
+                        border-radius: 20px;
+                        margin-top: 10px;
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                        height: 7.6rem;
+                        padding: 0.5rem;
+                        margin-right: 3rem;
+                        position: relative;
+
+                        .heading_text {
+                            font-size: 14px;
+                            color: $lable-color;
+                            font-weight: 600 !important;
+                        }
+
+                        .heading1 {
+                            display: flex;
+                            justify-content: space-between;
+                            width: 100%;
+                        }
+
+                        .heading2 {
+                            display: flex;
+                            justify-content: space-between;
+                            width: 100%;
+                            border-bottom: 1px dashed $font_color;
+                        }
+
+                        .after_heading {
+                            display: flex;
+                            justify-content: space-between;
+                            width: 100%;
+                            margin-top: 0.5rem;
+                        }
+
+                        .dashed_border {
+                            border-left: 1px dashed $font_color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .yebtns {
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+        display: flex;
+        justify-content: space-between;
+
+        .yebtn_done {
+            background-color: $primary;
+            color: $white;
+            text-transform: capitalize;
+            font-family: $font-family;
+            // width: 100%;
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+        }
+
+        .yebtn_cancel {
+            background-color: $white;
+            color: $font_color;
+            text-transform: capitalize;
+            font-family: $font-family;
+            border-color: $font_color;
+            height: 2.7rem;
+            font-size: 16px;
+            margin-top: 1rem;
+            width: 6rem !important;
+        }
+    }
+
+}
