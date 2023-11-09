@@ -13,28 +13,27 @@ import { useResendOtpMutation, useUserVerifyMutation } from '../api/Otp';
 import { toast } from 'react-hot-toast';
 import Loader from '../Components/ComonComponent/Loader';
 import { useDispatch } from 'react-redux';
-import { } from '../Redux/AuthSlice';
+import { setCurrentUser } from '../Redux/AuthSlice';
 
 export function matchIsNumeric(text) {
     const isNumber = typeof text === 'number';
     const isString = typeof text === 'string';
     return (isNumber || (isString && text !== '')) && !isNaN(Number(text));
 }
-
 const validateChar = (value, index) => {
     return matchIsNumeric(value) && value !== ' ';
 }
 
 export default function Otp() {
+    const [verifyOtp, { isLoading }] = useUserVerifyMutation();
+    const [resendOtp, { isLoading: resendOtpLoading }] = useResendOtpMutation();
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const { state } = location;
     const countryCode = state?.countryCode;
     const mobileNo = state?.mobileNo;
-
     const HideMobileNo = `${mobileNo?.slice(0, 3)}${String?.hide_number}${mobileNo?.slice(-2)}`;
-
     const defaultValue = {
         Otp: state?.loginOtp,
     };
@@ -45,14 +44,8 @@ export default function Otp() {
             .required(String.otp_required),
     });
 
-    // api
-
-    const [verifyOtp, { isLoading }] = useUserVerifyMutation();
-    const [resendOtp, { isLoading: resendOtpLoading }] = useResendOtpMutation();
-
     const handleSubmit = async (values) => {
         const Otp = values.Otp;
-
         const body = {
             countryCode: countryCode,
             mobileNo: mobileNo,
@@ -61,22 +54,18 @@ export default function Otp() {
 
         try {
             const response = await verifyOtp(body);
-            console.log("otp--", response)
+            console.log("response", response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
-
             if (status === 200 && response?.data?.result) {
                 const token = response?.data?.result?.token;
                 const username = response?.data?.result?.userName;
                 const companyid = response?.data?.result?.companyId;
                 const isCreatedCompany = response?.data?.result?.isCreatedCompany;
                 const isJoinedCompany = response?.data?.result?.isJoinedCompany;
-                const userName = response?.data?.result?.userName;
-                const currentUser = response?.data?.result;
                 const role = response?.data?.result?.role;
-                // response?.data?.result?.userName && dispatch(setCurrentUser(response?.data?.result))
                 localStorage.setItem("token", JSON.stringify(token));
-                // localStorage.setItem("username", JSON.stringify(userName));
+                dispatch(setCurrentUser(response?.data?.result))
                 toast.success(message)
                 if (!username) {
                     navigate("/Userinformation", {
@@ -114,7 +103,6 @@ export default function Otp() {
         catch (error) {
             console.log(error)
         }
-
     };
     const ResendOtp = async (setFieldValue) => {
         const body = {
@@ -126,7 +114,6 @@ export default function Otp() {
             console.log(response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
-
             if (status === 200) {
                 const code = response?.data?.result?.loginOtp;
                 toast.success(message)
@@ -162,7 +149,7 @@ export default function Otp() {
                                         className="login_desc"
                                         variant="span"
                                         component="span">
-                                        {`Code is sent to +${countryCode} ${HideMobileNo} Please Check your message.`}
+                                        {`${String.otp_des} +${countryCode} ${HideMobileNo} ${String.otp_title}`}
                                     </Typography>
                                 </Box>
                                 <Formik initialValues={defaultValue}
@@ -185,8 +172,7 @@ export default function Otp() {
                                                         // autoFocus
                                                         length={6}
                                                         validateChar={validateChar}
-                                                        style={{ fontFamily: 'Poppins' }}
-                                                    />
+                                                        style={{ fontFamily: 'Poppins' }} />
 
                                                     {touched.Otp && errors.Otp && (
                                                         <div className="error">{errors.Otp}</div>
@@ -201,7 +187,6 @@ export default function Otp() {
                                                             <Box className="login_button">
                                                                 <CustomButtons button_name={String.next} />
                                                             </Box>
-
                                                             <Box sx={{ fontFamily: "Poppins", textAlign: "center", marginTop: "1rem" }}>
                                                                 <OtpTimer
                                                                     text={<Link className='link' underline="none">{String.resend}</Link>}

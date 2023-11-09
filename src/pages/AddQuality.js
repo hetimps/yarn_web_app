@@ -12,11 +12,11 @@ import { useProfileQuery } from '../api/Auth';
 
 
 export default function AddQuality() {
-  const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
+  const { data: Userdata } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBars haddings="Quality"  Userdata={Userdata} />
+      <AppBars haddings="Quality" Userdata={Userdata} />
       <Drawers />
       <Main open={true}>
         <DrawerHeader />

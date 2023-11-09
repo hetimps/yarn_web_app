@@ -8,20 +8,9 @@ import { useCheckStatusQuery } from '../api/Join';
 import Loader from '../Components/ComonComponent/Loader';
 import { toast } from 'react-hot-toast';
 
-
 export default function Join() {
   const navigaet = useNavigate();
-
-  const logout = () => {
-    localStorage.removeItem("token")
-    navigaet("/Phonno")
-  }
-
   const { data, isFetching, refetch } = useCheckStatusQuery();
-
-  // const [requestStatus, setrequestStatus] = useState("");
-
-  console.log(data?.result?.isJoinedCompany, "data")
 
   useEffect(() => {
     if (!isFetching) {
@@ -31,34 +20,37 @@ export default function Join() {
     }
   }, [isFetching, data, navigaet])
 
+  const logout = () => {
+    localStorage.removeItem("token")
+    navigaet("/Phonno")
+  }
 
   const status = async () => {
-
     if (!isFetching) {
       const response = await refetch();
-
       const RequestStatus = response?.data?.result?.requestStatus;
-
-      console.log(RequestStatus, "RequestStatus")
-
       if (RequestStatus === "rejected") {
-
-        console.log(RequestStatus, "1")
-        navigaet("/Company");
+        navigaet("/Company", {
+          state: {
+            response
+          }
+        });
         toast.error(String.rejected_status)
       }
 
       else if (RequestStatus === "approved") {
-        navigaet("/Quality");
+        navigaet("/Quality", {
+          state: {
+            response
+          }
+        });
         window.location.reload(false);
         toast.success(String.approved_status)
       }
       else {
         toast.error(String.pending_status)
       }
-
     }
-
   }
   return (
     <>
@@ -77,8 +69,6 @@ export default function Join() {
             {String.joinPage_tital}
           </Typography>
         </Box>
-
-
         <Box>
           <Typography
             className="join_desc"

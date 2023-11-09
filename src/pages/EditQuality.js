@@ -8,14 +8,13 @@ import EditQualityForm from '../Components/QualityComponent/EditQualityForm';
 import { useProfileQuery } from '../api/Auth';
 
 export default function EditQuality() {
-  const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
+  const { data: Userdata} = useProfileQuery({}, { refetchOnMountOrArgChange: true });
   return (
     <Box sx={{ display: 'flex' }}>
 
       <CssBaseline />
       <AppBars haddings="Quality" Userdata={Userdata} />
       <Drawers />
-
       <Main open={true}>
         <DrawerHeader />
         <EditQualityForm />

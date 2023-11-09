@@ -13,7 +13,6 @@ import { useProfileQuery } from '../../api/Auth';
 import { useState } from 'react';
 
 export default function Drawers() {
-
     const navigate = useNavigate();
     const location = useLocation();
     const [showUser, setShowUser] = useState(true);
@@ -34,30 +33,23 @@ export default function Drawers() {
     }, [Userdata, navigate, UserisFetching, showUser])
 
     return (
-        <>
             <ThemeProvider theme={theme}>
                 <Drawer
                     sx={{
-                        width: 280,
-                        flexShrink: 0,
-                        '& .MuiDrawer-paper': {
-                            width: 280,
-                            boxSizing: 'border-box',
-                        },
-                    }}
+                    width: 280,
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper':{
+                    width: 280,
+                    boxSizing: 'border-box'}}}
                     variant="persistent"
                     anchor="left"
                     open={true}
-                    className='drawer'
-                >
+                    className='drawer'>
                     <DrawerHeader>
                         <img src={logo} alt="logo" className="draewr_logo"></img>
                     </DrawerHeader>
-
                     <List className='draewr_item'>
-
-                        <ListItem disablePadding onClick={() => Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" || location.pathname === "/Addquality" || location.pathname === "/Editquality" || location.pathname === "/Viewquality" ? "active" : ""
-                            }`}  >
+                        <ListItem disablePadding onClick={() => Navigate("/Quality")} className={`draewr_dashboard_item ${location.pathname === "/Quality" || location.pathname === "/Addquality" || location.pathname === "/Editquality" || location.pathname === "/Viewquality" ? "active" : ""}`}  >
                             <ListItemButton component="a" disableRipple>
                                 <ListItemIcon className='draewr_dashboard_icon'  >
                                     <DashboardCustomizeIcon />
@@ -65,9 +57,7 @@ export default function Drawers() {
                                 <ListItemText className='draewr_dashboard_text' primary="Quality" />
                             </ListItemButton>
                         </ListItem>
-
-                        {showUser && <ListItem disablePadding onClick={() => Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : ""
-                            }`}   >
+                        {showUser && <ListItem disablePadding onClick={() => Navigate("/User")} className={`draewr_dashboard_item ${location.pathname === "/User" ? "active" : "" }`}   >
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
                                     <PersonIcon />
@@ -75,9 +65,7 @@ export default function Drawers() {
                                 <ListItemText className='draewr_dashboard_text' primary="User" />
                             </ListItemButton>
                         </ListItem>}
-
-                        <ListItem disablePadding onClick={() => Navigate("/Yarn")} className={`draewr_dashboard_item ${location.pathname === "/Yarn" ? "active" : ""
-                            }`}>
+                        <ListItem disablePadding onClick={() => Navigate("/Yarn")} className={`draewr_dashboard_item ${location.pathname === "/Yarn" ? "active" : ""}`}>
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
                                     <SportsVolleyballIcon />
@@ -85,10 +73,7 @@ export default function Drawers() {
                                 <ListItemText className='draewr_dashboard_text' primary="Yarn" />
                             </ListItemButton>
                         </ListItem>
-
-
-                        <ListItem disablePadding onClick={() => Navigate("/Profile")} className={`draewr_dashboard_item ${location.pathname === "/Profile" ? "active" : ""
-                            }`} >
+                        <ListItem disablePadding onClick={() => Navigate("/Profile")} className={`draewr_dashboard_item ${location.pathname === "/Profile" ? "active" : ""}`} >
                             <ListItemButton component="a" disableRipple >
                                 <ListItemIcon className='draewr_dashboard_icon'>
                                     <SettingsIcon />
@@ -99,7 +84,5 @@ export default function Drawers() {
                     </List>
                 </Drawer>
             </ThemeProvider>
-
-        </>
     )
 }

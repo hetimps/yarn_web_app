@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const prepareHeaders = (headers) => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }
@@ -40,20 +39,6 @@ export const CompanyUser = createApi({
             }),
             invalidatesTags: ["CompanyUser"],
         }),
-
-        // AcceptedCompanyUser: builder.mutation({
-        //     query: (e) => {
-        //         console.log('AcceptedCompanyUser body:', e); // Log the body parameter
-        //         return {
-        //             url: "/company-user/req-accepted",
-        //             method: 'post',
-        //             params: e.acceptedUserId,
-        //             body: e.body
-        //         };
-        //     },
-        //     invalidatesTags: ["CompanyUser"],
-        // }),
-
         AcceptedCompanyUser: builder.mutation({
             query: (e) => {
                 console.log('AcceptedCompanyUser body:', e);

@@ -1,8 +1,7 @@
 import React from 'react'
-
-
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText} from '@mui/material'
 import Loader from '../ComonComponent/Loader'
+import { String } from '../../constants/String'
 
 export default function ConformDialog({ open, onClose, heading, tital, back, isLoading }) {
     return (
@@ -17,14 +16,13 @@ export default function ConformDialog({ open, onClose, heading, tital, back, isL
                             {tital}
                         </DialogContentText>
                     </DialogContent>
-
                     <DialogActions >
                         {isLoading ?
                             <Loader />
                             : (<Box className="cdialog_button">
-                                <Button variant="outlined" className="cdialog_cancel" onClick={onClose}>{"cancel"}</Button>
+                                <Button variant="outlined" className="cdialog_cancel" onClick={onClose}>{String.dialog_cancel_buttons}</Button>
                                 <Button variant="contained" className="cdialog_yes" onClick={back} autoFocus>
-                                    {"yes"}
+                                    {String.dialog_cancel_yes}
                                 </Button>
                             </Box>)}
                     </DialogActions>

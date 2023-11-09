@@ -7,58 +7,46 @@ import { useState } from 'react';
 import { Form, Formik } from 'formik';
 import InputLabels from './InputLabels';
 import TextFields from './TextFields';
-import * as Yup from "yup";
-import { Regex } from '../../constants/Regex';
-import { useEditQualityMutation, useGetEditQualityQuery } from '../../api/Quality';
+import { useGetEditQualityQuery } from '../../api/Quality';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { String } from '../../constants/String';
 import Loader from '../ComonComponent/Loader';
-import { toast } from 'react-hot-toast';
 import WarpDrawer from './WarpDrawer';
 import WeftDrawer from './WeftDrawer';
 import { useEffect } from 'react';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 
 export default function ViewQualityForm() {
-
     const { state } = useLocation();
     const [id, setId] = useState(state ? state?._id : '');
     const { data, isFetching, refetch } = useGetEditQualityQuery(id);
     const [qeditdata, setQEditdata] = useState([]);
+    const navigaet = useNavigate();
+    const [selectedOption, setSelectedOption] = useState("");
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
 
     useEffect(() => {
         refetch();
     }, [refetch])
 
     useEffect(() => {
-
         if (state && !isFetching) {
             setId(state?._id);
         }
         if (data) {
-
             setQEditdata(data?.result);
             setSelectedOption(data?.result?.expenseType)
         }
     }, [state, isFetching, data]);
 
-    const navigaet = useNavigate();
-
-    const [selectedOption, setSelectedOption] = useState("");
-
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
-    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
     const toggleDrawerWeft = () => {
         setIsDrawerOpenWeft(!isDrawerOpenWeft);
     };
-
-    // const handleChanger = (event) => {
-    //     setSelectedOption(event.target.value);
-    // };
 
     const defaultValue = {
         qulaity: data?.result?.qualityName,
@@ -76,221 +64,52 @@ export default function ViewQualityForm() {
         gsm: data?.result?.info?.gsm,
     };
 
-    const [wrapDataRequired, setWrapDataRequired] = useState(false);
-
-    const [weftDataRequired, setWeftDataRequired] = useState(false);
-
-
-    const validationSchema = Yup.object().shape({
-
-        qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
-        eff: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        cost: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        rpm: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        mach: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        reed: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        border: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        pasramani: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        steam: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        panno: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        nozzle: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        letis: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-        gsm: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
-
-    }).test('wrapData', `${String.wrapData_required}`, () => {
-        if (qeditdata?.warp?.warpData > 0) {
-            setWrapDataRequired(false);
-        }
-        return qeditdata?.warp?.warpData > 0;
-    }).test('weftData', `${String.weftData_required}`, () => {
-        if (qeditdata?.weft?.weftData > 0) {
-            setWeftDataRequired(false);
-        }
-        return qeditdata?.weft?.weftData > 0;
-    });
-
-    const [EditQuality, { isLoading }] = useEditQualityMutation();
-
-    const handleSubmit = async (value) => {
-        if (wrapData.length === 0) {
-            setWrapDataRequired(true);
-        }
-        else {
-            setWrapDataRequired(false);
-        }
-
-        if (weftData.length === 0) {
-            setWeftDataRequired(true);
-        }
-        else {
-            setWeftDataRequired(false);
-        }
-
-        if (wrapData.length === 0 || weftData.length === 0) {
-            return;
-        }
-
-        //api data
-
-        const qualityName = value.qulaity
-        const qualityWeight = totalWeights
-
-        const qualityCost = selectedOption === "Fixed Cost"
-            ? Number(totalCosts) + Number(value.cost)
-            : Number(totalCosts) + Number(value.cost * sumOfPicks);
-
-        const cost = selectedOption === "Fixed Cost"
-            ? Number(value.cost)
-            : Number(value.cost * sumOfPicks);
-
-        const TotalBeamEnds = tars
-
-        const TotalPick = sumOfPicks
-
-        const TotalWidth = widths
-
-        const totalefficiency = (isNaN(value.rpm) || isNaN(value.eff))
-            ? 0
-            : (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2));
-
-        const body = {
-            qualityName: qualityName,
-            qualityWeight: qualityWeight,
-            qualityCost: qualityCost,
-            TotalBeamEnds: TotalBeamEnds,
-            TotalPick: TotalPick,
-            TotalWidth: TotalWidth,
-            warp: {
-                totalWarpWeight: WrapsumOfweights,
-                totalWarpCost: WrapsumOfCosts,
-                warpData: wrapData.map((element) => {
-                    const { warpYarnName, warpCompnayName, tpm, _id, ...rest } = element;
-
-                    if (tpm !== "") {
-                        rest.tpm = tpm;
-                    }
-                    return rest;
-                })
-            },
-
-            weft: {
-                totalWeftWeight: WeftsumOfweights,
-                totalWeftCost: WeftsumOfCosts,
-                weftData: weftData.map((element) => {
-                    const { wefYarnName, wefCompnayName, _id, tpm, ...rest } = element;
-
-                    if (tpm !== "") {
-                        rest.tpm = tpm;
-                    }
-                    return rest;
-                })
-            },
-            expenseType: selectedOption,
-            cost: cost,
-            totalefficiency: totalefficiency,
-            rpm: value.rpm !== "" ? value.rpm : undefined,
-            efficiency: value.eff !== "" ? value.eff : undefined,
-            machine: value.mach !== "" ? value.mach : undefined,
-            info: {
-                reed: value.reed,
-                panno: value.panno,
-                border: value.border,
-                nozzle: value.nozzle,
-                pasramani: value.pasramani,
-                letis: value.letis,
-                steam: value.steam,
-                gsm: value.gsm
-            }
-        }
-
-        try {
-            const response = await EditQuality({ body, id })
-
-            const status = response?.data?.statusCode;
-            const message = response?.data?.message;
-            if (status === 200) {
-                toast.success(message)
-                navigaet("/Quality")
-            }
-            else {
-                toast.error(message)
-            }
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-
-    // dialog
-
-
     const Back = () => {
         navigaet("/Quality")
     }
-
-
     // set data
-
     useEffect(() => {
         setWrapData(qeditdata?.warp?.warpData)
         setweftData(qeditdata?.weft?.weftData)
     }, [qeditdata])
 
-
     // wrap data
     const [wrapData, setWrapData] = useState([]);
     const [wrapSumCost, setWrapSumCost] = useState([])
-
     const [wrapSumweight, setWrapSumweight] = useState([])
-
     const WrapsumOfCost = wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WrapsumOfweight = wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
-
-
     const [WrapsumOfCosts, setWrapsumOfCosts] = useState(0)
-
     const [WrapsumOfweights, setWrapsumOfweights] = useState(0)
-
-
 
     useEffect(() => {
         setWrapsumOfCosts(qeditdata?.warp?.totalWarpCost)
         setWrapsumOfweights(qeditdata?.warp?.totalWarpWeight)
     }, [qeditdata])
 
-
     useEffect(() => {
         setWrapsumOfCosts(Number(WrapsumOfCost.toFixed(2)))
         setWrapsumOfweights(Number(WrapsumOfweight.toFixed(2)))
     }, [WrapsumOfCost, WrapsumOfweight])
 
-
     // weft data
     const [weftData, setweftData] = useState(qeditdata?.weft?.weftData)
-
     const [weftSumCost, setweftSumCost] = useState([])
     const [weftSumweight, setweftSumweight] = useState([])
-
     const WeftsumOfCost = weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WeftsumOfweight = weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
-
-
-
     const [WeftsumOfCosts, setWeftsumOfCosts] = useState(0);
     const [WeftsumOfweights, setWeftsumOfweights] = useState(0)
-
 
     useEffect(() => {
         setWeftsumOfCosts(qeditdata?.weft?.totalWeftCost)
         setWeftsumOfweights(qeditdata?.weft?.totalWeftWeight)
     }, [qeditdata])
 
-
     useEffect(() => {
         setWeftsumOfCosts(Number(WeftsumOfCost.toFixed(2)))
         setWeftsumOfweights(Number(WeftsumOfweight.toFixed(2)))
     }, [WeftsumOfCost, WeftsumOfweight])
-
 
     //total sum
     const [totalWeights, settotalWeights] = useState(0)
@@ -306,71 +125,31 @@ export default function ViewQualityForm() {
         const totalCost = parseFloat(WrapsumOfCosts) + parseFloat(WeftsumOfCosts);
         settotalWeights(totalWeight.toFixed(2))
         settotalCosts(totalCost.toFixed(2))
-
     }, [WrapsumOfweights, WeftsumOfweights, WrapsumOfCosts, WeftsumOfCosts])
-
 
     //pick
     const [pickSum, setPickSum] = useState([]);
-
     const sumOfPick = pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
     const sumOfPicks = Number(sumOfPick.toFixed(2))
-
-
-    //width
     const [Width, setWidth] = useState([]);
-    const widths = Width.reduce((sum, width) => sum + parseFloat(width), 0);
-
-
-    //tar
     const [Tar, setTar] = useState([]);
-    const tars = Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
-
     const [editdata, seteditdata] = useState([]);
-    // const editData = (index) => {
-    //     toggleDrawer();
-
-    //     const editData = {
-    //         index: index,
-    //     }
-    //     seteditdata(editData)
-    // }
-
     const [editweftData, seteditweftData] = useState([]);
-
-    // const editWeftData = (index) => {
-    //     toggleDrawerWeft();
-    //     const editData = {
-    //         index: index,
-    //     }
-    //     seteditweftData(editData)
-    // }
 
     return (
         <>
-
             {isFetching ? (
-
                 <div className='editpage_loader'>
                     <Loader />
                 </div>
-
-            ) : (<Formik initialValues={defaultValue}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}>
+            ) : (<Formik initialValues={defaultValue}>
                 {({
                     values,
-                    handleChange,
-                    errors,
-                    touched,
                 }) => (
-
                     <Form>
                         <div className='add_form'>
-
                             {/* heading */}
                             <div className='add_heading'>
-
                                 <div className='first_heading' >
                                     <IconButton className='add_arrow' onClick={Back}>
                                         <ArrowBackIcon className='add_qicon' />
@@ -379,7 +158,6 @@ export default function ViewQualityForm() {
                                         {String.view_quality}
                                     </Typography>
                                 </div>
-
                                 <div className='second_heading' >
                                     <Stack direction="row" spacing={1}>
                                         <Button className='btn_weight' variant="contained" >{String.weight} {totalWeights} {String.akg}</Button>
@@ -391,32 +169,21 @@ export default function ViewQualityForm() {
                                         </Button>
                                     </Stack>
                                 </div>
-
                                 <div className='add_btn'>
                                     <Button type='submit' sx={{ display: "none" }} className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">{String.save}</Button>
                                 </div>
                             </div>
-
-
-
                             <Paper className='from_paper'>
                                 <div className='add_form_filed'>
-
                                     <div className='qulaity_wrap'>
-
                                         <InputLabel className="qulaity_label">
                                             {String.Quality}
                                         </InputLabel>
-
                                         <TextFields
                                             value={values.qulaity}
-                                            error={touched.qulaity && Boolean(errors.qulaity)}
-                                            helperText={touched.qulaity && errors.qulaity}
                                             placeholder={String.quality_placeholder} width={"50%"} name={"qulaity"} />
                                     </div>
-
                                     <div className='add_form_btns'>
-
                                         <Button className='btn_warp' variant="outlined"
                                             endIcon={
 
@@ -425,34 +192,23 @@ export default function ViewQualityForm() {
                                                         <ControlPointIcon />
                                                     </IconButton>
                                                 </div>
-                                            }
-                                        >
+                                            }>
                                             <div>
                                                 {String.warp_b}
                                             </div>
-
                                             <div>
                                                 {String.warp_w} {WrapsumOfweights.toFixed(2)} | {String.warp_c} {WrapsumOfCosts.toFixed(2)}
-
                                             </div>
                                         </Button>
-                                        {wrapDataRequired && wrapData.length === 0 && (
-                                            <div className="error-text">{String.wrapData_required}</div>
-                                        )}
                                     </div>
-
-
                                     <div className='wrap_box' >
-
                                         {wrapData?.map((wrap, index) => {
                                             const value = (((wrap.warpDeniar * wrap.warpBeamEnds) * wrap.warpShortage / 100 + (wrap.warpDeniar * wrap.warpBeamEnds)) / 9000000)
                                             const weight = (value * 100).toFixed(2);
                                             const cost = (value * wrap.warpYarnRate).toFixed(2);
                                             return (
-
                                                 <>
                                                     <Box className='box_content' component="span">
-
                                                         <div className='heading1' >
                                                             <div>
                                                                 <Typography className='heading_text'
@@ -461,7 +217,6 @@ export default function ViewQualityForm() {
                                                                     {wrap?.warpCompany?.yarnCompanyName || wrap?.warpYarnName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -488,10 +243,8 @@ export default function ViewQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                         </div>
-
                                                         <div className='after_heading' >
                                                             <div>
-
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
                                                                 <Typography
                                                                     className='heading_text'
@@ -509,7 +262,6 @@ export default function ViewQualityForm() {
                                                                     component="span">
                                                                     {wrap.warpShortage}
                                                                 </Typography>
-
                                                             </div>
                                                             <div className='dashed_border' />
                                                             <div>
@@ -546,9 +298,7 @@ export default function ViewQualityForm() {
                                                 </>
                                             )
                                         })}
-
                                     </div>
-
                                     <div className='add_form_btns'>
                                         <Button className='btn_weft' variant="outlined"
                                             endIcon={
@@ -560,17 +310,11 @@ export default function ViewQualityForm() {
                                             <div>
                                                 {String.weft_b}
                                             </div>
-
                                             <div>
                                                 {String.warp_w} {WeftsumOfweights.toFixed(2)} | {String.Weft_c} {WeftsumOfCosts.toFixed(2)}
                                             </div>
                                         </Button>
-                                        {weftDataRequired && weftData.length === 0 && (
-                                            <div className="error-text">{String.WeftData_required}</div>
-                                        )}
                                     </div>
-
-
                                     <div className='wrap_box' >
                                         {weftData?.map((weft, index) => {
                                             const value = (((weft.weftDeniar * weft.weftPick * weft.weftWidth) * weft.weftWastage / 100 + (weft.weftDeniar * weft.weftPick * weft.weftWidth)) / 9000000)
@@ -582,13 +326,11 @@ export default function ViewQualityForm() {
                                                         <div className='heading1' >
                                                             <div>
                                                                 <Typography className='heading_text'
-
                                                                     variant="span"
                                                                     component="span">
                                                                     {weft?.weftCompany?.yarnCompanyName || weft?.yarnCompanyName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -681,8 +423,6 @@ export default function ViewQualityForm() {
                                             )
                                         })}
                                     </div>
-
-
                                     <Paper className='expense_pepar'>
                                         <div className='add_expense'>
                                             <InputLabel className="qulaity_label">
@@ -700,7 +440,6 @@ export default function ViewQualityForm() {
                                                         <FormControlLabel value="Per Pick" control={<Radio />} label={String.Per_Pick} />
                                                     </RadioGroup>
                                                 </div>
-
                                                 <div className='cost_label'>
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
@@ -709,17 +448,12 @@ export default function ViewQualityForm() {
                                                     <div className='expense_wrap'>
                                                         <TextFields
                                                             value={values.cost} width={"12rem"} placeholder={String.Enter_Cost} name="cost"
-
-                                                            error={touched.cost && Boolean(errors.cost)}
-                                                            helperText={touched.cost && errors.cost}
                                                         />
                                                     </div>
                                                 )}
-
                                                 {selectedOption === 'Per Pick' && (
                                                     <div className='expense_wraps'>
-                                                        <TextFields error={touched.cost && Boolean(errors.cost)}
-                                                            helperText={touched.cost && errors.cost} value={values.cost} name="cost" width={"37.5%"} placeholder={String.Enter_Cost} />
+                                                        <TextFields value={values.cost} name="cost" width={"37.5%"} placeholder={String.Enter_Cost} />
                                                         <InputLabels name={`x ${sumOfPicks} =`} m={"0 0.7rem 0 0.7rem"} />
                                                         <TextFields name="costs" value={values.cost * sumOfPicks} width={"37.5%"} />
                                                     </div>
@@ -727,43 +461,32 @@ export default function ViewQualityForm() {
                                             </div>
                                         </div>
                                     </Paper>
-
                                     <Paper className='productions_pepar'>
                                         <div className='add_production'>
-
                                             <div className='productions_lables'>
                                                 <InputLabel className="qulaity_label">
                                                     {String.Production}
                                                 </InputLabel>
                                             </div>
-
                                             <div className='production_input_wrap'>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.RPM} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.RPM} name="rpm" error={touched.rpm && Boolean(errors.rpm)}
-                                                        helperText={touched.rpm && errors.rpm} value={values.rpm} />
+                                                    <TextFields width={"90%"} placeholder={String.RPM} name="rpm"
+                                                        value={values.rpm} />
                                                 </div>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.Eff} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Eff}
-                                                        name="eff" error={touched.eff && Boolean(errors.eff)}
-                                                        helperText={touched.eff && errors.eff} value={values.eff}
-                                                    />
-
+                                                    <TextFields width={"90%"} placeholder={String.Eff} name="eff" value={values.eff} />
                                                 </div>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.Mach} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} placeholder={String.Mach}
-                                                        name="mach" error={touched.mach && Boolean(errors.mach)}
-                                                        helperText={touched.mach && errors.mach} value={values.mach} />
+                                                        name="mach" value={values.mach} />
                                                 </div>
-
                                                 <div className='production_input'>
                                                     <InputLabels name={String.qPick} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} value={sumOfPicks} />
-
                                                 </div>
-
                                                 <div className='production_input'>
                                                     <InputLabels name={String.efficiency} m={"0 0.5rem 0 0"} />
                                                     <div style={{ top: 0, left: 0 }}>
@@ -780,56 +503,45 @@ export default function ViewQualityForm() {
                                             </div>
                                         </div>
                                     </Paper>
-
                                     <Paper className='info_pepar'>
                                         <div className='add_info'>
                                             <InputLabel className="qulaity_label">
                                                 {String.Information}
                                             </InputLabel>
-
                                             <div className='add_info_wrap'>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Reed} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} className="info_input_text" placeholder={String.Reed} name="reed" error={touched.reed && Boolean(errors.reed)}
-                                                        helperText={touched.reed && errors.reed} value={values.reed} />
+                                                    <TextFields width={"90%"} className="info_input_text" placeholder={String.Reed} name="reed" value={values.reed} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Border} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Border} name="border" error={touched.border && Boolean(errors.border)}
-                                                        helperText={touched.border && errors.border} value={values.border} />
+                                                    <TextFields width={"90%"} placeholder={String.Border} name="border" value={values.border} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Pasramani} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Pasramani} name="pasramani" error={touched.pasramani && Boolean(errors.pasramani)}
-                                                        helperText={touched.pasramani && errors.pasramani} value={values.pasramani} />
+                                                    <TextFields width={"90%"} placeholder={String.Pasramani} name="pasramani" value={values.pasramani} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Steam} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Steam} name="steam" error={touched.steam && Boolean(errors.steam)}
-                                                        helperText={touched.steam && errors.steam} value={values.steam} />
+                                                    <TextFields width={"90%"} placeholder={String.Steam} name="steam" value={values.steam} />
                                                 </div>
                                             </div>
-
                                             <div className='add_info_wrap' >
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Panno} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Panno} name="panno" error={touched.panno && Boolean(errors.panno)}
-                                                        helperText={touched.panno && errors.panno} value={values.panno} />
+                                                    <TextFields width={"90%"} placeholder={String.Panno} name="panno" value={values.panno} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Nozzle} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Nozzle} name="nozzle" error={touched.nozzle && Boolean(errors.nozzle)}
-                                                        helperText={touched.nozzle && errors.nozzle} value={values.nozzle} />
+                                                    <TextFields width={"90%"} placeholder={String.Nozzle} name="nozzle" value={values.nozzle} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Letis} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Letis} name="letis" error={touched.letis && Boolean(errors.letis)}
-                                                        helperText={touched.letis && errors.letis} value={values.letis} />
+                                                    <TextFields width={"90%"} placeholder={String.Letis} name="letis" value={values.letis} />
                                                 </div>
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Gsm} m={"0 0.5rem 0 0"} />
-                                                    <TextFields width={"90%"} placeholder={String.Gsm} name="gsm" error={touched.gsm && Boolean(errors.gsm)}
-                                                        helperText={touched.gsm && errors.gsm} value={values.gsm} />
+                                                    <TextFields width={"90%"} placeholder={String.Gsm} name="gsm" value={values.gsm} />
                                                 </div>
                                             </div>
                                         </div>

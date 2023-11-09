@@ -7,7 +7,6 @@ import Loader from './Loader';
 
 export default function Dialogs({ open, onClose, tital, text, Action, loading }) {
     return (
-        <>
             <Dialog className="dialog" open={open} >
                 <Box className="dialog_wraper" >
                     <DialogTitle >
@@ -37,6 +36,5 @@ export default function Dialogs({ open, onClose, tital, text, Action, loading })
                     </DialogActions>
                 </Box>
             </Dialog>
-        </>
     )
 }

@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { LoginApi } from '../api/PhonNumber'
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { LoginSlice } from './PhonNumberSlice';
 import { OtpApi } from '../api/Otp';
 import { UserApi } from '../api/UserInfo';
 import { CompanyApi } from '../api/Compnay';
@@ -14,7 +13,6 @@ import { YarnApi } from '../api/Yarn';
 
 export const store = configureStore({
     reducer: {
-        LoginUser: LoginSlice,
         currentUser: currentUser,
         [LoginApi.reducerPath]: LoginApi.reducer,
         [OtpApi.reducerPath]: OtpApi.reducer,
@@ -26,7 +24,6 @@ export const store = configureStore({
         [CompanyUser.reducerPath]: CompanyUser.reducer,
         [YarnApi.reducerPath]: YarnApi.reducer,
     },
-
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
             .concat(LoginApi.middleware)

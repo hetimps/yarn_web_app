@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const prepareHeaders = (headers) => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }
@@ -19,7 +18,6 @@ export const YarnApi = createApi({
     tagTypes: ["Yarn"],
 
     endpoints: (builder) => ({
-
         AddYarn: builder.mutation({
             query: (body) => ({
                 url: "/yarn/create-yarn",
@@ -30,7 +28,7 @@ export const YarnApi = createApi({
         }),
 
         GetYarn: builder.query({
-            query: ({ page, limit, search}) => ({
+            query: ({ page, limit, search }) => ({
                 url: '/yarn/getall-yarn',
                 params: {
                     page,
@@ -58,9 +56,8 @@ export const YarnApi = createApi({
                     yarn
                 },
             }),
-
         }),
     }),
 });
 
-export const { useGetYarnQuery, useUpdateYarnMutation, useGetYarnActivityQuery ,useAddYarnMutation} = YarnApi;
+export const { useGetYarnQuery, useUpdateYarnMutation, useGetYarnActivityQuery, useAddYarnMutation } = YarnApi;

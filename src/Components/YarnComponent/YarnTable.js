@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import { Box, Button, IconButton, ListItemSecondaryAction, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { String } from '../../constants/String';
@@ -37,6 +37,14 @@ export default function YarnTable({ Userdata, UserisFetching }) {
     const [showAddYarnButton, setShowAddYarnButton] = useState(true);
     const [showEditHistoryYarnButton, setShowEditHistoryYarnButton] = useState(true);
     const [adminshowEditHistoryYarnButton, setAdminshowEditHistoryYarnButton] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [isUpdateDrawerOpen, setIsUpdateDrawerOpen] = useState(false);
+    const [sortConfig, setSortConfig] = useState({
+        columnName: '',
+        direction: '',
+    });
+    const [selectrdYarn, setSelectrdYarn] = useState(null);
+    const [openHistory, setOpenHistory] = useState(false);
 
     useEffect(() => {
         if (!UserisFetching) {
@@ -61,7 +69,6 @@ export default function YarnTable({ Userdata, UserisFetching }) {
         if (!isFetching) {
             setTotal(data?.result?.totalCount)
             if (page === 1) {
-
                 setYarnData(data?.result?.data);
             } else {
                 setYarnData((prevData) => [...prevData, data?.result?.data]);
@@ -77,11 +84,6 @@ export default function YarnTable({ Userdata, UserisFetching }) {
     const fetchData = () => {
         setPage(page + 1);
     };
-
-    const [sortConfig, setSortConfig] = useState({
-        columnName: '',
-        direction: '',
-    });
 
     const handleSort = (columnName) => {
         let direction = 'asc';
@@ -101,12 +103,6 @@ export default function YarnTable({ Userdata, UserisFetching }) {
         return 0;
     }) : [];
 
-
-    // add yarn
-    const [openAdd, setOpenAdd] = useState(false);
-
-    const [selectrdYarn, setSelectrdYarn] = useState(null);
-
     const handleCloseAddYarn = () => {
         setOpenAdd(false);
     };
@@ -114,17 +110,10 @@ export default function YarnTable({ Userdata, UserisFetching }) {
         setOpenAdd(true);
     };
 
-    // drawer
-    const [isUpdateDrawerOpen, setIsUpdateDrawerOpen] = useState(false);
-
     const toggleUpdateDrawer = (sortedData) => {
         setIsUpdateDrawerOpen(!isUpdateDrawerOpen);
         setSelectrdYarn(sortedData)
     };
-
-    // history
-
-    const [openHistory, setOpenHistory] = useState(false);
 
     const handleCloseHistoryYarn = () => {
         setOpenHistory(false);
@@ -183,14 +172,12 @@ export default function YarnTable({ Userdata, UserisFetching }) {
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('yarnName')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell">
                                     <Box className="table_hading_cell" sx={{ width: "27rem " }} >
                                         {String.yarnRate}
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('yarnRate')} />
                                     </Box>
                                 </TableCell>
-
                                 {showEditHistoryYarnButton && <TableCell className="table_border table_cell" sx={{ width: "-1rem" }}  >
                                     {(Userdata?.result?.role === "write")}
                                     <Box className="table_hading_cell tables_hading_show"  >
@@ -201,7 +188,7 @@ export default function YarnTable({ Userdata, UserisFetching }) {
 
                         {isFetching && page === 1 ? (<Box className="table_loading" >
                             <Loader />
-                        </Box>) : (!isFetching && sortedData?.length < 0) || (sortedData?.length <= 0 && search) ? (
+                        </Box>) : (!isFetching && sortedData?.length <= 0) || (sortedData?.length <= 0 && search) ? (
                             <Box className="table_loading" >
                                 {String.no_data_available}
                             </Box>
@@ -238,7 +225,6 @@ export default function YarnTable({ Userdata, UserisFetching }) {
                     </Table>
                 </InfiniteScroll>
             </TableContainer>
-
             <AddYarnDialog open={openAdd} onClose={handleCloseAddYarn} />
             {selectrdYarn && <EditYarnDrawer toggleDrawer={toggleUpdateDrawer} isDrawerOpen={isUpdateDrawerOpen} selectrdYarn={selectrdYarn} />}
             {selectrdYarn && <YarnHistory open={openHistory} onClose={handleCloseHistoryYarn} selectrdYarn={selectrdYarn} />}

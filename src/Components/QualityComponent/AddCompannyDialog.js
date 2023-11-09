@@ -6,23 +6,20 @@ import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
-import { useAddCompanyMutation} from '../../api/Quality';
+import { useAddCompanyMutation } from '../../api/Quality';
 import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
 
 export default function AddCompannyDialog({ open, onClose }) {
+    const [Add_Company, { isLoading }] = useAddCompanyMutation();
     const defaultValue = {
         yarnCompanyName: "",
     };
-
     const validationSchema = Yup.object().shape({
         yarnCompanyName: Yup.string().required(String.company_required).matches(Regex.yarn_name, String.valid_compnay),
     });
 
-    const [Add_Company, { isLoading }] = useAddCompanyMutation();
-
     const handleSubmit = async (value) => {
-        console.log(value)
         try {
             const response = await Add_Company(value)
             const status = response?.data?.statusCode;
@@ -47,13 +44,6 @@ export default function AddCompannyDialog({ open, onClose }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='cdialog_container'>
-                {/* <DialogTitle id="alert-dialog-title" className='cadd_dialog_tital'>
-                    <Box sx={{ marginLeft: "20px " }}>
-                        <MdClear className="cdialog_close" onClick={onClose} />
-                    </Box>
-
-                </DialogTitle> */}
-
                 <DialogContent className='cdialog_content'>
                     <Formik initialValues={defaultValue} validationSchema={validationSchema} onSubmit={handleSubmit} >
                         {({
@@ -80,7 +70,6 @@ export default function AddCompannyDialog({ open, onClose }) {
                                         <Button type='submit' variant="contained" className='cadd' >
                                             {String.cadd}
                                         </Button>
-
                                     </Stack>)}
                                 </div>
                             </Form>)}

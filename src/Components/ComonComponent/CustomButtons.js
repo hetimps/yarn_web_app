@@ -9,7 +9,6 @@ export default function CustomButtons({ button_name }) {
         background: "#E89E46",
         height:"55px",
     }
-
     return (
         <Button type='submit' className='buttoms_login' style={Button_style} variant="contained" >
             {button_name}

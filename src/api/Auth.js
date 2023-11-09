@@ -26,5 +26,4 @@ export const AuthApi = createApi({
         }),
     }),
 });
-
 export const { useProfileQuery } = AuthApi;

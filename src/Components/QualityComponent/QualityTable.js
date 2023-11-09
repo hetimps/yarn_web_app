@@ -15,7 +15,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-hot-toast'
 import DeleteDialogs from './DeleteDialogs'
-import { useProfileQuery } from '../../api/Auth'
 
 export default function QualityTable({ Userdata, UserisFetching }) {
     const [page, setPage] = useState(1);
@@ -31,6 +30,19 @@ export default function QualityTable({ Userdata, UserisFetching }) {
     const [DeleteQuality, { isLoading }] = useDeleteQualityMutation({});
     const { data, isFetching, refetch } = useGetQualityQuery({ page, limit, search: search });
     const [createdByMap, setCreatedByMap] = useState({});
+    const [showAddQualityButton, setShowAddQualityButton] = useState(true);
+    const [showEditButton, setShowEditButton] = useState(true);
+    const [showDeleteButton, setShowDeleteButton] = useState(true);
+    const [adminShowButton, setAdminShowButton] = useState(false);
+    const [adminShowEditButton, setAdminShowEditButton] = useState(false);
+    const [adminShowDeleteButton, setAdminShowDeleteButton] = useState(false);
+    const [showMoreIcon, setShowMoreIcon] = useState(true);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openConfirmation, setOpenConfirmation] = useState(false);
+    const [sortConfig, setSortConfig] = useState({
+        columnName: '',
+        direction: '',
+    });
 
     useEffect(() => {
         setRef(true);
@@ -54,22 +66,7 @@ export default function QualityTable({ Userdata, UserisFetching }) {
         refetch()
     }, [search, refetch]);
 
-    const fetchData = () => {
-        setPage(page + 1);
-    };
-
-    const [sortConfig, setSortConfig] = useState({
-        columnName: '',
-        direction: '',
-    });
-
-    const handleSort = (columnName) => {
-        let direction = 'asc';
-        if (sortConfig.columnName === columnName && sortConfig.direction === 'asc') {
-            direction = 'desc';
-        }
-        setSortConfig({ columnName, direction });
-    };
+    
     const sortedData = QualityData ? [...QualityData].sort((a, b) => {
         if (sortConfig.columnName !== '') {
             const keyA = a[sortConfig.columnName];
@@ -81,21 +78,44 @@ export default function QualityTable({ Userdata, UserisFetching }) {
         return 0;
     }) : [];
 
+    useEffect(() => {
+        if (!UserisFetching) {
+            if (Userdata?.result?.role === "view") {
+                setShowMoreIcon(false)
+                setShowAddQualityButton(false);
+                setShowEditButton(false);
+                setShowDeleteButton(false);
+            }
+            else if (Userdata?.result?.role === "admin" || Userdata?.result?.role === "root") {
+                setAdminShowEditButton(true);
+                setAdminShowDeleteButton(true);
+                setAdminShowButton(true)
+            } else if (Userdata?.result?.role === "write" || Userdata?.result?.role === "view") {
+                setAdminShowButton(false)
+            }
+            Userdata?.result?.requestStatus === "rejected" && navigate("/Company")
+        }
+    }, [Userdata, navigate, UserisFetching, sortedData])
+
+    const fetchData = () => {
+        setPage(page + 1);
+    }
+
+    const handleSort = (columnName) => {
+        let direction = 'asc';
+        if (sortConfig.columnName === columnName && sortConfig.direction === 'asc') {
+            direction = 'desc';
+        }
+        setSortConfig({ columnName, direction });
+    };
+
     const addQuality = () => {
         navigate("/Addquality")
     }
-    const [anchorEl, setAnchorEl] = useState(null);
-    // const handleMenuOpen = (event, rowId ,createdBy) => {
-    //     setAnchorEl(event.currentTarget);
-    //     setSelectedRowId(rowId);
-    //     setCreatedBy(createdBy)
-
-    // };
-
+ 
     const handleMenuOpen = (event, rowId, createdBy) => {
         setAnchorEl(event.currentTarget);
         setSelectedRowId(rowId);
-        // Use an object spread to update the createdByMap
         setCreatedByMap((prevMap) => ({ ...prevMap, [rowId]: createdBy }));
     };
     const handleMenuClose = () => {
@@ -121,10 +141,8 @@ export default function QualityTable({ Userdata, UserisFetching }) {
             const response = await DeleteQuality({ id: selectedRowId });
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
-
             if (status === 200) {
                 toast.success(message);
-
                 handleMenuClose();
                 handleCloseConfirmation();
             } else {
@@ -137,8 +155,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
         }
     };
 
-    const [openConfirmation, setOpenConfirmation] = useState(false);
-
     const handleOpenConfirmation = () => {
         setOpenConfirmation(true);
     };
@@ -146,39 +162,9 @@ export default function QualityTable({ Userdata, UserisFetching }) {
         setOpenConfirmation(false);
     };
 
-    const [showAddQualityButton, setShowAddQualityButton] = useState(true);
-    const [showEditButton, setShowEditButton] = useState(true);
-    const [showDeleteButton, setShowDeleteButton] = useState(true);
-    const [adminShowButton, setAdminShowButton] = useState(false);
-    const [adminShowEditButton, setAdminShowEditButton] = useState(false);
-    const [adminShowDeleteButton, setAdminShowDeleteButton] = useState(false);
-    const [showMoreIcon, setShowMoreIcon] = useState(true);
-
-    // const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
-
-    useEffect(() => {
-        if (!UserisFetching) {
-            if (Userdata?.result?.role === "view") {
-                setShowMoreIcon(false)
-                setShowAddQualityButton(false);
-                setShowEditButton(false);
-                setShowDeleteButton(false);
-            }
-            else if (Userdata?.result?.role === "admin" || Userdata?.result?.role === "root") {
-                setAdminShowEditButton(true);
-                setAdminShowDeleteButton(true);
-                setAdminShowButton(true)
-            } else if (Userdata?.result?.role === "write" || Userdata?.result?.role === "view") {
-                setAdminShowButton(false)
-            }
-            Userdata?.result?.requestStatus === "rejected" && navigate("/Company")
-        }
-    }, [Userdata, navigate, UserisFetching, sortedData])
-
     return (
         <>
             <div className='table_tital'>
-                {/* <div className='tital_container'> */}
                 <div>
                     <Typography className="data_count" variant="span" id="tableTitle" component="div">
                         {sortedData?.length === 0 ? (
@@ -187,7 +173,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                         )}
                     </Typography>
                 </div>
-
                 <div className='search_container_wraper'>
                     <Box className="table_search">
                         <Search
@@ -200,7 +185,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                         {String.add_quality}
                     </Button>}
                 </div>
-                {/* </div> */}
             </div>
 
             <TableContainer component={Paper} className="Table_container">
@@ -222,29 +206,23 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                         {String.quality}
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
                                 </TableCell>
-
                                 <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
                                 </TableCell>
-
                                 <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
                                 </TableCell>
-
                                 <TableCell className="table_border" sx={{ borderBottom: "none" }} colSpan={-1}>
                                     <Box className="table_hading_cell"></Box>
                                 </TableCell>
-
                                 <TableCell className="table_border tables_main_hading" colSpan={2} sx={{ borderBottom: "none" }}>
                                     <Box className="table_hading_cell">
                                         {String.weft}
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border tables_main_hading" colSpan={2} sx={{ borderBottom: "none" }}>
                                     <Box className="table_hading_cell">
                                         {String.warp}
@@ -261,7 +239,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                         <UnfoldMoreIcon className='table_hading_icon' onClick={() => handleSort('qualityName')} />
                                     </Box>
                                 </TableCell>
-
                                 <TableCell className="table_border table_cell" sx={{ bordertop: "none" }}>
                                     <Box className="table_hading_cell">
                                         {String.kg}
@@ -345,7 +322,8 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                             sx={{
                                                 '& td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
                                                 '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
-                                                '&:hover': { backgroundColor: '#f5f5f5' }}}>
+                                                '&:hover': { backgroundColor: '#f5f5f5' }
+                                            }}>
 
                                             <TableCell className="table_border" component="th" scope="row">
                                                 {row?.qualityName || '-'}
@@ -381,14 +359,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                                 {row?.warp?.totalWarpCost || '-'}
                                             </TableCell>
 
-                                            {/* {showMoreIcon && (<TableCell className="table_border" align="left">
-                                                {(((Userdata?.result?.role === "write" && Userdata?.result?.companyId?.createdBy !== row?.createdBy)) || adminShowButton) ? (
-                                                    <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
-                                                        <MoreVertIcon className='more_icon' />
-                                                    </Box>
-                                                ) : null}
-                                            </TableCell>)} */}
-
                                             {showMoreIcon && (<TableCell className="table_border" align="left">
                                                 {(((Userdata?.result?.role === "write" && Userdata?.result?.createdBy === row?.createdBy)) || adminShowButton) ? (
                                                     <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
@@ -396,35 +366,17 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                                     </Box>
                                                 ) : null}
                                             </TableCell>)}
-
-                                            {/* {showMoreIcon && (
-                                                <TableCell className="table_border" align="left">
-                                                    {Userdata?.result?.role === "write" &&
-                                                        Userdata?.result?.createdBy === row?.createdBy ? (
-                                                        <Box className="more_icons" onClick={(event) => handleMenuOpen(event, row._id, row?.createdBy)}>
-                                                            <MoreVertIcon className='more_icon' />
-                                                        </Box>
-                                                    ) : null}
-                                                </TableCell>
-                                            )} */}
-
                                             <Menu
                                                 className="menus"
                                                 anchorEl={anchorEl}
                                                 open={Boolean(anchorEl)}
                                                 onClose={handleMenuClose}>
-                                                {/* {(showEditButton && (Userdata?.result?.role === "write" && Userdata?.result?.companyId?.createdBy !== row?.createdBy)) ? <MenuItem className='menu' onClick={() => handleEdit(row?._id
-                                                )}>
-                                                    <EditIcon className='edit' />
-                                                    <span className='menu-text'>{String.edit_menu}</span>
-                                                </MenuItem> : (null)} */}
                                                 {((showEditButton && (Userdata?.result?.role === "write" && Userdata?.result?.createdBy === createdByMap[selectedRowId])) || adminShowEditButton) && (
                                                     <MenuItem className='menu' onClick={() => handleEdit(selectedRowId)}>
                                                         <EditIcon className='edit' />
                                                         <span className='menu-text'>{String.edit_menu}</span>
                                                     </MenuItem>
                                                 )}
-
                                                 {((showDeleteButton && (Userdata?.result?.role === "write" && Userdata?.result?.createdBy === createdByMap[selectedRowId])) || adminShowDeleteButton) && (<MenuItem className='menu' onClick={handleOpenConfirmation}>
                                                     <DeleteIcon className='edit' />
                                                     <span className='menu-text'>{String.delete_menu}</span>

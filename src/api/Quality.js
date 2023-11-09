@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const prepareHeaders = (headers) => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }
@@ -21,7 +20,6 @@ export const QualityApi = createApi({
     endpoints: (builder) => ({
         GetQuality: builder.query({
             query: ({ page, limit, search, yarn }) => ({
-
                 url: '/quality/getall-quality',
                 params: {
                     page,
@@ -40,23 +38,6 @@ export const QualityApi = createApi({
             }),
             invalidatesTags: ["Quality"],
         }),
-
-        // AddYarn: builder.mutation({
-        //     query: (body) => ({
-        //         url: "/yarn/create-yarn",
-        //         method: 'post',
-        //         body,
-        //     }),
-        //     invalidatesTags: ["Yarn"],
-        // }),
-
-        // GetYarn: builder.query({
-        //     query: () => ({
-        //         url: '/yarn/getall-yarn',
-        //     }),
-        //     providesTags: ["Yarn"],
-        // }),
-
         GetCompany: builder.query({
             query: () => ({
                 url: '/yarn-company/getall-yarn-company',
@@ -72,8 +53,6 @@ export const QualityApi = createApi({
             }),
             invalidatesTags: ["Company"],
         }),
-
-
         GetEditQuality: builder.query({
             query: (id) => ({
                 url: '/quality/get-quality',
@@ -81,7 +60,6 @@ export const QualityApi = createApi({
                     id
                 },
             }),
-
         }),
         EditQuality: builder.mutation({
             query: ({ body, id }) => ({
@@ -100,7 +78,6 @@ export const QualityApi = createApi({
                 params: {
                     id
                 },
-                // invalidatesTags: ["Quality"]
             }),
             invalidatesTags: ["Quality"]
         })

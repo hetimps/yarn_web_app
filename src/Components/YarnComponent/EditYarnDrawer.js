@@ -1,11 +1,10 @@
-import { Accordion, AccordionDetails, AccordionSummary, Autocomplete, Box, Button, Checkbox, Drawer, FormControl, FormControlLabel, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Checkbox, Drawer, FormControlLabel, InputLabel, Paper, Stack, TextField, Typography } from '@mui/material'
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useState } from 'react';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
 import { Regex } from '../../constants/Regex';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useEffect } from 'react';
 import { useUpdateYarnMutation } from '../../api/Yarn';
@@ -14,7 +13,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useGetQualityQuery } from '../../api/Quality';
 
 export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYarn }) {
-
     const limit = "";
     const search = "";
     const page = "";
@@ -33,11 +31,9 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
         }
     }, [data, isFetching, yarnQualityData, isDrawerOpen])
 
-
     useEffect(() => {
         isDrawerOpen && refetch();
     }, [isDrawerOpen, refetch])
-
 
     useEffect(() => {
         const qualityIds = yarnQualityData.map((quality) => quality._id);
@@ -64,14 +60,12 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
     const defaultValue = {
         yarnName: selectrdYarn?.yarnName || "",
         yarnRate: selectrdYarn?.yarnRate || "",
-        // isAll: false
     };
 
     const validationSchema = Yup.object().shape({
         yarnName: Yup.string().required(String.yarn_required).matches(Regex.yarn_name, String.valid_name),
         yarnRate: Yup.string().required(String.yarn_rate).matches(Regex.yarn_rate, String.valid_rate),
     });
-
 
     const handleChangeisall = async (event) => {
         if (event.target.checked) {
@@ -83,34 +77,21 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
         }
     };
 
-    // const handleChangeisall = async (event) => {
-    //     const isChecked = event.target.checked;
-
-    //     setIsAll(isChecked);
-    //     setSelectedQualityIds(isChecked ? allQualityId : []);
-    // };
-
-
     const handleQualityCheckboxChange = (qualityId) => {
         if (selectedQualityIds.includes(qualityId)) {
-            // Quality is already selected, so remove it
             setSelectedQualityIds(selectedQualityIds.filter((id) => id !== qualityId));
         } else {
-            // Quality is not selected, so add it
             setSelectedQualityIds([...selectedQualityIds, qualityId]);
         }
     };
 
     const handleSubmit = async (value) => {
         const id = selectrdYarn?._id;
-
         const body = {
             yarnName: value?.yarnName,
             yarnRate: value?.yarnRate,
-            // isAll: value?.isAll,
             isAll: isAll
         }
-
         if (selectedQualityIds.length > 0) {
             body.qualityIds = selectedQualityIds;
         }
@@ -127,11 +108,7 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                         handleChange,
                         errors,
                         touched,
-                        setFieldValue,
-                        setFieldTouched,
-                        setFieldError
                     }) => {
-
                         return (
                             <Form>
                                 <Paper className='yeheading_paper'>
@@ -201,30 +178,21 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                 return (
                                                     <>
                                                         <Accordion className='mainaccordion'>
-
                                                             <AccordionSummary
                                                                 sx={{ height: "5px" }}
                                                                 expandIcon={<ExpandMoreIcon />}
                                                                 aria-controls="panel1a-content"
                                                                 id="panel1a-header">
-
                                                                 <div className='Accordion_heading'>
                                                                     <div className='Accordion_checkboxs'>
-
                                                                         <FormControlLabel
                                                                             control={<Checkbox sx={{ pointerEvents: "none" }} checked={selectedQualityIds.includes(quality._id)}
                                                                                 onChange={(e) => {
-
                                                                                     handleQualityCheckboxChange(quality._id)
-                                                                                    e.stopPropagation();
-                                                                                }
-                                                                                }
-                                                                            />
-                                                                            }
-                                                                        />
+                                                                                    e.stopPropagation()
+                                                                                }} />} />
                                                                         <Typography> {quality?.qualityName}</Typography>
                                                                     </div>
-
                                                                     <Typography>
                                                                         {`${String.money} : ${quality?.qualityCost.toFixed(2)} | ${String.akg} : ${quality?.qualityWeight.toFixed(2)}`}
                                                                     </Typography>
@@ -338,7 +306,6 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                                         )
                                                                     })}
                                                                 </div>
-
                                                                 <Button className='btn_warp' variant="outlined" sx={{ marginTop: "0.6rem" }} >
                                                                     <div className='btn_info'>
                                                                         <div>
@@ -389,7 +356,6 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                                                             </Typography>
                                                                                         </div>
                                                                                     </div>
-
                                                                                     <div className='after_heading' >
                                                                                         <div>
                                                                                             <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
@@ -462,7 +428,6 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                 )
                                             })}
                                         </div>
-
                                         <div className='yebtns'>
                                             {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
                                                 <Button onClick={toggleDrawer} className='yebtn_cancel' variant="outlined">{String.ycancel}</Button>

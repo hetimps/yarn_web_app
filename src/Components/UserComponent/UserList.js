@@ -13,7 +13,6 @@ import { String } from '../../constants/String';
 import toast from 'react-hot-toast';
 import UserAcceptedDialog from './UserAcceptedDialog';
 import { useNavigate } from 'react-router-dom';
-import { useProfileQuery } from '../../api/Auth';
 
 
 export default function UserList({ Userdata, UserisFetching }) {
@@ -26,11 +25,12 @@ export default function UserList({ Userdata, UserisFetching }) {
     const [acceptedUserId, setAcceptedUserId] = useState();
     const [acceptedUserRole, setAcceptedUserRole] = useState(null);
     const [openRejectedConfirmation, setOpenRejectedConfirmation] = useState(false);
+    const [userAcceptedDialog, setUserAcceptedDialog] = useState(false);
+    const navigate = useNavigate();
 
-    // const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
     const { data, isFetching, refetch } = useGetCompanyUserQuery({ status: "requested", search: search, page }, { refetchOnMountOrArgChange: true });
     const { data: acceptedData, isFetching: acceptedFetching, refetch: acceptedrefetch } = useGetCompanyUserQuery({ status: "accepted", search: search, page }, { refetchOnMountOrArgChange: true, });
-    const navigate = useNavigate();
+    const [RejectCompanyUser, { isLoading }] = useRejectedCompanyUserMutation();
 
     useEffect(() => {
         if (!UserisFetching) {
@@ -41,16 +41,14 @@ export default function UserList({ Userdata, UserisFetching }) {
         }
     }, [Userdata, navigate, UserisFetching])
 
-    const [RejectCompanyUser, { isLoading }] = useRejectedCompanyUserMutation();
-
     useEffect(() => {
-        if (!isFetching && data) {
+        if (!isFetching && data && data?.result) {
             setRequestedUser(data?.result[0]?.data);
         }
     }, [data?.result, requestedUser, isFetching, data]);
 
     useEffect(() => {
-        if (!acceptedFetching && acceptedData) {
+        if (!acceptedFetching && acceptedData && data?.result) {
             setAcceptedUser(acceptedData?.result[0]?.data);
         }
     }, [data?.result, acceptedData, acceptedFetching, acceptedUser])
@@ -93,7 +91,6 @@ export default function UserList({ Userdata, UserisFetching }) {
         }
         response && handleCloseRejectedConfirmation();
     }
-    const [userAcceptedDialog, setUserAcceptedDialog] = useState(false);
 
     const userAcceptedDialogClose = () => {
         setUserAcceptedDialog(false);
@@ -114,21 +111,12 @@ export default function UserList({ Userdata, UserisFetching }) {
                     <div className='user__search_container_wraper'>
                         <Box className="user_invite_search_container">
                             <>
-                                {/* {(data?.result && (requestedUser?.length !== 0 || acceptedUser?.length !== 0)) && (
+                                {((requestedUser === undefined && input === "") && (acceptedUser === undefined && input === "")) ? (null) : (
                                     <Search
                                         setinput={setinput}
                                         input={input}
                                         setsearch={setsearch}
-                                        setpage={setPage} />)} */}
-
-                                {((requestedUser === undefined && input === "") || (acceptedUser === undefined && input === "")) ? (null) : (
-                                    <>
-                                        <Search
-                                            setinput={setinput}
-                                            input={input}
-                                            setsearch={setsearch}
-                                            setpage={setPage} />
-                                    </>
+                                        setpage={setPage} />
                                 )}
                             </>
                         </Box>
@@ -142,7 +130,6 @@ export default function UserList({ Userdata, UserisFetching }) {
                 ) : (
                     <>
                         {!data?.result || (requestedUser === undefined && acceptedUser === undefined) ? (
-                            // {!data?.result || (requestedUser?.length === 0 && acceptedUser?.length === 0) ? (
                             <Typography className='no-data-message'>
                                 {String.no_data_available}
                             </Typography>
@@ -165,7 +152,7 @@ export default function UserList({ Userdata, UserisFetching }) {
                                                     <ListItemText className='user_list_text'
                                                         primary={user?.userId?.userName}
                                                         primaryTypographyProps={{
-                                                            style: { fontWeight: 500, fontSize: '1rem' },
+                                                            style: { fontWeight: 500, fontSize: '1rem' }
                                                         }} />
 
                                                     <div className='time_container'>
@@ -176,11 +163,10 @@ export default function UserList({ Userdata, UserisFetching }) {
                                                         <ListItemText className='user_list_text user_list_text_time'
                                                             primary={calculateTimeAgo(user?.userId?.updatedAt)}
                                                             primaryTypographyProps={{
-                                                                style: { fontWeight: 100, fontSize: '0.8rem', color: "grey" },
-                                                            }} />
+                                                                style: { fontWeight: 100, fontSize: '0.8rem', color: "grey" }
+                                                            }}/>
                                                     </div>
                                                 </div>
-
                                                 <ListItemSecondaryAction >
                                                     <IconButton edge="end" aria-label="navigate" onClick={() => userAcceptedDialogOpen(user?._id)} >
                                                         <CheckCircleOutlineIcon className='user_list_icon_right' />
@@ -209,7 +195,8 @@ export default function UserList({ Userdata, UserisFetching }) {
                                                     <ListItemText className='user_list_text'
                                                         primary={user?.userId?.userName}
                                                         primaryTypographyProps={{
-                                                            style: { fontWeight: 500, fontSize: '1rem' }}} />
+                                                            style: { fontWeight: 500, fontSize: '1rem' }
+                                                        }}/>
 
                                                     <div className='time_container'>
                                                         <div >
@@ -219,7 +206,8 @@ export default function UserList({ Userdata, UserisFetching }) {
                                                         <ListItemText className='user_list_text user_list_text_time'
                                                             primary={calculateTimeAgo(user?.userId?.updatedAt)}
                                                             primaryTypographyProps={{
-                                                                style: { fontWeight: 100, fontSize: '0.8rem', color: "grey" }}} />
+                                                                style: { fontWeight: 100, fontSize: '0.8rem', color: "grey" }
+                                                            }}/>
                                                     </div>
                                                 </div>
 
@@ -227,7 +215,6 @@ export default function UserList({ Userdata, UserisFetching }) {
                                                     <IconButton edge="end" aria-label="navigate" onClick={() => userAcceptedDialogOpen(user?._id, user?.userId?.role)} >
                                                         <EditIcon className='user_list_icon_edit' />
                                                     </IconButton>
-
                                                     <IconButton edge="end" aria-label="navigate" onClick={() => handleOpenRejectedConfirmation(user?._id)} >
                                                         <HighlightOffIcon className='user_list_icon_cancel' />
                                                     </IconButton>
@@ -240,7 +227,7 @@ export default function UserList({ Userdata, UserisFetching }) {
                         }
                     </>
                 )}
-            </Box >
+            </Box>
             <UserAcceptedDialog open={userAcceptedDialog} onClose={userAcceptedDialogClose} acceptedUserId={acceptedUserId} acceptedUserRole={acceptedUserRole} setAcceptedUserRole={setAcceptedUserRole} />
             <ConformDialog open={openRejectedConfirmation} onClose={handleCloseRejectedConfirmation} heading={String.reject_conformgialog_heading} tital={String.reject_conformgialog_tital} isLoading={isLoading} back={RejectedUser} />
         </>

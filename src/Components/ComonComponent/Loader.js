@@ -1,8 +1,6 @@
 import React from 'react'
 import { ColorRing } from 'react-loader-spinner'
 
-
-
 export default function Loader() {
     return (
         <ColorRing
@@ -12,7 +10,6 @@ export default function Loader() {
             ariaLabel="blocks-loading"
             wrapperStyle={{}}
             wrapperClass="blocks-wrapper"
-            colors={["#E89E46", "#E89E46", "#E89E46", "#E89E46", "#E89E46"]}
-        />
+            colors={["#E89E46", "#E89E46", "#E89E46", "#E89E46", "#E89E46"]}/>
     )
 }

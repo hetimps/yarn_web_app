@@ -3,7 +3,6 @@ import MuiAppBar from '@mui/material/AppBar';
 
 // AppBar
 const drawerWidth = 240;
-
  export const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -20,7 +19,6 @@ const drawerWidth = 240;
         }),
     }),
 }));
-
 //Drawer
 export const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',

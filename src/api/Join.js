@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const prepareHeaders = (headers) => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     if (token) {
         headers.set("Authorization", `Bearer ${token}`);
     }

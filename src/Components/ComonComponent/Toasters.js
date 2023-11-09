@@ -7,7 +7,6 @@ export default function Toasters() {
     };
 
     return (
-        <>
             <Toaster toastOptions={{
                 // duration: 10000,
                 style: toasterStyles, success: {
@@ -25,6 +24,5 @@ export default function Toasters() {
             }}
                 position="top-right"
                 reverseOrder={false}/>
-        </>
     )
 }

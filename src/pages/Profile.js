@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBars from '../Components/ComonComponent/AppBar';
 import Drawers from '../Components/ComonComponent/Drawers';
-import QualityTable from '../Components/QualityComponent/QualityTable';
 import { DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Comon_Component"
 import { useProfileQuery } from '../api/Auth';
 import ProfilePage from '../Components/ProfileComponent/ProfilePage';

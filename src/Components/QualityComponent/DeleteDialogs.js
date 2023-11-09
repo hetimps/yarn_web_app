@@ -2,7 +2,6 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 import React from 'react'
 import "../../style/Quality/Drawer_Navbar.scss"
 import { String } from '../../constants/String'
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import Loader from '../ComonComponent/Loader';
 
@@ -18,17 +17,14 @@ export default function DeleteDialogs({ open, onClose, tital, text, Action, load
                             </Box>
                         </Box>
                     </DialogTitle>
-
                     <DialogContent>
                         <Box className="dialog_tital_txt">
                             {tital}
                         </Box>
-
                         <DialogContentText className="dialog_info">
                             {text}
                         </DialogContentText>
                     </DialogContent>
-
                     <DialogActions >
                         {loading ?
                             <Loader />

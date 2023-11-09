@@ -1,5 +1,4 @@
 export const String = {
-
     // phonno
     Tital: "Enter your Mobile number",
     des: "We will send you a confirmation code.",
@@ -9,11 +8,13 @@ export const String = {
 
     // otp
     otp_tital: "Verify phone",
-    otp_des: "Code is sent to +91 987*****10 Please Check your inbox",
+    otp_des: "Code is sent to ",
+    otp_title: "Please Check your message.",
     resend: "Resend OTP",
     otp_validation: "Enter valid OTP",
     otp_required: "OTP is a required ",
     hide_number: "*****",
+
 
     //user info
     user_tital: "Welcome back",
@@ -46,7 +47,6 @@ export const String = {
     pending_status: "Your Join Request Has Been Pending Please wait",
     rejected_status: "Your Join Request Rejected Please Try Agin",
     approved_status: "Your Join Request Approved",
-
 
     // dialog
     dialog_cancel_buttons: "Cancel",
@@ -180,7 +180,6 @@ export const String = {
     weftYarnRate_required: "Yarn rate is required",
     weftWastage_required: "Wastage is required",
 
-
     weftDeniar_valid: "Enter valid Deniar",
     weftPick_valid: "Enter valid Pick",
     weftWidth_valid: "Enter valid Width",
@@ -195,18 +194,14 @@ export const String = {
     weftWastage_placeholder: "Wastage",
     wefttpm_yarn: "TPM",
 
-
     //edit quality
     edit_Qulaity: "Edit Quality",
     //delete quality
     delete_dialog_tital: "Confirm Delete",
     delete_dialog_desc: 'Are you sure,you want to delete this quality?',
-
     view_quality: "View Quality",
 
-
     //user page
-
     reject_conformgialog_tital: "Are you sure to remove this user invitation?",
     reject_conformgialog_heading: "Remove Invitation",
     accepted_dialog_button: "Assign",
@@ -214,7 +209,6 @@ export const String = {
     accepted_dialog_tital: "What permission do you want to assign to this user?",
     pending_request: "Pending Request",
     all_user: "All User",
-
 
     //yarn table
     yarnName: "Yarn Name ",
@@ -226,19 +220,17 @@ export const String = {
     update_yarn: "Update",
     yarn_checkbox: "Can you reflect this data with all quality?",
 
-
     // history yarn
     history_yarn_tital: "History",
+    reflected: "Reflected",
 
     //profile pae
-
-    account:"Account",
-    name : "Name",
-    phone_number : "Phone Number",
-    email_address : "Email Address",
-    company_information : "Company Information",
-    Enter_Company_Address : "Enter Company Address",
-    Company_address : "Company Address"
-
-
+    account: "Account",
+    name: "Name",
+    phone_number: "Phone Number",
+    email_address: "Email Address",
+    company_information: "Company Information",
+    Enter_Company_Address: "Enter Company Address",
+    Company_address: "Company Address",
+    account_update: " Updated successfully..."
 }

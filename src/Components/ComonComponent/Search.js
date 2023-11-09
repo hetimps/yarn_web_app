@@ -11,7 +11,6 @@ export default function Search({ setpage, setsearch, setinput, input, isFetching
             setpage(1)
         }
     };
-
     const handleChange = (e) => {
         if (e.target.value === "") {
             setinput("");
@@ -19,41 +18,36 @@ export default function Search({ setpage, setsearch, setinput, input, isFetching
         }
         setinput(e.target.value);
     };
-
     const handleClearSearch = () => {
         setinput("")
         setsearch("")
     }
-
     const HandleSearch = () => {
-
         setsearch(input);
         setpage(1);
     }
 
     return (
-        <>
-            <InputBase
-                placeholder="Search..."
-                inputProps={{ "aria-label": "search" }}
-                className="appbar_search"
-                endAdornment={
-                    <div className="appbar_search_right">
-                        {input !== "" && (
-                            <IconButton onClick={handleClearSearch}>
-                                <ClearIcon />
-                            </IconButton>
-                        )}
-                        <Button onClick={HandleSearch} className="appbar_search_button" variant="contained">
-                            <SearchIcon className="appbar_search_icon" />
-                        </Button>
-                    </div>
-                }
-                value={input}
-                onChange={isFetching ? null : handleChange}
-                onKeyDown={onKeyDown}
-                disabled={disabled} />
-        </>
+        <InputBase
+            placeholder="Search..."
+            inputProps={{ "aria-label": "search" }}
+            className="appbar_search"
+            endAdornment={
+                <div className="appbar_search_right">
+                    {input !== "" && (
+                        <IconButton onClick={handleClearSearch}>
+                            <ClearIcon />
+                        </IconButton>
+                    )}
+                    <Button onClick={HandleSearch} className="appbar_search_button" variant="contained">
+                        <SearchIcon className="appbar_search_icon" />
+                    </Button>
+                </div>
+            }
+            value={input}
+            onChange={isFetching ? null : handleChange}
+            onKeyDown={onKeyDown}
+            disabled={disabled} />
     )
 }
 

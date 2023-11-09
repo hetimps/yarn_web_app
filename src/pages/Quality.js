@@ -8,15 +8,12 @@ import { DrawerHeader, Main } from "../Components/Page_Comon_Components/Page_Com
 import { useProfileQuery } from '../api/Auth';
 
 export default function Quality() {
-
-  const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
-
+  const { data: Userdata, isFetchings: UserisFetching } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBars haddings="Quality" Userdata={Userdata} />
       <Drawers />
-
       <Main open={true}>
         <DrawerHeader />
         < QualityTable Userdata={Userdata} UserisFetching={UserisFetching} />

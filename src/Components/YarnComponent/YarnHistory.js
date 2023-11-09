@@ -1,15 +1,10 @@
 import React from 'react'
 import "../../style/Compnay.scss"
-import { Avatar, Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, InputLabel, List, ListItem, ListItemAvatar, ListItemText, Stack, TextField, Typography, } from '@mui/material'
-import * as Yup from "yup";
-import { Regex } from '../../constants/Regex';
-import { Form, Formik } from 'formik';
+import { Box,  Checkbox, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from '@mui/material'
 import { String } from '../../constants/String';
-import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
-import { Label } from '@mui/icons-material';
 import "../../style/Yarn/YarnTable.scss"
-import { useGetYarnActivityQuery, useUpdateYarnMutation } from '../../api/Yarn';
+import { useGetYarnActivityQuery } from '../../api/Yarn';
 import "../../style/Yarn/YarnTable.scss"
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -56,7 +51,7 @@ export default function YarnHistory({ open, onClose, selectrdYarn }) {
                     ) : (
                         yarnHistoryData?.length === 0 ? (
                             <Typography className='hyno-data-message'>
-                                No data available
+                               {String.no_data_available}
                             </Typography>
                         ) : (
                             yarnHistoryData.map((history) => {
@@ -86,13 +81,13 @@ export default function YarnHistory({ open, onClose, selectrdYarn }) {
                                                 <div>
                                                     <Checkbox disableRipple checked={true} className='reflected_checkbox' />
                                                     <Typography className='hyheading_text' variant="span" component="span">
-                                                        {"Reflected"}
+                                                        {String.reflected}
                                                     </Typography>
                                                 </div>
                                             ) : null}
                                         </ListItem>
                                     </List>
-                                );
+                                )
                             })
                         )
                     )}

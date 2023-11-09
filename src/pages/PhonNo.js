@@ -16,6 +16,8 @@ import CustomButtons from "../Components/ComonComponent/CustomButtons";
 import { Regex } from "../constants/Regex";
 
 const PhonNo = () => {
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const navigate = useNavigate();
   const defaultValue = {
     phoneNumber: "",
   };
@@ -33,32 +35,23 @@ const PhonNo = () => {
       })
   });
 
-  const [loginUser, { isLoading }] = useLoginUserMutation();
-  const navigate = useNavigate();
   const handleSubmit = async (values) => {
-
     const countryCode = document
       .querySelector(".react-tel-input .selected-flag")
       .getAttribute("title");
-
     let index = countryCode.indexOf("+");
     const PhonCode = countryCode.substring(index + 1).trim();
-    console.log(PhonCode);
     const length = PhonCode.length;
     const phoneNumber = values.phoneNumber;
     const Number = (phoneNumber.substr(length));
-    console.log(Number);
     const body = {
       countryCode: PhonCode,
       mobileNo: Number
     }
-
     try {
       const response = await loginUser(body)
-      console.log(response)
       const status = response?.data?.statusCode;
       const message = response?.data?.message;
-
       if (status === 200) {
         const loginOtp = response?.data?.result?.loginOtp;
         const mobileNo = response?.data?.result?.mobileNo;
@@ -102,17 +95,14 @@ const PhonNo = () => {
                   <Typography
                     className="login_desc"
                     variant="span"
-                    component="span"
-                  >
+                    component="span">
                     {String.des}
                   </Typography>
                 </Box>
-
                 <Formik
                   initialValues={defaultValue}
                   validationSchema={validationSchema}
                   onSubmit={handleSubmit}>
-
                   {({
                     values,
                     handleChange,
@@ -126,19 +116,15 @@ const PhonNo = () => {
                           e.preventDefault();
                           handleSubmit(values);
                         }
-                      }}
-                    >
+                      }}>
                       <Box className="login_filed">
                         <Box className="phon_input">
-
                           <PhoneInput
                             inputProps={{
                               autoFocus: true,
                               name: "phoneNumber",
-                              autoComplete: "off",
-
+                              autoComplete: "off"
                             }}
-
                             countryCodeEditable={false}
                             country="in"
                             value={values.phoneNumber}
@@ -148,11 +134,9 @@ const PhonNo = () => {
                             searchable={true}
                             disableDropdown={true}
                           />
-
                           {touched.phoneNumber && errors.phoneNumber && (
                             <div className="error">{errors.phoneNumber}</div>
                           )}
-
                         </Box>
                         <div className="btn-out">
                           {isLoading ? (<Box className="loader">
@@ -172,8 +156,7 @@ const PhonNo = () => {
                 <img
                   src={Machin}
                   className="login_img-machin"
-                  alt="machin_img"
-                />
+                  alt="machin_img" />
               </Box>
             </Grid>
           </Grid>

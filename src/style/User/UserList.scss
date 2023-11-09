@@ -10,16 +10,20 @@
         .user__search_container_wraper {
             display: flex;
         }
+
         .user_invite_search_container {
             margin-top: 0.8rem;
             margin-right: 0.5rem;
         }
+
         .user_invite_count {
             margin-top: 2rem;
         }
+
         .alluser_invite_count {
             margin-top: 5rem;
         }
+
         .user_invite_buttons {
             color: $primary;
             display: flex;
@@ -31,6 +35,7 @@
             border-radius: 9px;
             width: 9rem;
             height: 3.12rem;
+
             :hover {
                 background-color: $secondary;
             }

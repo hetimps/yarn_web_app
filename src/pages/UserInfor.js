@@ -16,39 +16,29 @@ import { Regex } from '../constants/Regex';
 
 export default function UserInfor() {
 
+  const [User, { isLoading }] = useUserInfoMutation();
+  const navigate = useNavigate();
   const defaultValue = {
     userName: "",
     userEmail: ""
   };
-
   const validationSchema = Yup.object({
     userName: Yup.string().required(String.user_required).matches(Regex.user_name, String.user_required),
     userEmail: Yup.string().matches(Regex.email_regex, String.email_format)
   });
 
-  const [User, { isLoading }] = useUserInfoMutation();
-  const navigate = useNavigate();
-
   const handleSubmit = async (values) => {
-
     try {
       const response = await User(values);
-      console.log(response)
       const status = response?.data?.statusCode;
       const message = response?.data?.message;
-
       if (status === 200) {
         toast.success(message)
         const userName = response?.data?.result?.userName;
         localStorage.setItem("username", JSON.stringify(userName));
-        // navigate("/Company", {
-        //   state: {
-        //     response
-        //   }
-        // })
         navigate("/Company", {
           state: {
-            "username": userName
+            response
           }
         })
       }

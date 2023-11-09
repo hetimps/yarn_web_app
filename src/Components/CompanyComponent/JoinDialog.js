@@ -23,19 +23,17 @@ export default function JoinDialog({ open, onClose }) {
 
     const [Join_Company, { isLoading }] = useJoinCompanyMutation();
     const handleSubmit = async (values) => {
-        console.log(values)
         try {
             const response = await Join_Company(values)
-            console.log(response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
 
             if (status === 200) {
                 toast.success(message)
-                navigaet("/Join",{
-                    state : {
-                        "isJoinedCompany": true,
-                    }
+                navigaet("/Join", {
+                    state: { 
+                        "isJoinedCompanyCustome": true,
+                     }
                 })
             }
             else {
@@ -47,7 +45,6 @@ export default function JoinDialog({ open, onClose }) {
         }
     }
     return (
-        <>
             <Dialog
                 open={open}
                 onClose={onClose}
@@ -89,6 +86,5 @@ export default function JoinDialog({ open, onClose }) {
                     </Formik>
                 </DialogContent>
             </Dialog>
-        </>
     )
 }

@@ -8,7 +8,6 @@ import "../style/Compnay.scss"
 import CompanyDialog from '../Components/CompanyComponent/CompanyDialog';
 import JoinDialog from '../Components/CompanyComponent/JoinDialog';
 
-
 export default function Company() {
   const [openAdd, setOpenAdd] = useState(false);
   const handleCloseAdd = () => {
@@ -26,7 +25,6 @@ export default function Company() {
   const handleOpenJoin = () => {
     setOpenJoin(true);
   };
-
 
   return (
     <>
@@ -55,15 +53,12 @@ export default function Company() {
                 <Formik>
                   <Form>
                     <Box className="login_filed">
-
                       <div >
                         <Box className="user_btns">
                           <Button onClick={handleOpenAdd} className='user_btn' variant="outlined">{String.add_company}</Button>
                           <Button onClick={handleOpenJoin} className='user_btn' variant="outlined">{String.join_company}</Button>
                         </Box>
-
                       </div>
-
                     </Box>
                   </Form>
                 </Formik>
@@ -77,7 +72,6 @@ export default function Company() {
           </Grid>
         </Paper>
       </Box>
-
       <CompanyDialog open={openAdd} onClose={handleCloseAdd} />
       <JoinDialog open={openJoin} onClose={handleCloseJoin} />
     </>

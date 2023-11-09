@@ -16,17 +16,14 @@ export default function CompanyDialog({ open, onClose }) {
     const defaultValue = {
         companyName: "",
     };
-
     const validationSchema = Yup.object().shape({
         companyName: Yup.string().required(String.add_company_required).matches(Regex.company_name, String.add_company_required),
     });
 
     const [Add_Company, { isLoading }] = useAddCompanyMutation();
     const handleSubmit = async (values) => {
-        console.log(values)
         try {
             const response = await Add_Company(values)
-            console.log(response)
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
             if (status === 200) {
@@ -52,7 +49,6 @@ export default function CompanyDialog({ open, onClose }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 className='dialog_container'>
-
                 <DialogTitle id="alert-dialog-title" className='invite_dialog_tital'>
                     <Box sx={{ marginLeft: "20px " }}>
                         <MdClear className="invite_dialog_close" onClick={onClose} />

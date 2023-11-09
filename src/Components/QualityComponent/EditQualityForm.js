@@ -21,13 +21,27 @@ import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
 
-
 export default function EditQualityForm() {
-
     const { state } = useLocation();
     const [id, setId] = useState(state ? state?._id : '');
     const { data, isFetching, refetch } = useGetEditQualityQuery(id);
     const [qeditdata, setQEditdata] = useState([]);
+    const navigaet = useNavigate();
+    const [selectedOption, setSelectedOption] = useState("");
+    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [wrapDataRequired, setWrapDataRequired] = useState(false);
+    const [weftDataRequired, setWeftDataRequired] = useState(false);
+    const [EditQuality, { isLoading }] = useEditQualityMutation();
+    const [openConfirmation, setOpenConfirmation] = useState(false);
+    const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
+    const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
+    const [Tar, setTar] = useState([]);
+    const [Width, setWidth] = useState([]);
+    const [pickSum, setPickSum] = useState([]);
+
+    const [editdata, seteditdata] = useState([]);
+    const [editweftData, seteditweftData] = useState([]);
 
     useEffect(() => {
         refetch();
@@ -43,15 +57,10 @@ export default function EditQualityForm() {
         }
     }, [state, isFetching, data]);
 
-    const navigaet = useNavigate();
-    const [selectedOption, setSelectedOption] = useState("");
-
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
-    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
     const toggleDrawerWeft = () => {
         setIsDrawerOpenWeft(!isDrawerOpenWeft);
     };
@@ -76,11 +85,7 @@ export default function EditQualityForm() {
         gsm: data?.result?.info?.gsm,
     };
 
-    const [wrapDataRequired, setWrapDataRequired] = useState(false);
-    const [weftDataRequired, setWeftDataRequired] = useState(false);
-
     const validationSchema = Yup.object().shape({
-
         qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
         eff: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
         cost: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
@@ -107,7 +112,6 @@ export default function EditQualityForm() {
         return qeditdata?.weft?.weftData > 0;
     });
 
-    const [EditQuality, { isLoading }] = useEditQualityMutation();
 
     const handleSubmit = async (value) => {
         if (wrapData.length === 0) {
@@ -129,23 +133,17 @@ export default function EditQualityForm() {
         //api data
         const qualityName = value.qulaity
         const qualityWeight = totalWeights
-
         const qualityCost = selectedOption === "Fixed Cost"
             ? Number(totalCosts) + Number(value.cost)
             : Number(totalCosts) + Number(value.cost * sumOfPicks);
 
         const cost = Number(value.cost)
-
         const TotalBeamEnds = tars
-
         const TotalPick = sumOfPicks
-
         const TotalWidth = widths
-
         const totalefficiency = (isNaN(value.rpm) || isNaN(value.eff))
             ? 0
             : (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2));
-
         const body = {
             qualityName: qualityName,
             qualityWeight: qualityWeight,
@@ -217,23 +215,18 @@ export default function EditQualityForm() {
     }
 
     // dialog
-    const [openConfirmation, setOpenConfirmation] = useState(false);
     const handleOpenConfirmation = () => {
         setOpenConfirmation(true);
     };
     const handleCloseConfirmation = () => {
         setOpenConfirmation(false);
     };
-
-    const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
     const handleOpenWrapConfirmation = () => {
         setcancelWrapConfirmation(true);
     };
     const handleCloseWrapConfirmation = () => {
         setcancelWrapConfirmation(false);
     };
-
-    const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
     const handleOpenWefConfirmation = () => {
         setcancelWefConfirmation(true);
     };
@@ -251,18 +244,13 @@ export default function EditQualityForm() {
         setweftData(qeditdata?.weft?.weftData)
     }, [qeditdata])
 
-
     // wrap data
     const [wrapData, setWrapData] = useState([]);
     const [wrapSumCost, setWrapSumCost] = useState([])
-
     const [wrapSumweight, setWrapSumweight] = useState([])
-
     const WrapsumOfCost = wrapData?.length === 0 ? (0) : wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WrapsumOfweight = wrapData?.length === 0 ? (0) : wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
-
     const [WrapsumOfCosts, setWrapsumOfCosts] = useState(0)
-
     const [WrapsumOfweights, setWrapsumOfweights] = useState(0)
 
     useEffect(() => {
@@ -270,22 +258,17 @@ export default function EditQualityForm() {
         setWrapsumOfweights(qeditdata?.warp?.totalWarpWeight)
     }, [qeditdata])
 
-
     useEffect(() => {
         setWrapsumOfCosts(Number(WrapsumOfCost.toFixed(2)))
         setWrapsumOfweights(Number(WrapsumOfweight.toFixed(2)))
     }, [WrapsumOfCost, WrapsumOfweight])
 
-
     // weft data
     const [weftData, setweftData] = useState(qeditdata?.weft?.weftData)
-
     const [weftSumCost, setweftSumCost] = useState([])
     const [weftSumweight, setweftSumweight] = useState([])
-
     const WeftsumOfCost = weftData?.length === 0 ? (0) : weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WeftsumOfweight = weftData?.length === 0 ? (0) : weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
-
     const [WeftsumOfCosts, setWeftsumOfCosts] = useState(0);
     const [WeftsumOfweights, setWeftsumOfweights] = useState(0)
 
@@ -298,7 +281,6 @@ export default function EditQualityForm() {
         setWeftsumOfCosts(Number(WeftsumOfCost.toFixed(2)))
         setWeftsumOfweights(Number(WeftsumOfweight.toFixed(2)))
     }, [WeftsumOfCost, WeftsumOfweight])
-
 
     //total sum
     const [totalWeights, settotalWeights] = useState(0)
@@ -318,23 +300,17 @@ export default function EditQualityForm() {
 
 
     //pick
-    const [pickSum, setPickSum] = useState([]);
     const sumOfPick = weftData?.length === 0 ? (0) : pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
-
     const sumOfPicks = Number(sumOfPick.toFixed(2))
 
     //width
-    const [Width, setWidth] = useState([]);
     const widths = weftData?.length === 0 ? (0) : Width.reduce((sum, width) => sum + parseFloat(width), 0);
 
     //tar
-    const [Tar, setTar] = useState([]);
     const tars = wrapData?.length === 0 ? (0) : Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
 
-    const [editdata, seteditdata] = useState([]);
     const editData = (index) => {
         toggleDrawer();
-
         const editData = {
             index: index,
         }
@@ -354,8 +330,6 @@ export default function EditQualityForm() {
         setweftData(updatedWeftData);
         handleCloseWefConfirmation();
     }
-    const [editweftData, seteditweftData] = useState([]);
-
     const editWeftData = (index) => {
         toggleDrawerWeft();
         const editData = {
@@ -699,11 +673,9 @@ export default function EditQualityForm() {
 
                                     <Paper className='expense_pepar'>
                                         <div className='add_expense'>
-
                                             <InputLabel className="qulaity_label">
                                                 {String.Expense}
                                             </InputLabel>
-
                                             <div className='costs'>
                                                 <div className='expense_radios'>
                                                     <RadioGroup
@@ -717,12 +689,10 @@ export default function EditQualityForm() {
                                                         <FormControlLabel value="Per Pick" control={<Radio />} label={String.Per_Pick} />
                                                     </RadioGroup>
                                                 </div>
-
                                                 <div className='cost_label'>
                                                     {console.log(values.cost, "const")}
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
-
                                                 {selectedOption === 'Fixed Cost' && (
                                                     <div className='expense_wrap'>
                                                         <TextFields onChange={handleChange}
@@ -731,7 +701,6 @@ export default function EditQualityForm() {
                                                             helperText={touched.cost && errors.cost} />
                                                     </div>
                                                 )}
-
                                                 {selectedOption === 'Per Pick' && (
                                                     <div className='expense_wraps'>
                                                         <TextFields error={touched.cost && Boolean(errors.cost)}
@@ -751,7 +720,6 @@ export default function EditQualityForm() {
                                                     {String.Production}
                                                 </InputLabel>
                                             </div>
-
                                             <div className='production_input_wrap'>
                                                 <div className='production_input'>
                                                     <InputLabels name={String.RPM} m={"0 0.5rem 0 0"} />
@@ -771,7 +739,6 @@ export default function EditQualityForm() {
                                                         name="mach" error={touched.mach && Boolean(errors.mach)}
                                                         helperText={touched.mach && errors.mach} onChange={handleChange} value={values.mach} />
                                                 </div>
-
                                                 <div className='production_input'>
                                                     <InputLabels name={String.qPick} m={"0 0.5rem 0 0"} />
                                                     <TextFields width={"90%"} value={sumOfPicks} />
@@ -787,7 +754,6 @@ export default function EditQualityForm() {
                                             </div>
                                         </div>
                                     </Paper>
-
                                     <Paper className='info_pepar'>
                                         <div className='add_info'>
                                             <InputLabel className="qulaity_label">

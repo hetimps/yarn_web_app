@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import "../../style/Quality/AddQualityForm.scss"
 import { Box, Button, FormControlLabel, IconButton, InputLabel, Paper, Radio, RadioGroup, Stack, Typography } from '@mui/material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState } from 'react';
-import { FastField, Form, Formik } from 'formik';
+import {  Form, Formik } from 'formik';
 import InputLabels from './InputLabels';
 import TextFields from './TextFields';
 import * as Yup from "yup";
@@ -19,22 +19,38 @@ import WarpDrawer from './WarpDrawer';
 import WeftDrawer from './WeftDrawer';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Cancel } from '@mui/icons-material';
+
 export default function AddQualityForm() {
-
+    const [openConfirmation, setOpenConfirmation] = useState(false);
+    const [Qulaity, { isLoading }] = useAddQualityMutation();
     const navigaet = useNavigate();
-
+    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState('Fixed Cost');
+    const [wrapDataRequired, setWrapDataRequired] = useState(false);
+    const [weftDataRequired, setWeftDataRequired] = useState(false);
+    const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
+    const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
+    const [wrapData, setWrapData] = useState([])
+    const [wrapSumCost, setWrapSumCost] = useState([])
+    const [wrapSumweight, setWrapSumweight] = useState([])
+    const [weftData, setweftData] = useState([])
+    const [weftSumCost, setweftSumCost] = useState([])
+    const [weftSumweight, setweftSumweight] = useState([])
+    const [pickSum, setPickSum] = useState([]);
+    const [Tar, setTar] = useState([]);
+    const [editdata, seteditdata] = useState([]);
+    const [Width, setWidth] = useState([]);
+    const [editweftData, seteditweftData] = useState([]);
+
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
 
-    const [isDrawerOpenWeft, setIsDrawerOpenWeft] = useState(false);
     const toggleDrawerWeft = () => {
         setIsDrawerOpenWeft(!isDrawerOpenWeft);
     };
 
-    const [selectedOption, setSelectedOption] = useState('Fixed Cost');
     const handleChanger = (event) => {
         setSelectedOption(event.target.value);
     };
@@ -54,10 +70,6 @@ export default function AddQualityForm() {
         letis: "",
         gsm: "",
     };
-
-    const [wrapDataRequired, setWrapDataRequired] = useState(false);
-
-    const [weftDataRequired, setWeftDataRequired] = useState(false);
 
     const validationSchema = Yup.object().shape({
         qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
@@ -85,8 +97,6 @@ export default function AddQualityForm() {
         return weftData.length > 0;
     });
 
-    const [Qulaity, { isLoading }] = useAddQualityMutation();
-
     const handleSubmit = async (value) => {
         if (wrapData.length === 0) {
             setWrapDataRequired(true);
@@ -107,23 +117,17 @@ export default function AddQualityForm() {
         }
 
         //api data
-
         const qualityName = value.qulaity
         const qualityWeight = totalWeights
-
         const qualityCost = selectedOption === "Fixed Cost"
             ? Number(totalCosts) + Number(value.cost)
             : Number(totalCosts) + Number(value.cost * sumOfPicks);
 
         const cost = Number(value.cost)
         const TotalBeamEnds = tars
-
         const TotalPick = sumOfPicks
-
         const TotalWidth = widths
-
         const totalefficiency = (((value.rpm / sumOfPicks / 39.37) * (value.eff / 100) * 720).toFixed(2))
-
         const body = {
             qualityName: qualityName,
             qualityWeight: qualityWeight,
@@ -143,7 +147,6 @@ export default function AddQualityForm() {
                     return rest;
                 })
             },
-
             weft: {
                 totalWeftWeight: WeftsumOfweights,
                 totalWeftCost: WeftsumOfCosts,
@@ -158,7 +161,6 @@ export default function AddQualityForm() {
             },
             expenseType: selectedOption,
             expenseCost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
-            // cost: selectedOption === "Fixed Cost" ? cost : cost * TotalPick,
             cost: cost,
             totalefficiency: totalefficiency,
             rpm: value.rpm !== "" ? value.rpm : undefined,
@@ -175,11 +177,8 @@ export default function AddQualityForm() {
                 gsm: value.gsm
             }
         }
-        console.log(body, "body")
-
         try {
             const response = await Qulaity(body)
-
             const status = response?.data?.statusCode;
             const message = response?.data?.message;
             if (status === 200) {
@@ -196,8 +195,6 @@ export default function AddQualityForm() {
     }
 
     // dialog
-    const [openConfirmation, setOpenConfirmation] = useState(false);
-
     const handleOpenConfirmation = () => {
         setOpenConfirmation(true);
     };
@@ -205,17 +202,12 @@ export default function AddQualityForm() {
         setOpenConfirmation(false);
     };
 
-    const [cancelWrapConfirmation, setcancelWrapConfirmation] = useState(false);
-
     const handleOpenWrapConfirmation = () => {
         setcancelWrapConfirmation(true);
     };
     const handleCloseWrapConfirmation = () => {
         setcancelWrapConfirmation(false);
     };
-
-
-    const [cancelWeftConfirmation, setcancelWefConfirmation] = useState(false);
 
     const handleOpenWefConfirmation = () => {
         setcancelWefConfirmation(true);
@@ -229,53 +221,30 @@ export default function AddQualityForm() {
     }
 
     // wrap data
-    const [wrapData, setWrapData] = useState([])
-
-    const [wrapSumCost, setWrapSumCost] = useState([])
-    const [wrapSumweight, setWrapSumweight] = useState([])
-
     const WrapsumOfCost = wrapData?.length === 0 ? (0) : wrapSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WrapsumOfCosts = Number(WrapsumOfCost.toFixed(2))
-
     const WrapsumOfweight = wrapData?.length === 0 ? (0) : (wrapSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0));
     const WrapsumOfweights = Number(WrapsumOfweight.toFixed(2))
-
     // weft data
-    const [weftData, setweftData] = useState([])
-
-    const [weftSumCost, setweftSumCost] = useState([])
-    const [weftSumweight, setweftSumweight] = useState([])
-
     const WeftsumOfCost = weftData?.length === 0 ? (0) : weftSumCost.reduce((sum, cost) => sum + parseFloat(cost), 0);
     const WeftsumOfCosts = Number(WeftsumOfCost.toFixed(2))
-
     const WeftsumOfweight = weftData?.length === 0 ? (0) : weftSumweight.reduce((sum, weight) => sum + parseFloat(weight), 0);
     const WeftsumOfweights = Number(WeftsumOfweight.toFixed(2))
-
     //total sum
     const totalWeight = parseFloat(WrapsumOfweights) + parseFloat(WeftsumOfweights)
     const totalWeights = totalWeight.toFixed(2)
-
     const totalCost = parseFloat(WrapsumOfCosts) + parseFloat(WeftsumOfCosts)
     const totalCosts = totalCost.toFixed(2)
-
     //pick
-    const [pickSum, setPickSum] = useState([]);
     const sumOfPick = weftData?.length === 0 ? (0) : pickSum.reduce((sum, pick) => sum + parseFloat(pick), 0);
     const sumOfPicks = Number(sumOfPick.toFixed(2))
-
     //width
-    const [Width, setWidth] = useState([]);
     const widths = weftData?.length === 0 ? (0) : Width.reduce((sum, width) => sum + parseFloat(width), 0);
-
     //tar
-    const [Tar, setTar] = useState([]);
     const tars = wrapData?.length === 0 ? (0) : Tar.reduce((sum, tar) => sum + parseFloat(tar), 0);
 
-    const [editdata, seteditdata] = useState([]);
     const editData = (index) => {
         toggleDrawer();
-
         const editData = {
             index: index,
         }
@@ -296,8 +265,6 @@ export default function AddQualityForm() {
         handleCloseWefConfirmation();
     }
 
-    const [editweftData, seteditweftData] = useState([]);
-
     const editWeftData = (index) => {
         toggleDrawerWeft();
         const editData = {
@@ -317,10 +284,8 @@ export default function AddQualityForm() {
                     errors,
                     touched,
                 }) => (
-
                     <Form>
                         <div className='add_form'>
-                            {/* heading */}
                             <div className='add_heading'>
                                 <div className='first_heading' >
                                     <IconButton className='add_arrow' onClick={handleOpenConfirmation}>
@@ -342,7 +307,6 @@ export default function AddQualityForm() {
                                         </Button>
                                     </Stack>
                                 </div>
-
                                 <div className='add_btn'>
                                     {isLoading ? <Loader /> : (<Button type='submit' className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">{String.save}</Button>)}
                                 </div>
@@ -413,7 +377,6 @@ export default function AddQualityForm() {
                                                                     {wrap.warpCompnayName}
                                                                 </Typography>
                                                             </div>
-
                                                             <div>
                                                                 <Typography className='heading_text'
                                                                     variant="span"
@@ -440,7 +403,6 @@ export default function AddQualityForm() {
                                                                 </Typography>
                                                             </div>
                                                         </div>
-
                                                         <div className='after_heading' >
                                                             <div>
                                                                 <InputLabel className='heading_text' >{String.Deniar}</InputLabel>
@@ -657,7 +619,6 @@ export default function AddQualityForm() {
                                                         <FormControlLabel value="Per Pick" control={<Radio />} label={String.Per_Pick} />
                                                     </RadioGroup>
                                                 </div>
-
                                                 <div className='cost_label'>
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
@@ -723,7 +684,6 @@ export default function AddQualityForm() {
                                             </div>
                                         </div>
                                     </Paper>
-
                                     <Paper className='info_pepar'>
                                         <div className='add_info'>
                                             <InputLabel className="qulaity_label">
@@ -751,7 +711,6 @@ export default function AddQualityForm() {
                                                         helperText={touched.steam && errors.steam} onChange={handleChange} value={values.steam} />
                                                 </div>
                                             </div>
-
                                             <div className='add_info_wrap' >
                                                 <div className='info_input'>
                                                     <InputLabels name={String.Panno} m={"0 0.5rem 0 0"} />
@@ -782,7 +741,6 @@ export default function AddQualityForm() {
                     </Form>
                 )}
             </Formik >
-
             <ConformDialog open={openConfirmation} onClose={handleCloseConfirmation} tital={String.con_dialog_tital} back={Back} />
             <ConformDialog open={cancelWrapConfirmation} onClose={handleCloseWrapConfirmation} tital={String.wrapdialog_tital} back={removeWrapBox} />
             <ConformDialog open={cancelWeftConfirmation} onClose={handleCloseWefConfirmation} tital={String.weftdialog_tital} back={removeweftBox} />

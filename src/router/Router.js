@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PhonNo from '../pages/PhonNo';
 import Otp from '../pages/Otp';
@@ -13,16 +13,11 @@ import User from '../pages/User';
 import AddQuality from '../pages/AddQuality';
 import EditQuality from '../pages/EditQuality';
 import ViewQuality from '../pages/ViewQuality';
-import { useProfileQuery } from '../api/Auth';
-import { useDispatch } from 'react-redux';
-import { setCurrentUser } from '../Redux/AuthSlice';
 
 export default function Router() {
     return (
         <BrowserRouter>
-
             <PrivatePage />
-
             <Routes>
                 <Route path="/Phonno" element={<PhonNo />}></Route>
                 <Route path="/Otp" element={<Otp />}></Route>
