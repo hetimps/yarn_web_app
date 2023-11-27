@@ -1,12 +1,13 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Panding from "../assets/img/panding.svg"
-import "../style/Join.scss"
+import "../style/Join/Join.scss"
 import { String } from '../constants/String';
 import { useCheckStatusQuery } from '../api/Join';
 import Loader from '../Components/ComonComponent/Loader';
 import { toast } from 'react-hot-toast';
+import { Buttons } from '../Components/ComonComponent/CustomButtons';
 
 export default function Join() {
   const navigaet = useNavigate();
@@ -88,8 +89,8 @@ export default function Join() {
         <div className='btns'>
           <Box >
             <Stack direction="row" spacing={1}>
-              <Button variant="contained" className='status_btn' onClick={status}>Status</Button>
-              <Button variant="contained" className='sign_out' onClick={logout}>Sign Out</Button>
+              <Buttons variant={"contained"} className={'status_btn'} onClick={status} button_name={String.status} />
+              <Buttons variant={"contained"} className={'sign_out'} onClick={logout} button_name={String.sign_out} />
             </Stack>
           </Box>
         </div>

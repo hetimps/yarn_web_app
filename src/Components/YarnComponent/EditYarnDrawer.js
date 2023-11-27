@@ -11,6 +11,7 @@ import { useUpdateYarnMutation } from '../../api/Yarn';
 import Loader from '../ComonComponent/Loader';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useGetQualityQuery } from '../../api/Quality';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYarn }) {
     const limit = "";
@@ -174,7 +175,7 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                         </div>
 
                                         <div className='yequality'>
-                                            {yarnQualityData?.map((quality, index) => {
+                                            {yarnQualityData?.map((quality) => {
                                                 return (
                                                     <>
                                                         <Accordion className='mainaccordion'>
@@ -212,7 +213,7 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                                 </Button>
 
                                                                 <div className='wrap_box' >
-                                                                    {quality?.warp?.warpData?.map((wrap, index) => {
+                                                                    {quality?.warp?.warpData?.map((wrap) => {
                                                                         return (
                                                                             <>
                                                                                 <Box className='box_content' component="span">
@@ -318,7 +319,7 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                                                 </Button>
 
                                                                 <div className='wrap_box' >
-                                                                    {quality?.weft?.weftData?.map((weft, index) => {
+                                                                    {quality?.weft?.weftData?.map((weft) => {
                                                                         return (
                                                                             <>
                                                                                 <Box className='box_content' component="span">
@@ -430,8 +431,8 @@ export default function EditYarnDrawer({ toggleDrawer, isDrawerOpen, selectrdYar
                                         </div>
                                         <div className='yebtns'>
                                             {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
-                                                <Button onClick={toggleDrawer} className='yebtn_cancel' variant="outlined">{String.ycancel}</Button>
-                                                <Button className='yebtn_done' type='submit' variant="contained">{String.update_yarn}</Button>
+                                                <Buttons onClick={toggleDrawer}  className={'yebtn_cancel'} variant={"outlined"} button_name={String.ycancel} />
+                                                <Buttons type={'submit'} className={'yebtn_done'} variant={"contained"} button_name={String.update_yarn} />
                                             </Stack>)}
                                         </div>
                                     </div>

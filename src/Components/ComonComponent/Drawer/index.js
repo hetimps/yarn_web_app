@@ -1,22 +1,22 @@
 import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, ThemeProvider } from '@mui/material'
 import React, { useEffect } from 'react'
-import logo from "../../assets/img/logo.svg";
+import logo from "../../../assets/img/logo.svg";
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { useLocation, useNavigate } from 'react-router';
 import { createTheme } from '@mui/material/styles';
-import "../../style/Quality/Drawer_Navbar.scss"
-import { DrawerHeader } from "../ComonComponent/Comon_Component";
+import "../../../style/Quality/Drawer_Navbar.scss"
+import { DrawerHeader } from "./style";
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
-import { useProfileQuery } from '../../api/Auth';
+import { useProfileQuery } from '../../../api/Auth';
 import { useState } from 'react';
 
 export default function Drawers() {
     const navigate = useNavigate();
     const location = useLocation();
     const [showUser, setShowUser] = useState(true);
-    const { data: Userdata, isFetchings: UserisFetching, refetch: userRefetch } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
+    const { data: Userdata, isFetchings: UserisFetching } = useProfileQuery({}, { refetchOnMountOrArgChange: true });
     const theme = createTheme();
 
     const Navigate = (path) => {

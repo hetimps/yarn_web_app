@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box,Typography } from '@mui/material';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 import { String } from '../../constants/String';
@@ -16,11 +16,12 @@ import { IoMdAdd } from "react-icons/io";
 import AddYarnDialog from '../QualityComponent/AddYarnDialog';
 import EditIcon from '@mui/icons-material/Edit';
 import RestoreIcon from '@mui/icons-material/Restore';
-import "../../style/Yarn/YarnTable.scss"
+import "../../style/Yarns/YarnTable.scss"
 import { useGetYarnQuery } from '../../api/Yarn';
 import YarnHistory from './YarnHistory';
 import EditYarnDrawer from './EditYarnDrawer';
 import { useNavigate } from 'react-router-dom';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function YarnTable({ Userdata, UserisFetching }) {
 
@@ -106,7 +107,7 @@ export default function YarnTable({ Userdata, UserisFetching }) {
     const handleCloseAddYarn = () => {
         setOpenAdd(false);
     };
-    const handleOpenAddYarn = (sortedData) => {
+    const handleOpenAddYarn = () => {
         setOpenAdd(true);
     };
 
@@ -145,9 +146,10 @@ export default function YarnTable({ Userdata, UserisFetching }) {
                             setsearch={setsearch}
                             setpage={setPage} />
                     </Box>
-                    {showAddYarnButton && <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' onClick={handleOpenAddYarn} >
-                        {String.add_yarn}
-                    </Button>}
+                    {showAddYarnButton &&
+                    <Buttons  startIcon={<IoMdAdd />} variant={"outlined"}  className={'add_buttons'} onClick={handleOpenAddYarn} button_name={String.add_yarn}/>
+                    
+                    }
                 </div>
             </Box>
 

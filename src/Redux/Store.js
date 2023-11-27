@@ -2,12 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 import { LoginApi } from '../api/PhonNumber'
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { OtpApi } from '../api/Otp';
-import { UserApi } from '../api/UserInfo';
-import { CompanyApi } from '../api/Compnay';
+import { UserApi } from '../api/UserInformation';
+import { CompanyApi } from '../api/Company';
 import { JoinApi } from '../api/Join';
 import { QualityApi } from '../api/Quality';
 import { AuthApi } from '../api/Auth';
-import { CompanyUser } from '../api/Companyuser.js';
+import { CompanyUser } from '../api/CompanyUser.js';
 import currentUser from './AuthSlice';
 import { YarnApi } from '../api/Yarn';
 
@@ -36,5 +36,4 @@ export const store = configureStore({
             .concat(CompanyUser.middleware)
             .concat(YarnApi.middleware)
 })
-
 setupListeners(store.dispatch);

@@ -1,5 +1,5 @@
-import { Box, Button, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Box, Menu, MenuItem, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material'
+import React, { useEffect, useMemo, useState } from 'react'
 import Search from '../ComonComponent/Search'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import "../../style/Quality/QualityTable.scss"
@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { toast } from 'react-hot-toast'
 import DeleteDialogs from './DeleteDialogs'
+import { Buttons } from '../ComonComponent/CustomButtons'
 
 export default function QualityTable({ Userdata, UserisFetching }) {
     const [page, setPage] = useState(1);
@@ -56,7 +57,7 @@ export default function QualityTable({ Userdata, UserisFetching }) {
 
                 setQualityData(data?.result?.data);
             } else {
-                setQualityData((prevData) => [...prevData, ...data?.result?.data]);
+                data?.result?.data && setQualityData((prevData) => [...prevData, ...data.result.data]);
             }
             setHasMore(data?.result?.data?.length === limit);
         }
@@ -65,18 +66,29 @@ export default function QualityTable({ Userdata, UserisFetching }) {
     useEffect(() => {
         refetch()
     }, [search, refetch]);
+    // const sortedData = QualityData ? [...QualityData].sort((a, b) => {
+    //     if (sortConfig.columnName !== '') {
+    //         const keyA = a[sortConfig.columnName];
+    //         const keyB = b[sortConfig.columnName];
 
+    //         if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
+    //         if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
+    //     }
+    //     return 0;
+    // }) : [];
+    const sortedData = useMemo(() => {
+        if (!QualityData) return [];
+        return [...QualityData].sort((a, b) => {
+            if (sortConfig.columnName !== '') {
+                const keyA = a[sortConfig.columnName];
+                const keyB = b[sortConfig.columnName];
     
-    const sortedData = QualityData ? [...QualityData].sort((a, b) => {
-        if (sortConfig.columnName !== '') {
-            const keyA = a[sortConfig.columnName];
-            const keyB = b[sortConfig.columnName];
-
-            if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
-            if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-    }) : [];
+                if (keyA < keyB) return sortConfig.direction === 'asc' ? -1 : 1;
+                if (keyA > keyB) return sortConfig.direction === 'asc' ? 1 : -1;
+            }
+            return 0;
+        });
+    }, [QualityData, sortConfig.columnName, sortConfig.direction]);
 
     useEffect(() => {
         if (!UserisFetching) {
@@ -112,7 +124,7 @@ export default function QualityTable({ Userdata, UserisFetching }) {
     const addQuality = () => {
         navigate("/Addquality")
     }
- 
+
     const handleMenuOpen = (event, rowId, createdBy) => {
         setAnchorEl(event.currentTarget);
         setSelectedRowId(rowId);
@@ -181,12 +193,11 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                             setsearch={setsearch}
                             setpage={setPage} />
                     </Box>
-                    {showAddQualityButton && <Button startIcon={<IoMdAdd />} variant="outlined" className='add_buttons' onClick={addQuality} >
-                        {String.add_quality}
-                    </Button>}
+                    {showAddQualityButton && 
+                    <Buttons startIcon={<IoMdAdd />} variant={"outlined"} className={'add_buttons'} onClick={addQuality} button_name={String.add_quality}/> 
+                    }
                 </div>
             </div>
-
             <TableContainer component={Paper} className="Table_container">
                 <InfiniteScroll
                     dataLength={sortedData?.length}
@@ -324,7 +335,6 @@ export default function QualityTable({ Userdata, UserisFetching }) {
                                                 '&:last-child td': { borderBottom: '1px solid rgba(224, 224, 224, 1)' },
                                                 '&:hover': { backgroundColor: '#f5f5f5' }
                                             }}>
-
                                             <TableCell className="table_border" component="th" scope="row">
                                                 {row?.qualityName || '-'}
                                             </TableCell>

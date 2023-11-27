@@ -1,6 +1,6 @@
 import React from 'react'
-import "../../style/Compnay.scss"
-import { Box, Button, Dialog, DialogContent, DialogTitle, InputLabel, Stack, TextField, } from '@mui/material'
+import "../../style/Company/Company.scss"
+import { Box, Dialog, DialogContent, DialogTitle, InputLabel, Stack, TextField, } from '@mui/material'
 import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
 import { Form, Formik } from 'formik';
@@ -8,11 +8,11 @@ import { String } from '../../constants/String';
 import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
 import { useAddYarnMutation } from '../../api/Yarn';
+import { Buttons } from '../ComonComponent/CustomButtons';
+
 
 export default function AddYarnDialog({ open, onClose }) {
-
     const [Add_Yarn, { isLoading }] = useAddYarnMutation();
-
     const defaultValue = {
         yarnName: "",
         yarnRate: ""
@@ -85,11 +85,9 @@ export default function AddYarnDialog({ open, onClose }) {
                                         helperText={touched.yarnRate && errors.yarnRate} className='yinput' placeholder={String.rate_placeholder} id="outlined-basic" autoComplete='off' sx={{ width: "100%" }} variant="outlined" />
                                 </div>
                                 <div className='btns'>
-                                    {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
-                                        <Button onClick={onClose} variant="outlined" className='ycancel'>{String.ycancel}</Button>
-                                        <Button type='submit' variant="contained" className='yadd' >
-                                            {String.yadd}
-                                        </Button>
+                                    {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}> 
+                                        <Buttons  onClick={onClose}  variant={"outlined"} className={'ycancel'}  button_name={String.ycancel}   />  
+                                        <Buttons type={'submit' }  variant={"contained"} className={'yadd'}  button_name={String.yadd}   />  
                                     </Stack>)}
                                 </div>
                             </Form>)}

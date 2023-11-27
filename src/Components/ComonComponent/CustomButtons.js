@@ -1,18 +1,9 @@
-
-import { Button} from '@mui/material'
+import { Button } from '@mui/material'
 import React from 'react'
-import "../../style/PhonNo.scss"
-
-export default function CustomButtons({ button_name }) {
-    const Button_style = {
-        width:"20rem",
-        background: "#E89E46",
-        height:"55px",
-    }
+import "../../style/PhonNo/PhonNo.scss"
+export function Buttons({ onClick, className, variant, button_name,startIcon,type,disabled}) {
     return (
-        <Button type='submit' className='buttoms_login' style={Button_style} variant="contained" >
-            {button_name}
-        </Button>
+        <Button onClick={onClick} className={className} variant={variant} startIcon={startIcon} type={type} disabled={disabled}>{button_name}</Button>
     )
 }
 

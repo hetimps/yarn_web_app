@@ -1,7 +1,6 @@
 import React from 'react'
-import "../../style/Compnay.scss"
-import { Box, Button, Dialog, DialogContent, DialogTitle, InputLabel, Stack, TextField, } from '@mui/material'
-import { MdClear } from "react-icons/md";
+import "../../style/Company/Company.scss"
+import { Dialog, DialogContent,  InputLabel, Stack, TextField, } from '@mui/material'
 import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
 import { Form, Formik } from 'formik';
@@ -9,6 +8,7 @@ import { String } from '../../constants/String';
 import { useAddCompanyMutation } from '../../api/Quality';
 import { toast } from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function AddCompannyDialog({ open, onClose }) {
     const [Add_Company, { isLoading }] = useAddCompanyMutation();
@@ -18,7 +18,6 @@ export default function AddCompannyDialog({ open, onClose }) {
     const validationSchema = Yup.object().shape({
         yarnCompanyName: Yup.string().required(String.company_required).matches(Regex.yarn_name, String.valid_compnay),
     });
-
     const handleSubmit = async (value) => {
         try {
             const response = await Add_Company(value)
@@ -36,7 +35,6 @@ export default function AddCompannyDialog({ open, onClose }) {
             console.log(error)
         }
     }
-
     return (
         <>
             <Dialog
@@ -53,7 +51,7 @@ export default function AddCompannyDialog({ open, onClose }) {
                             touched,
                         }) => (
                             <Form className='invite_form' >
-                                <div >
+                                <div>
                                     <InputLabel className="label" >
                                         {String.clabel}
                                     </InputLabel>
@@ -66,10 +64,8 @@ export default function AddCompannyDialog({ open, onClose }) {
                                 </div>
                                 <div className='btns'>
                                     {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
-                                        <Button onClick={onClose} variant="outlined" className='ccancel'>{String.ccancel}</Button>
-                                        <Button type='submit' variant="contained" className='cadd' >
-                                            {String.cadd}
-                                        </Button>
+                                        <Buttons onClick={onClose}  variant={"outlined"} className={'ccancel'}  button_name={String.ccancel}  /> 
+                                        <Buttons type={'submit'} variant={"contained"} className={'cadd'}  button_name={String.cadd}  /> 
                                     </Stack>)}
                                 </div>
                             </Form>)}

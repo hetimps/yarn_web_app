@@ -1,4 +1,4 @@
-@import "../Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
@@ -14,7 +14,6 @@ body {
     border-color: $red !important;
 }
 
-
 .MuiList-root,
 .MuiList-padding,
 .MuiMenu-list,
@@ -25,7 +24,7 @@ body {
 
 .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
     box-shadow: none !important;
-    box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px !important;
+    box-shadow: $muiPaper-root-shadow 0px 3px 5px !important;
 }
 
 .editpage_loader {
@@ -36,7 +35,6 @@ body {
 }
 
 .add_form {
-
     .MuiInputBase-root {
         border-radius: 7px !important;
         height: 45px;
@@ -68,7 +66,6 @@ body {
                 font-size: 1.3rem;
             }
         }
-
         .second_heading {
             .btn_weight {
                 font-weight: 600;
@@ -78,7 +75,6 @@ body {
                 color: $black;
                 text-transform: capitalize;
                 height: 2.5rem;
-                // width: 8.5rem;
             }
 
             .btn_cost {
@@ -89,7 +85,6 @@ body {
                 text-transform: capitalize;
                 font-weight: 600;
                 height: 2.5rem;
-                // width: 8.5rem;
             }
         }
 
@@ -107,9 +102,8 @@ body {
     }
 
     //from
-
     .from_paper {
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        box-shadow: $from_paper-box-shadow 0px 7px 29px 0px;
         padding: 1.2rem;
         margin-top: 1.3rem;
         border-radius: 30px;
@@ -144,7 +138,7 @@ body {
             .box {
                 width: 200px;
                 height: 150px;
-                border: 1px solid #ccc;
+                border: 1px solid $box-border;
                 margin: 10px;
                 position: relative;
             }
@@ -161,16 +155,15 @@ body {
                 border: none;
                 cursor: pointer;
                 font-size: 18px;
-                color: #999;
+                color:$from-close-button;
             }
 
             .close-button:hover {
-                color: #333;
+                color: $from-close-button-hover;
             }
 
             .add_form_btns {
                 margin-top: 0.7rem;
-
                 .btn_warp {
                     color: $black;
                     font-family: $font-family;
@@ -192,7 +185,7 @@ body {
                         border-radius: 0 7px 7px 0;
 
                         .add_waicons_button {
-                            color: white;
+                            color: $white;
                         }
                     }
                 }
@@ -219,7 +212,7 @@ body {
                         border-radius: 0 7px 7px 0;
 
                         .add_weicons_button {
-                            color: white;
+                            color:$white;
                         }
                     }
                 }
@@ -234,10 +227,8 @@ body {
 
             .wrap_box {
                 display: flex;
-                // flex-direction: row;
                 flex-wrap: wrap;
                 position: relative;
-
                 .close_icon {
                     display: flex;
                     justify-content: flex-end;
@@ -299,7 +290,7 @@ body {
             }
 
             .expense_pepar {
-                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                box-shadow: $muipaper-box-shadow 0px 2px 8px 0px;
                 padding: 0.5rem;
                 margin-top: 0.5rem;
                 border-radius: 10px;
@@ -336,7 +327,7 @@ body {
             }
 
             .productions_pepar {
-                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                box-shadow: $muipaper-box-shadow 0px 2px 8px 0px;
                 padding: 0.5rem;
                 margin-top: 0.5rem;
                 border-radius: 10px;
@@ -351,7 +342,7 @@ body {
             }
 
             .info_pepar {
-                box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+                box-shadow: $muipaper-box-shadow 0px 2px 8px 0px;
                 padding: 0.5rem;
                 margin-top: 0.5rem;
                 border-radius: 10px;
@@ -382,23 +373,18 @@ body {
 }
 
 .drawer {
-
     .MuiInputBase-root {
         border-radius: 12px !important;
         height: 50px;
     }
-
     position: relative;
-
     .heading_paper {
         box-shadow: $placeholder-color 0px 0px 0px 1px, $white 0px 0px 0px 1px inset;
         padding: 0.5rem;
-
         .heading {
             display: flex;
             justify-content: space-between;
             align-items: center;
-
             .close_icon {
                 cursor: pointer;
                 margin-top: 4px;
@@ -418,11 +404,9 @@ body {
             .yarn_select {
                 width: 98%;
             }
-
             .add_icon {
                 background-color: $primary;
                 border-radius: 7px;
-
                 .add_yarn {
                     color: $white;
                     cursor: pointer;
@@ -460,17 +444,14 @@ body {
 
         .input_all {
             margin-top: 1rem;
-
             .inputs {
                 margin-top: 0.8rem;
-
                 .drawer_label {
                     font-weight: 500;
                     color: $black;
                     margin-bottom: 0.2rem;
                     margin-left: 0.3rem;
                 }
-
                 .input {
                     width: 100%;
                 }
@@ -485,19 +466,16 @@ body {
             margin-right: 1rem;
             display: flex;
             justify-content: space-between;
-
             .btn_done {
                 background-color: $primary;
                 color: $white;
                 text-transform: capitalize;
                 font-family: $font-family;
-                // width: 100%;
                 height: 2.7rem;
                 font-size: 16px;
                 margin-top: 1rem;
                 width: 6rem !important;
             }
-
             .btn_cancel {
                 background-color: $white;
                 color: $font_color;
@@ -516,7 +494,6 @@ body {
 
 //yarn
 .ydrawer {
-
     .yheading {
         display: flex;
         justify-content: space-between;
@@ -526,22 +503,18 @@ body {
 
         .icons {
             display: flex;
-
             .add_icon {
                 color: $primary;
                 width: 30px;
                 cursor: pointer;
             }
-
             .close_icon {
                 cursor: pointer;
             }
         }
     }
 }
-
 //add yarn
-
 .ydialog_container {
     .MuiInputBase-root {
         border-radius: 12px !important;
@@ -556,7 +529,6 @@ body {
 
         .ydialog_close {
             cursor: pointer;
-            // margin-top: 0.5rem !important;
             font-size: 20px !important;
             position: absolute !important;
             top: 0;
@@ -578,12 +550,6 @@ body {
         .yratewrap {
             margin-top: 1rem;
         }
-
-        // .yedit_check_box{
-        //     margin-top: 8px;
-        //     margin-left: -5px !important;
-        //     width: 100% !important;
-        // }
     }
 
     .btns {
@@ -602,7 +568,6 @@ body {
             margin-top: 1rem;
             width: 6rem !important;
             width: 6rem !important;
-
         }
 
         .yadd {
@@ -610,7 +575,6 @@ body {
             color: $white;
             text-transform: capitalize;
             font-family: $font-family;
-
             height: 2.7rem;
             font-size: 16px;
             margin-top: 1rem;
@@ -629,16 +593,13 @@ body {
 //add_company
 .cdialog_container {
     .MuiInputBase-root {
-
         border-radius: 12px !important;
         height: 45px;
     }
 
     .cadd_dialog_tital {
-
         .cdialog_close {
             cursor: pointer;
-            // margin-top: 0.5rem !important;
             font-size: 20px !important;
             position: absolute !important;
             top: 0;
@@ -700,25 +661,20 @@ body {
 }
 
 .cdialog {
-
     .cdialog_wraper {
         display: flex;
         flex-direction: column;
         align-items: center !important;
-
         .cdialog_tital_heading {
             text-align: center;
             font-weight: 600;
             font-size: 20px !important;
             margin-bottom: 5px;
         }
-
         .cdialog_info {
             text-align: center;
         }
-
     }
-
 
     .cdialog_cancel {
         color: $font_color !important;
@@ -729,7 +685,6 @@ body {
         margin-bottom: 12px !important;
         height: 2.6rem;
     }
-
     .cdialog_yes {
         text-transform: capitalize !important;
         font-family: $font-family !important;
@@ -742,7 +697,6 @@ body {
         height: 2.6rem;
         margin-left: 0.5rem;
     }
-
     .MuiDialog-paper {
         border-radius: 20px !important;
         width: 415px;

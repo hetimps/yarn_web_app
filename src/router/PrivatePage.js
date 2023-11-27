@@ -17,8 +17,6 @@ export default function PrivatePage({ children }) {
     const company_name = state?.response?.data?.result?.companyName;
     const isCreatedCompany = state?.response?.data?.result?.isCreatedCompany;
     const requestStatus = state?.response?.data?.result?.requestStatus;
-    const isJoinedCompany = state?.response?.data?.result?.isJoinedCompany;
-    const isJoinedCompanyCustome = state?.isJoinedCompanyCustome;
     const user = JSON.parse(localStorage.getItem("token"))
 
     useEffect(() => {

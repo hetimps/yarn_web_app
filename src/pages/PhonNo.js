@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container, Grid, Paper, Typography } from "@mui/material";
-import "../style/PhonNo.scss";
+import "../style/PhonNo/PhonNo.scss";
 import Logo from "../assets/img/logo.svg";
 import { String } from "../constants/String";
 import Machin from "../assets/img/machin.svg";
@@ -12,7 +12,7 @@ import { useLoginUserMutation } from "../api/PhonNumber";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loader from '../Components/ComonComponent/Loader';
-import CustomButtons from "../Components/ComonComponent/CustomButtons";
+import { Buttons } from "../Components/ComonComponent/CustomButtons";
 import { Regex } from "../constants/Regex";
 
 const PhonNo = () => {
@@ -142,7 +142,7 @@ const PhonNo = () => {
                           {isLoading ? (<Box className="loader">
                             <Loader />
                           </Box>) : (<Box className="login_button">
-                            <CustomButtons button_name={String.next} />
+                             <Buttons button_name={String.next} className="buttoms_login" type={'submit'} variant={"contained"}  />
                           </Box>)}
                         </div>
                       </Box>

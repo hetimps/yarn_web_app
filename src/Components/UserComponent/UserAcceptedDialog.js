@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup } from '@mui/material';
+import { Box,Checkbox, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { String } from '../../constants/String';
-import { useAcceptedCompanyUserMutation } from '../../api/Companyuser';
+import { useAcceptedCompanyUserMutation } from '../../api/CompanyUser';
 import toast from 'react-hot-toast';
 import Loader from '../ComonComponent/Loader';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function UserAcceptedDialog({ open, onClose, acceptedUserId, acceptedUserRole, setAcceptedUserRole }) {
     const [AcceptCompanyUser, { isLoading }] = useAcceptedCompanyUserMutation();
@@ -63,16 +64,14 @@ export default function UserAcceptedDialog({ open, onClose, acceptedUserId, acce
                 aria-describedby="alert-dialog-description"
                 className="adialog_container">
                 <DialogTitle id="alert-dialog-title" className="ainvite_dialog_tital">
-                    {/* <Box sx={{ marginLeft: "20px " }}>
-                        <MdClear className="ainvite_dialog_close" onClick={handleDialogClose} />
-                    </Box> */}
+
                     <Box className="ainvite_dialog_tital_txt">
                         {String.accepted_dialog_tital}
                     </Box>
                 </DialogTitle>
                 <DialogContent className="ainvite_dialog_content">
                     <Formik initialValues={{}} onSubmit={handleSubmit}>
-                        {({ values, handleChange }) => (
+                        {() => (
                             <Form className="ainvite_form">
                                 <div>
                                     <FormGroup>
@@ -97,16 +96,8 @@ export default function UserAcceptedDialog({ open, onClose, acceptedUserId, acce
                                         <Loader />
                                     </Box>) : (
                                         <>
-                                            <Button
-                                                onClick={handleDialogClose}
-                                                className="cancel_dialog_button" variant="outlined" autoFocus>
-                                                {String.cancel_dialog_button}
-                                            </Button>
-                                            <Button
-                                                disabled={!ShowAssign}
-                                                type="submit" className="ainvite_dialog_button" variant="contained" autoFocus>
-                                                {String.accepted_dialog_button}
-                                            </Button>
+                                        <Buttons onClick={handleDialogClose} className={"cancel_dialog_button"} variant={"outlined"} button_name={String.cancel_dialog_button} />  
+                                        <Buttons disabled={!ShowAssign} type={"submit"} className={"ainvite_dialog_button"} variant={"contained"} button_name={String.accepted_dialog_button} />
                                         </>
                                     )}
                                 </div>

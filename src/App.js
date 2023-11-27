@@ -9,7 +9,7 @@ function App() {
       <Provider store={store}>
         <Toasters/>
         <Router />
-      </Provider>
+      </Provider> 
     </>
   );
 }

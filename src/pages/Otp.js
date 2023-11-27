@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import Logo from "../assets/img/logo.svg";
 import { String } from "../constants/String";
 import Machin from "../assets/img/machin.svg";
-import CustomButtons from '../Components/ComonComponent/CustomButtons';
+import { Buttons } from '../Components/ComonComponent/CustomButtons';
 import { MuiOtpInput } from 'mui-one-time-password-input'
 import OtpTimer from 'otp-timer'
 import * as Yup from "yup";
@@ -20,7 +20,7 @@ export function matchIsNumeric(text) {
     const isString = typeof text === 'string';
     return (isNumber || (isString && text !== '')) && !isNaN(Number(text));
 }
-const validateChar = (value, index) => {
+const validateChar = (value) => {
     return matchIsNumeric(value) && value !== ' ';
 }
 
@@ -185,7 +185,7 @@ export default function Otp() {
                                                     </Box>) : (
                                                         <>
                                                             <Box className="login_button">
-                                                                <CustomButtons button_name={String.next} />
+                                                                <Buttons button_name={String.next} className="buttoms_login" type={'submit'} variant={"contained"}  />
                                                             </Box>
                                                             <Box sx={{ fontFamily: "Poppins", textAlign: "center", marginTop: "1rem" }}>
                                                                 <OtpTimer

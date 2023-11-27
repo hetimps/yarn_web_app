@@ -1,7 +1,8 @@
 import React from 'react'
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText} from '@mui/material'
+import { Box, Dialog, DialogActions, DialogContent, DialogContentText} from '@mui/material'
 import Loader from '../ComonComponent/Loader'
 import { String } from '../../constants/String'
+import { Buttons } from '../ComonComponent/CustomButtons'
 
 export default function ConformDialog({ open, onClose, heading, tital, back, isLoading }) {
     return (
@@ -20,10 +21,8 @@ export default function ConformDialog({ open, onClose, heading, tital, back, isL
                         {isLoading ?
                             <Loader />
                             : (<Box className="cdialog_button">
-                                <Button variant="outlined" className="cdialog_cancel" onClick={onClose}>{String.dialog_cancel_buttons}</Button>
-                                <Button variant="contained" className="cdialog_yes" onClick={back} autoFocus>
-                                    {String.dialog_cancel_yes}
-                                </Button>
+                                <Buttons variant={"outlined"} className={"cdialog_cancel"} onClick={onClose}  button_name={String.dialog_cancel_buttons} /> 
+                                <Buttons variant={"contained"} className={"cdialog_yes"} onClick={back}  button_name={String.dialog_cancel_yes} /> 
                             </Box>)}
                     </DialogActions>
                 </Box>

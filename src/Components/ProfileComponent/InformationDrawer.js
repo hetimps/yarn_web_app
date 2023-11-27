@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import Loader from '../ComonComponent/Loader'
-import { Button, Drawer, InputLabel, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Drawer, InputLabel, Paper, Stack, TextField, Typography } from '@mui/material'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { String } from '../../constants/String';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
 import toast from 'react-hot-toast';
-import { useUserInfoMutation } from '../../api/UserInfo';
+import { useUserInfoMutation } from '../../api/UserInformation';
+import { Buttons } from '../ComonComponent/CustomButtons';
 export default function AccountInfoDrawer({ toggleDrawer, isDrawerOpen, Userdata, UserisFetching, userRefetch, account }) {
 
-const [UpdateProfile, { isLoading }] = useUserInfoMutation();
-const [userNameState, setUserNameState] = useState(Userdata?.userName);
-const [userEmailState, setUserEmailState] = useState(Userdata?.userEmail);
-const [disabledSave, setDisabledSave] = useState(true);
+    const [UpdateProfile, { isLoading }] = useUserInfoMutation();
+    const [userNameState, setUserNameState] = useState(Userdata?.userName);
+    const [userEmailState, setUserEmailState] = useState(Userdata?.userEmail);
+    const [disabledSave, setDisabledSave] = useState(true);
 
-useEffect(() => {
-    if (!UserisFetching) {
-        formik.setFieldValue("userName", Userdata?.userName)
-        formik.setFieldValue("mobileNo", Userdata?.mobileNo)
-        formik.setFieldValue("userEmail", Userdata?.userEmail)
-        CompanyFormik.setFieldValue("companyName", Userdata?.companyId?.companyName)
-        setUserNameState(Userdata?.userName)
-        setUserEmailState(Userdata?.userEmail)
+    useEffect(() => {
+        if (!UserisFetching) {
+            formik.setFieldValue("userName", Userdata?.userName)
+            formik.setFieldValue("mobileNo", Userdata?.mobileNo)
+            formik.setFieldValue("userEmail", Userdata?.userEmail)
+            CompanyFormik.setFieldValue("companyName", Userdata?.companyId?.companyName)
+            setUserNameState(Userdata?.userName)
+            setUserEmailState(Userdata?.userEmail)
         }
-}, [Userdata, UserisFetching])
+    }, [Userdata, UserisFetching])
 
     useEffect(() => {
         if (userNameState !== Userdata?.userName || userEmailState !== Userdata?.userEmail) {
@@ -68,7 +69,7 @@ useEffect(() => {
             comapnyAddress: '',
         },
         validationSchema: Yup.object().shape({}),
-        onSubmit: async (values) => {
+        onSubmit: async () => {
             toggleDrawer()
         },
     });
@@ -142,8 +143,8 @@ useEffect(() => {
                         </div>
                         <div className='yebtns'>
                             {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
-                                <Button onClick={toggleDrawer} className='yebtn_cancel' variant="outlined">{String.ycancel}</Button>
-                                <Button disabled={disabledSave} className='save_button' type='submit' variant="contained">{String.save}</Button>
+                                <Buttons onClick={toggleDrawer} className='yebtn_cancel' variant="outlined" button_name={String.ycancel} />
+                                <Buttons disabled={disabledSave} type={'submit'} className='save_button' variant="contained" button_name={String.save} />
                             </Stack>)}
                         </div>
                     </div>
@@ -173,8 +174,8 @@ useEffect(() => {
                     </div>
                     <div className='yebtns'>
                         {isLoading ? <Loader /> : (<Stack direction="row" spacing={1}>
-                            <Button onClick={toggleDrawer} className='yebtn_cancel' variant="outlined">{String.ycancel}</Button>
-                            <Button className='save_button' type='submit' variant="contained">{String.save}</Button>
+                            <Buttons onClick={toggleDrawer} className='yebtn_cancel' variant="outlined" button_name={String.ycancel} />
+                            <Buttons type={'submit'} className='save_button' variant="contained" button_name={String.save} />
                         </Stack>)}
                     </div>
                 </div>

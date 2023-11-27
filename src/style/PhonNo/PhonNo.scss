@@ -1,4 +1,4 @@
-@import "./Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
@@ -26,12 +26,11 @@ body {
         border-radius: 12px !important;
         height: 50px;
     }
-
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url(../assets/img/background.svg);
+    background-image: url(../../assets/img/background.svg);
     background-repeat: no-repeat;
 
     .login_pepar {
@@ -80,11 +79,9 @@ body {
 
                 .login_filed {
                     width: 100%;
-
                     .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
                         border-color: $primary !important;
                     }
-
                     .phon_input {
                         margin: 2.5rem 0;
 
@@ -94,7 +91,6 @@ body {
                             font-weight: 600;
                         }
                     }
-
                     .btn-out {
                         position: relative;
                         width: 100%;
@@ -103,7 +99,6 @@ body {
                             position: relative;
                             width: 100% !important;
                         }
-
                         .loader {
                             position: absolute;
                             top: 50%;
@@ -112,7 +107,6 @@ body {
                             margin-top: 1.5rem !important;
 
                         }
-
                         //otp link
                         .link {
                             font-family: $font-family ;
@@ -156,7 +150,6 @@ body {
     .login-container {
         background-image: none !important;
         width: 100% !important;
-
         .login_pepar {
             width: 100% !important;
             height: 100vh;
@@ -175,18 +168,14 @@ body {
 @media (max-width: 700px) {
 
     .login-container {
-
         .login_pepar {
             width: 100% !important;
             border-radius: 0rem !important;
-
             .main {
                 width: 400px !important;
-
                 .login_tital {
                     font-size: 1.1rem !important;
                 }
-
                 .login_desc {
                     font-size: 0.9rem !important;
                 }

@@ -202,7 +202,7 @@ export default function ViewQualityForm() {
                                         </Button>
                                     </div>
                                     <div className='wrap_box' >
-                                        {wrapData?.map((wrap, index) => {
+                                        {wrapData?.map((wrap) => {
                                             const value = (((wrap.warpDeniar * wrap.warpBeamEnds) * wrap.warpShortage / 100 + (wrap.warpDeniar * wrap.warpBeamEnds)) / 9000000)
                                             const weight = (value * 100).toFixed(2);
                                             const cost = (value * wrap.warpYarnRate).toFixed(2);
@@ -316,7 +316,7 @@ export default function ViewQualityForm() {
                                         </Button>
                                     </div>
                                     <div className='wrap_box' >
-                                        {weftData?.map((weft, index) => {
+                                        {weftData?.map((weft) => {
                                             const value = (((weft.weftDeniar * weft.weftPick * weft.weftWidth) * weft.weftWastage / 100 + (weft.weftDeniar * weft.weftPick * weft.weftWidth)) / 9000000)
                                             const cost = Number((value * weft.weftYarnRate).toFixed(2));
                                             const weight = Number((value * 100).toFixed(2));

@@ -6,7 +6,7 @@ import "../../style/User/UserList.scss";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import Loader from '../ComonComponent/Loader';
-import { useGetCompanyUserQuery, useRejectedCompanyUserMutation } from '../../api/Companyuser';
+import { useGetCompanyUserQuery, useRejectedCompanyUserMutation } from '../../api/CompanyUser';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ConformDialog from '../QualityComponent/ConformDialog';
 import { String } from '../../constants/String';
@@ -141,8 +141,8 @@ export default function UserList({ Userdata, UserisFetching }) {
                                             {String.pending_request}
                                         </Typography>}
 
-                                    {requestedUser?.map((user) =>
-                                        <List className='user_list' >
+                                    {requestedUser?.map((user, index) =>
+                                        <List className='user_list' key={index} >
                                             <ListItem alignItems="flex-start" className="user_list_item">
                                                 <ListItemAvatar>
                                                     <Avatar className='user_list_img' alt="use_img" />
@@ -184,8 +184,8 @@ export default function UserList({ Userdata, UserisFetching }) {
                                         {String.all_user}
                                     </Typography>}
 
-                                    {acceptedUser?.map((user) =>
-                                        <List className='user_list' >
+                                    {acceptedUser?.map((user, index) =>
+                                        <List className='user_list' key={index}>
                                             <ListItem alignItems="flex-start" className="user_list_item">
                                                 <ListItemAvatar>
                                                     <Avatar className='user_list_img' alt="use_img" />

@@ -1,15 +1,16 @@
 import React from 'react'
-import "../../style/Compnay.scss"
-import { Box, Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
+import "../../style/Company/Company.scss"
+import { Box, Dialog, DialogContent, DialogTitle, TextField } from '@mui/material'
 import { Form, Formik } from 'formik';
 import { MdClear } from "react-icons/md";
 import { String } from '../../constants/String';
 import * as Yup from "yup";
 import { Regex } from '../../constants/Regex';
-import { useAddCompanyMutation } from '../../api/Compnay';
+import { useAddCompanyMutation } from '../../api/Company';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../ComonComponent/Loader';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function CompanyDialog({ open, onClose }) {
     const navigaet = useNavigate();
@@ -75,9 +76,9 @@ export default function CompanyDialog({ open, onClose }) {
                                 <div className='invite_dialog_butto_container'>
                                     {isLoading ? (<Box className="loader">
                                         <Loader />
-                                    </Box>) : (<Button disableRipple type="submit" className="invite_dialog_button" variant="contained" autoFocus>
-                                        {String.add_button}
-                                    </Button>)}
+                                    </Box>) : (
+                                        <Buttons type={"submit"}  className={"invite_dialog_button"} variant={"contained"} button_name={String.add_button}/> 
+                                    )}
                                 </div>
                             </Form>)}
                     </Formik>

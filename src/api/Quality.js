@@ -1,13 +1,5 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export const prepareHeaders = (headers) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-    }
-    return headers;
-};
+import { prepareHeaders } from './Utils';
 
 export const QualityApi = createApi({
     reducerPath: 'QualityApi',
@@ -16,7 +8,6 @@ export const QualityApi = createApi({
         prepareHeaders: prepareHeaders
     }),
     tagTypes: ["Quality", "Yarn", "Company"],
-
     endpoints: (builder) => ({
         GetQuality: builder.query({
             query: ({ page, limit, search, yarn }) => ({

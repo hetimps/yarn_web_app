@@ -3,12 +3,12 @@ import React from 'react'
 import Machin from "../assets/img/machin.svg";
 import Logo from "../assets/img/logo.svg";
 import { Form, Formik } from 'formik';
-import CustomButtons from '../Components/ComonComponent/CustomButtons';
+import { Buttons } from '../Components/ComonComponent/CustomButtons';
 import { String } from '../constants/String';
 import { MdEmail } from "react-icons/md";
 import { BiSolidUser } from "react-icons/bi";
 import * as Yup from "yup";
-import { useUserInfoMutation } from '../api/UserInfo';
+import { useUserInfoMutation } from '../api/UserInformation';
 import { toast } from 'react-hot-toast';
 import Loader from '../Components/ComonComponent/Loader';
 import { useNavigate } from 'react-router-dom';
@@ -122,8 +122,8 @@ export default function UserInfor() {
                       <div className="btn-out">
                         {isLoading ? (<Box className="loader">
                           <Loader />
-                        </Box>) : (<Box className="login_button">
-                          <CustomButtons button_name={String.done} />
+                        </Box>) : (<Box >
+                          <Buttons button_name={String.done} className="buttoms_login" type={'submit'} variant={"contained"}  />
                         </Box>)}
                       </div>
                     </Box>

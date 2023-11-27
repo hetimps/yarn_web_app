@@ -20,6 +20,7 @@ import WeftDrawer from './WeftDrawer';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useEffect } from 'react';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function EditQualityForm() {
     const { state } = useLocation();
@@ -136,7 +137,6 @@ export default function EditQualityForm() {
         const qualityCost = selectedOption === "Fixed Cost"
             ? Number(totalCosts) + Number(value.cost)
             : Number(totalCosts) + Number(value.cost * sumOfPicks);
-
         const cost = Number(value.cost)
         const TotalBeamEnds = tars
         const TotalPick = sumOfPicks
@@ -151,12 +151,28 @@ export default function EditQualityForm() {
             TotalBeamEnds: TotalBeamEnds,
             TotalPick: TotalPick,
             TotalWidth: TotalWidth,
+            // warp: {
+            //     totalWarpWeight: WrapsumOfweights,
+            //     totalWarpCost: WrapsumOfCosts,
+            //     warpData: wrapData.map((element) => {
+            //         const { warpYarnName, warpCompnayName
+            //             , tpm, warpCompany, warpYarn, _id, ...rest } = element;
+            //console.log( warpYarnName, warpCompnayName, tpm, warpCompany, warpYarn,_id)
+            //         if (tpm !== "") {
+            //             rest.tpm = tpm;
+            //         }
+            //         rest.warpCompany = element?.warpCompany?._id || element?.warpCompany;
+            //         rest.warpYarn = element?.warpYarn?._id || element?.warpYarn;
+            //         return rest;
+            //     })
+            // },
             warp: {
                 totalWarpWeight: WrapsumOfweights,
                 totalWarpCost: WrapsumOfCosts,
                 warpData: wrapData.map((element) => {
-                    const { warpYarnName, warpCompnayName
-                        , tpm, warpCompany, warpYarn, _id, ...rest } = element;
+                    const { tpm, ...rest } = element;
+                    delete rest._id
+                    console.log(element, "element")
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
@@ -165,11 +181,26 @@ export default function EditQualityForm() {
                     return rest;
                 })
             },
+            // weft: {
+            //     totalWeftWeight: WeftsumOfweights,
+            //     totalWeftCost: WeftsumOfCosts,
+            //     weftData: weftData.map((element) => {
+            //         const { wefYarnName, wefCompnayName, weftCompnay, wetfYarn, _id, tpm, ...rest } = element;
+            //console.log(wefYarnName, wefCompnayName, weftCompnay, wetfYarn,_id)
+            //         if (tpm !== "") {
+            //             rest.tpm = tpm;
+            //         }
+            //         rest.weftCompany = element?.weftCompany?._id || element?.weftCompany;
+            //         rest.weftYarn = element?.weftYarn?._id || element?.weftYarn;
+            //         return rest;
+            //     })
+            // },
             weft: {
                 totalWeftWeight: WeftsumOfweights,
                 totalWeftCost: WeftsumOfCosts,
                 weftData: weftData.map((element) => {
-                    const { wefYarnName, wefCompnayName, weftCompnay, wetfYarn, _id, tpm, ...rest } = element;
+                    const { tpm, ...rest } = element;
+                    delete rest._id
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
@@ -388,7 +419,7 @@ export default function EditQualityForm() {
                                 </div>
 
                                 <div className='add_btn'>
-                                    {isLoading ? <Loader /> : (<Button type='submit' className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">{String.save}</Button>)}
+                                    {isLoading ? <Loader /> : (<Buttons type={'submit'} className={'btn_save'} startIcon={<TurnedInNotIcon />} variant={"contained"} button_name={String.save} />)}
                                 </div>
                             </div>
 

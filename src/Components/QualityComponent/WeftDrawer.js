@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Stack, TextField, Typography } from '@mui/material'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
@@ -11,9 +11,13 @@ import { Regex } from '../../constants/Regex';
 import AddCompannyDialog from './AddCompannyDialog';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useGetYarnQuery } from '../../api/Yarn';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, pickSum, setweftSumCost, weftSumCost, setweftSumweight, weftSumweight, toggleDrawerWeft, isDrawerOpenWeft, setweftData, weftData }) {
-    const { data: YarnData } = useGetYarnQuery();
+    const page = 1;
+    const limit = "";
+    const search = "";
+    const { data: YarnData } = useGetYarnQuery({ page, limit, search: search });
     const { data: CompanyData } = useGetCompanyQuery();
     const [openAddCompnay, setOpenAddCompnay] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
@@ -126,7 +130,7 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
         }
     };
 
-    const calculation = async (values, setFieldValue) => {
+    const calculation = async (values) => {
         const value = (((values.weftDeniar * values.weftPick * values.weftWidth) * values.weftWastage / 100 + (values.weftDeniar * values.weftPick * values.weftWidth)) / 9000000)
         const cost = Number((value * values.weftYarnRate).toFixed(2));
         const weight = Number((value * 100).toFixed(2));
@@ -208,9 +212,9 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                                 sx={{ width: "98%" }}
                                                 id='weftYarn'
                                                 name='weftYarn'
-                                                options={YarnData?.result || []}
+                                                options={YarnData?.result?.data || []}
                                                 getOptionLabel={(option) => option ? `${option.yarnName} - ${option.yarnRate} ₹` : ''}
-                                                value={YarnData?.result?.find((yarnItem) => yarnItem._id === values.weftYarn) || null}
+                                                value={YarnData?.result?.data?.find((yarnItem) => yarnItem._id === values.weftYarn) || null}
                                                 onChange={(e, newValue) => {
                                                     if (newValue) {
                                                         setFieldValue('weftYarn', newValue._id || '');
@@ -351,8 +355,8 @@ export default function WeftDrawer({ editweftData, Width, setWidth, setPickSum, 
                                         </div>
                                         <div className='btns'>
                                             <Stack direction="row" spacing={1}>
-                                                <Button onClick={toggleDrawerWefts} className='btn_cancel' variant="outlined">{String.warp_Cancel}</Button>
-                                                <Button className='btn_done' type='submit' variant="contained">{String.warp_done}</Button>
+                                                <Buttons onClick={toggleDrawerWefts}  className={'btn_cancel'} variant={"outlined"} button_name={String.warp_Cancel}/> 
+                                                <Buttons type={'submit'}  className={'btn_done'} variant={"contained"} button_name={String.warp_done}/> 
                                             </Stack>
                                         </div>
                                     </div>

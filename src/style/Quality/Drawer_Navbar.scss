@@ -1,4 +1,4 @@
-@import "../Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
@@ -15,10 +15,8 @@
     margin-top: 1.5rem !important;
     margin-right: 2rem !important;
 
-
     .draewr_dashboard_item {
         border-radius: 0 30px 30px 0 !important;
-
         &:hover {
             background-color: $secondary;
 
@@ -33,19 +31,16 @@
                 border-radius: 0px 30px 30px 0px !important;
             }
         }
-
         .draewr_dashboard_icon {
             color: $font_color;
         }
 
         .draewr_dashboard_text {
-            // color: #2D3748;
             font-weight: 600 !important;
             margin-left: -0.5rem !important;
         }
     }
 }
-
 
 .draewr_dashboard_item:active .draewr_dashboard_icon {
     color: $primary;
@@ -68,7 +63,6 @@
 
 .draewr_dashboard_item.active {
     background-color: $secondary;
-
     /* Add other styles for the active effect */
     &::before {
         content: '';
@@ -88,16 +82,9 @@
     .MuiTypography-root {
         color: $primary;
     }
-
 }
 
 // appbar
-
-
-// .css-i4bv87-MuiSvgIcon-root {
-//     font-size: 20px !important;
-// }
-
 .appbar_right_noti_icon {
     height: 43px !important;
     width: 43px !important;
@@ -114,7 +101,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-
 
         .appbar_hading_box {
             display: flex;
@@ -145,7 +131,6 @@
 
                 .appbar_search_button {
                     height: 50px;
-
                     box-shadow: none;
                     border-radius: 0px 9px 9px 0px;
 
@@ -188,8 +173,6 @@
                 margin-left: 0.5rem;
                 font-size: 1.1rem !important;
             }
-
-
 
             .appbar_logout {
                 color: $font_color !important;
@@ -245,7 +228,7 @@
 
     .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
         box-shadow: none !important;
-        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+        box-shadow: $muipaper-box-shadow 0px 2px 8px 0px !important;
     }
 }
 
@@ -254,7 +237,6 @@
     .dialog_wraper {
         display: flex !important;
         flex-direction: column;
-        // background-color: red;
         align-items: center !important;
         margin-top: -18px;
 
@@ -334,7 +316,6 @@
     margin-left: 8px;
 }
 
-
 .appbar_search {
     height: 50px;
     width: 300px;
@@ -343,12 +324,10 @@
         height: 50px;
         box-shadow: none;
         border-radius: 0px 9px 9px 0px;
-
         &:hover {
             background-color: $primary;
         }
     }
-
     .appbar_search_icon {
         color: $white ;
     }

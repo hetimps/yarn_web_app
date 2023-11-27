@@ -1,7 +1,6 @@
-@import "../Color.js/color";
+@import "../Color/color";
 
 .user_List {
-
     .user_invite_buttons_container {
         display: flex;
         justify-content: space-between;
@@ -35,7 +34,6 @@
             border-radius: 9px;
             width: 9rem;
             height: 3.12rem;
-
             :hover {
                 background-color: $secondary;
             }
@@ -44,15 +42,11 @@
 }
 
 
-
-
 //user list
 
 .user_list {
     margin-top: 1rem !important;
-    // box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px;
-    // background-color: red;
+    box-shadow: $box-shadow-user_profile 0px 8px 24px;
     border-radius: 10px !important;
 
     .user_list_item {
@@ -117,10 +111,6 @@
         padding: 2px;
     }
 
-    // .css-i4bv87-MuiSvgIcon-root {
-    //     font-size: 2rem;
-
-    // }
 }
 
 //loader
@@ -148,7 +138,6 @@
 }
 
 //accepted dialog -------------
-
 .adialog_container {
     .MuiDialog-paper {
         border-radius: 20px;
@@ -170,7 +159,6 @@
 
         .ainvite_dialog_close {
             cursor: pointer;
-            // margin-top: 0.5rem !important;
             font-size: 20px !important;
             position: absolute !important;
             top: 0;
@@ -224,7 +212,5 @@
                 }
             }
         }
-
     }
-
 }

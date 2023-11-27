@@ -1,14 +1,11 @@
 import { createTheme } from '@mui/material';
-
 // Create a custom theme
 export const theme = createTheme({
   components: {
-
     MuiButton: {
       defaultProps: {
         disableRipple: true,
       },
-
     },
     MuiLink: {
       styleOverrides: {
@@ -25,7 +22,5 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: ["Poppins", "sans-serif"].join(","),
-
-   
   },
 });

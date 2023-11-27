@@ -15,7 +15,6 @@ export const String = {
     otp_required: "OTP is a required ",
     hide_number: "*****",
 
-
     //user info
     user_tital: "Welcome back",
     user_des: "Please enter your details.",
@@ -35,7 +34,6 @@ export const String = {
     add_button: "Create  Company",
     add_placeholder: "Enter your company name",
     add_company_required: "Company name is required",
-
     join_tital: "Please enter your join company Code",
     join_button: "Join Company",
     join_placeholder: "Enter company code",
@@ -47,6 +45,9 @@ export const String = {
     pending_status: "Your Join Request Has Been Pending Please wait",
     rejected_status: "Your Join Request Rejected Please Try Agin",
     approved_status: "Your Join Request Approved",
+    status:"Status",
+    sign_out:"Sign Out",
+
 
     // dialog
     dialog_cancel_buttons: "Cancel",
@@ -76,7 +77,6 @@ export const String = {
     edit_menu: "Edit",
     delete_menu: "Delete",
     view_menu: "View",
-
 
     //add quality
     save: "Save",
@@ -123,7 +123,6 @@ export const String = {
     Expense: "Expense :",
     Information: "Information :",
 
-
     //add yarn 
     yadd: "add",
     ycancel: "cancel",
@@ -167,7 +166,6 @@ export const String = {
     select_company: "Company name",
 
     //weft drawer
-
     weft_heading: "Weft",
     dweight: "W : ",
     dcost: " C :",

@@ -1,11 +1,10 @@
 import React from 'react'
-import "../../style/Compnay.scss"
+import "../../style/Company/Company.scss"
 import { Box,  Checkbox, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from '@mui/material'
 import { String } from '../../constants/String';
 import Loader from '../ComonComponent/Loader';
-import "../../style/Yarn/YarnTable.scss"
 import { useGetYarnActivityQuery } from '../../api/Yarn';
-import "../../style/Yarn/YarnTable.scss"
+import "../../style/Yarns/YarnTable.scss"
 import { useState } from 'react';
 import { useEffect } from 'react';
 import moment from 'moment/moment';

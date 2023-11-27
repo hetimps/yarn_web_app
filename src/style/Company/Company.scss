@@ -1,11 +1,10 @@
-@import "./Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: $font-family;
 }
@@ -37,7 +36,6 @@ body {
 }
 
 // dialog
-
 .dialog_container {
     .MuiInputBase-root {
         border-radius: 12px !important;
@@ -46,7 +44,6 @@ body {
 
     .MuiDialog-paper {
         border-radius: 20px;
-        // width: 30%;
         padding: 0.5rem 0.5rem;
     }
 
@@ -60,10 +57,8 @@ body {
         .invite_dialog_tital_txt {
             margin: auto;
         }
-
         .invite_dialog_close {
             cursor: pointer;
-            // margin-top: 0.5rem !important;
             font-size: 20px !important;
             position: absolute !important;
             top: 0;
@@ -76,17 +71,14 @@ body {
     .invite_dialog_content {
         .invite_form {
             margin-top: 0.5rem;
-
             .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
                 border-color: $primary !important;
             }
-
             .invite_dialog_butto_container {
                 display: flex;
                 justify-content: center;
                 width: 100%;
                 margin-top: 1.5rem;
-
                 .invite_dialog_button {
                     font-family: $font-family;
                     text-transform: capitalize;

@@ -1,13 +1,5 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export const prepareHeaders = (headers) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-    }
-    return headers;
-};
+import { prepareHeaders } from './Utils';
 
 export const YarnApi = createApi({
     reducerPath: 'YarnApi',
@@ -16,7 +8,6 @@ export const YarnApi = createApi({
         prepareHeaders: prepareHeaders
     }),
     tagTypes: ["Yarn"],
-
     endpoints: (builder) => ({
         AddYarn: builder.mutation({
             query: (body) => ({
@@ -26,7 +17,6 @@ export const YarnApi = createApi({
             }),
             invalidatesTags: ["Yarn"],
         }),
-
         GetYarn: builder.query({
             query: ({ page, limit, search }) => ({
                 url: '/yarn/getall-yarn',

@@ -1,13 +1,5 @@
-
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-export const prepareHeaders = (headers) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-    }
-    return headers;
-};
+import { prepareHeaders } from './Utils';
 
 export const CompanyUser = createApi({
     reducerPath: 'CompanyUser',
@@ -16,7 +8,6 @@ export const CompanyUser = createApi({
         prepareHeaders: prepareHeaders
     }),
     tagTypes: ["CompanyUser"],
-
     endpoints: (builder) => ({
         GetCompanyUser: builder.query({
             query: ({ status, page, search }) => ({

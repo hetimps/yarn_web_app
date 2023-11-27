@@ -1,4 +1,4 @@
-@import "../Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
@@ -40,7 +40,6 @@
                 color: $lable-color;
                 font-size: 1.5rem;
                 margin-right: 4px;
-
             }
         }
 
@@ -53,14 +52,12 @@
 
             .input_constiner {
                 width: 30%;
-
                 .namel {
                     font-weight: 600;
                     margin-bottom: 0.2rem;
                     color: $font_color;
                     font-size: 1rem;
                 }
-
                 .namei {
                     width: 100%;
                 }
@@ -76,8 +73,6 @@
                 text-transform: capitalize;
             }
 
-
-
             .btns {
                 margin-top: 1.5rem !important;
                 background-color: $primary;
@@ -88,7 +83,6 @@
                 font-size: 16px;
                 width: 6rem !important;
             }
-
             .loader {
                 margin-top: 1.5rem;
             }
@@ -97,13 +91,11 @@
         .companyAccordion {
             margin-top: 0.8rem;
 
-
             .comapany_conatiner {
                 .comapany_form {
                     display: flex;
                     gap: 15px;
                     align-items: center;
-
 
                     .input_constiner {
                         width: 30%;
@@ -114,7 +106,6 @@
                             color: $font_color;
                             font-size: 1rem;
                         }
-
                         .namei {
                             width: 100%;
                         }
@@ -129,7 +120,6 @@
                         font-size: 16px;
                         width: 6rem !important;
                     }
-
                     .loader {
                         margin-top: 1.5rem;
                     }
@@ -144,8 +134,7 @@
     margin-top: 1rem;
 
     .user_list_profile {
-
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 24px;
+        box-shadow: $box-shadow-user_profile 0px 8px 24px;
         border-radius: 10px !important;
         height: 4rem !important;
         display: flex;
@@ -185,7 +174,6 @@
 //account drawer
 
 .adrawer {
-
     .aheading_paper {
         box-shadow: $placeholder-color 0px 0px 0px 1px, $white 0px 0px 0px 1px inset;
         padding: 0.5rem;
@@ -207,10 +195,7 @@
     }
 
     .account_form {
-
         padding: 0.5rem;
-
-
         .input_constiner {
             margin-top: 1rem;
 
@@ -258,9 +243,5 @@
                 width: 6rem !important;
             }
         }
-
-
     }
-
-
 }

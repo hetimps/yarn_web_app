@@ -1,12 +1,13 @@
-import { Box, Button, Container, Grid, Paper, Typography } from '@mui/material'
+import { Box,Container, Grid, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Machin from "../assets/img/machin.svg";
 import Logo from "../assets/img/logo.svg";
 import { Form, Formik } from 'formik';
 import { String } from '../constants/String';
-import "../style/Compnay.scss"
+import "../style/Company/Company.scss"
 import CompanyDialog from '../Components/CompanyComponent/CompanyDialog';
 import JoinDialog from '../Components/CompanyComponent/JoinDialog';
+import { Buttons } from '../Components/ComonComponent/CustomButtons';
 
 export default function Company() {
   const [openAdd, setOpenAdd] = useState(false);
@@ -55,8 +56,8 @@ export default function Company() {
                     <Box className="login_filed">
                       <div >
                         <Box className="user_btns">
-                          <Button onClick={handleOpenAdd} className='user_btn' variant="outlined">{String.add_company}</Button>
-                          <Button onClick={handleOpenJoin} className='user_btn' variant="outlined">{String.join_company}</Button>
+                          <Buttons onClick={handleOpenAdd} className={'user_btn'} variant={"outlined"} button_name={String.add_company} />
+                          <Buttons onClick={handleOpenJoin} className={'user_btn'} variant={"outlined"} button_name={String.join_company} />
                         </Box>
                       </div>
                     </Box>

@@ -4,7 +4,7 @@ import { Box, Button, FormControlLabel, IconButton, InputLabel, Paper, Radio, Ra
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { useState } from 'react';
-import {  Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import InputLabels from './InputLabels';
 import TextFields from './TextFields';
 import * as Yup from "yup";
@@ -19,6 +19,7 @@ import WarpDrawer from './WarpDrawer';
 import WeftDrawer from './WeftDrawer';
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function AddQualityForm() {
     const [openConfirmation, setOpenConfirmation] = useState(false);
@@ -54,7 +55,6 @@ export default function AddQualityForm() {
     const handleChanger = (event) => {
         setSelectedOption(event.target.value);
     };
-
     const defaultValue = {
         qulaity: "",
         cost: 0,
@@ -70,7 +70,6 @@ export default function AddQualityForm() {
         letis: "",
         gsm: "",
     };
-
     const validationSchema = Yup.object().shape({
         qulaity: Yup.string().required(String.quality_required).matches(Regex.quality_name, String.quality_required),
         eff: Yup.string().matches(Regex.quality_item, String.quality_item_valid),
@@ -135,28 +134,75 @@ export default function AddQualityForm() {
             TotalBeamEnds: TotalBeamEnds,
             TotalPick: TotalPick,
             TotalWidth: TotalWidth,
+            // warp: {
+            //     totalWarpWeight: WrapsumOfweights,
+            //     totalWarpCost: WrapsumOfCosts,
+            //     warpData: wrapData.map((element) => {
+
+            //         const { warpYarnName, warpCompnayName, tpm, ...rest } = element;
+            //         console.log(warpYarnName, warpCompnayName)
+            //         delete rest.warpYarnName;
+            //         if (tpm !== "") {
+            //             rest.tpm = tpm;
+            //         }
+            //         return rest;
+            //     })
+            // },
             warp: {
                 totalWarpWeight: WrapsumOfweights,
                 totalWarpCost: WrapsumOfCosts,
                 warpData: wrapData.map((element) => {
-                    const { warpYarnName, warpCompnayName, tpm, ...rest } = element;
-
+                    const { tpm, ...rest } = element;
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
-                    return rest;
+                    return {
+                        warpBeamEnds: rest.warpBeamEnds,
+                        ...(element.tpm !== "" && { tpm: element.tpm }),
+                        warpCompany: rest.warpCompany,
+                        warpCost: rest.warpCost,
+                        warpDeniar: rest.warpDeniar,
+                        warpShortage: rest.warpShortage,
+                        warpWeight: rest.warpWeight,
+                        warpYarn: rest.warpYarn,
+                        warpYarnRate: rest.warpYarnRate,
+                    };
                 })
             },
+            // weft: {
+            //     totalWeftWeight: WeftsumOfweights,
+            //     totalWeftCost: WeftsumOfCosts,
+            //     weftData: weftData.map((element) => {
+            //         const { wefYarnName, wefCompnayName, tpm, ...rest } = element;
+            //         console.log(wefYarnName, wefCompnayName)
+            //         if (tpm !== "") {
+            //             rest.tpm = tpm;
+            //         }
+            //         return rest;
+            //     })
+            // },
             weft: {
                 totalWeftWeight: WeftsumOfweights,
                 totalWeftCost: WeftsumOfCosts,
                 weftData: weftData.map((element) => {
                     const { wefYarnName, wefCompnayName, tpm, ...rest } = element;
-
+                    console.log(wefYarnName, wefCompnayName)
                     if (tpm !== "") {
                         rest.tpm = tpm;
                     }
-                    return rest;
+                    return {
+                        weftCompany:rest.weftCompany,
+                        ...(element.tpm !== "" && { tpm: element.tpm }),
+                        weftCost:rest.weftCost,
+                        weftDeniar:rest.weftDeniar,
+                        weftPick:rest.weftPick,
+                        weftWastage:rest.weftWastage,
+                        weftWeight:rest.weftWeight,
+                        weftWidth:rest.weftWidth,
+                        weftYarn:rest.weftYarn,
+                        weftYarnRate:rest.weftYarnRate,
+
+                    };
                 })
             },
             expenseType: selectedOption,
@@ -208,7 +254,6 @@ export default function AddQualityForm() {
     const handleCloseWrapConfirmation = () => {
         setcancelWrapConfirmation(false);
     };
-
     const handleOpenWefConfirmation = () => {
         setcancelWefConfirmation(true);
     };
@@ -295,7 +340,6 @@ export default function AddQualityForm() {
                                         {String.add_Qulaity}
                                     </Typography>
                                 </div>
-
                                 <div className='second_heading'>
                                     <Stack direction="row" spacing={1}>
                                         <Button className='btn_weight' variant="contained" >{String.weight} {totalWeights} {String.akg}</Button>
@@ -308,7 +352,9 @@ export default function AddQualityForm() {
                                     </Stack>
                                 </div>
                                 <div className='add_btn'>
-                                    {isLoading ? <Loader /> : (<Button type='submit' className='btn_save' startIcon={<TurnedInNotIcon />} variant="contained">{String.save}</Button>)}
+                                    {isLoading ? <Loader /> : (
+                                        <Buttons type={'submit'} className={'btn_save'} startIcon={<TurnedInNotIcon />} variant={"contained"} button_name={String.save} />
+                                    )}
                                 </div>
                             </div>
 
@@ -326,7 +372,6 @@ export default function AddQualityForm() {
                                     </div>
 
                                     <div className='add_form_btns'>
-
                                         <Button className='btn_warp' variant="outlined"
                                             endIcon={
                                                 <div className='add_waicons' onClick={toggleDrawer}>
@@ -622,12 +667,10 @@ export default function AddQualityForm() {
                                                 <div className='cost_label'>
                                                     <InputLabels name={String.Cost} m={"0 0.5rem 0 0"} />
                                                 </div>
-
                                                 {selectedOption === 'Fixed Cost' && (
                                                     <div className='expense_wrap'>
                                                         <TextFields onChange={handleChange}
                                                             value={values.cost} width={"12rem"} placeholder={String.Enter_Cost} name="cost"
-
                                                             error={touched.cost && Boolean(errors.cost)}
                                                             helperText={touched.cost && errors.cost}
                                                         />

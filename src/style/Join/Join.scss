@@ -1,42 +1,36 @@
-@import "./Color.js/color";
+@import "../Color/color";
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     font-family: $font-family;
 }
 
 .container {
-
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     flex-direction: column;
-
     .join_tital {
         margin-top: -1rem !important;
     }
-
     .join_desc {
         color: $light-color;
     }
 
     .btns {
         margin-top: 1rem !important;
-
         .status_btn {
             color: $font_color ;
-            background-color: #EAEAEA;
+            background-color: $background-btn;
             text-transform: capitalize;
             font-family: $font-family;
             width: 6rem;
         }
-
         .sign_out {
             color: $white;
             text-transform: capitalize;
@@ -46,7 +40,6 @@ body {
     }
 }
 
-
 @media (max-width: 500px) {
     .container {
         display: flex;
@@ -54,16 +47,12 @@ body {
         justify-content: center;
         height: 100vh;
         flex-direction: column;
-
         .join_tital {
             font-size: 1rem;
         }
-
         .join_desc {
             font-size: 0.8rem;
-            // background-color: red;
         }
-
         .btns {
             margin-top: 1rem !important;
         }

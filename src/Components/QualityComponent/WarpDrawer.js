@@ -1,4 +1,4 @@
-import { Autocomplete, Button, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Drawer, FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Paper, Stack, TextField, Typography } from '@mui/material'
 import * as Yup from "yup";
 import "../../style/Quality/AddQualityForm.scss"
 import { useState } from 'react';
@@ -12,12 +12,18 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useEffect } from 'react';
 import { useGetYarnQuery } from '../../api/Yarn';
+import { Buttons } from '../ComonComponent/CustomButtons';
 
 export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, WrapSumweight, toggleDrawer, isDrawerOpen, setWrapData, wrapData, wrapSumCost, setWrapSumCost }) {
     const [openAdd, setOpenAdd] = useState(false);
+    const page = 1;
+    const limit = "";
+    const search = "";
     const [openAddCompnay, setOpenAddCompnay] = useState(false);
-    const { data: YarnData } = useGetYarnQuery();
+    const { data: YarnData } = useGetYarnQuery({ page, limit, search: search });
     const { data: CompanyData } = useGetCompanyQuery();
+
+    console.log(YarnData, "YarnData")
 
     useEffect(() => {
         if (wrapData && wrapData.length > 0) {
@@ -120,7 +126,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
         tpm: Yup.string().matches(Regex.wrap_item, String.tpm_valid)
     });
 
-    const calculation = async (values, setFieldValue) => {
+    const calculation = async (values) => {
         const value = (((values?.warpDeniar * values?.warpBeamEnds) * values?.warpShortage / 100 + (values?.warpDeniar * values?.warpBeamEnds)) / 9000000)
         const cost = Number((value * values?.warpYarnRate).toFixed(2));
         const weight = Number((value * 100)?.toFixed(2));
@@ -197,13 +203,15 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                 <div className='from'>
                                     <div className='yarns_wrap'>
                                         <FormControl fullWidth>
+
+                                            {console.log(YarnData, "YarnData")}
                                             <Autocomplete
                                                 sx={{ width: "98%" }}
                                                 id='warpYarn'
                                                 name='warpYarn'
-                                                options={YarnData?.result || []}
+                                                options={YarnData?.result?.data || []}
                                                 getOptionLabel={(option) => option ? `${option.yarnName} - ${option.yarnRate} ₹` : ''}
-                                                value={YarnData?.result?.find((yarnItem) => yarnItem._id === values.warpYarn) || null}
+                                                value={YarnData?.result?.data?.find((yarnItem) => yarnItem._id === values.warpYarn) || null}
                                                 onChange={(e, newValue) => {
                                                     if (newValue) {
                                                         setFieldValue('warpYarn', newValue._id || '');
@@ -307,6 +315,7 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
                                                 {String.ends_placeholder}
                                             </InputLabel>
                                             <TextField onChange={handleChange}
+
                                                 className='input'
                                                 value={values.warpBeamEnds}
                                                 error={touched.warpBeamEnds && Boolean(errors.warpBeamEnds)}
@@ -346,8 +355,8 @@ export default function WarpDrawer({ editdata, Tar, setTar, setWrapSumweight, Wr
 
                                         <div className='btns'>
                                             <Stack direction="row" spacing={1}>
-                                                <Button onClick={toggleDrawers} className='btn_cancel' variant="outlined">{String.warp_Cancel}</Button>
-                                                <Button className='btn_done' type='submit' variant="contained">{String.warp_done}</Button>
+                                                <Buttons onClick={toggleDrawers} className={'btn_cancel'} variant={"outlined"} button_name={String.warp_Cancel} />
+                                                <Buttons type={'submit'} className={'btn_done'} variant={"contained"} button_name={String.warp_done} />
                                             </Stack>
                                         </div>
                                     </div>

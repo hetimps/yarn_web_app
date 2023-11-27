@@ -1,11 +1,11 @@
 import { Avatar, Box, Toolbar, Typography } from '@mui/material'
 import React, { useState } from 'react'
-import "../../style/Quality/Drawer_Navbar.scss"
+import "../../../style/Quality/Drawer_Navbar.scss"
 import { useNavigate } from 'react-router';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Dialogs from './Dialogs';
-import { String } from '../../constants/String';
-import { AppBar } from './Comon_Component';
+import Dialogs from '../Dialogs.js';
+import { String } from '../../../constants/String.js';
+import { AppBar } from './style.js';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 export default function AppBars({ haddings, Userdata }) {
